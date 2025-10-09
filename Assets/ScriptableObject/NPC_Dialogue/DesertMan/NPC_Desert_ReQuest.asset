@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
+  m_Name: NPC_Desert_ReQuest
+  m_EditorClassIdentifier: 
+  entityName: Desert_Man
+  texts:
+  - "\uD558\uD558\u2026! \uADF8\uB7FC \uADF8\uB807\uC9C0"
+  - "\uC5B4\uB514\uAE4C\uC9C0 \uB9D0\uD588\uB354\uB77C?"
+  - "\uC544\uC8FC \uC61B\uB0A0\uC5D0 \uC800 \uB108\uBA38\uC758 \uC704\uD5D8\uD55C
+    \uB3D9\uBB3C\uACFC \uB9C8\uC8FC\uD588\uC9C0"
+  - "\uADF8 \uB3D9\uBB3C\uC758 \uBF08\uB97C\u2026 \uC815\uB9D0 \uC88B\uC544\uD558\uB354\uB77C\uACE0"
+  - "\uC544 \uBC30\uACE0\uD30C"
+  - "\uB530\uB73B\uD558\uACE0 \uAE40\uC774 \uBAA8\uB77D\uBAA8\uB77D \uB098\uB294
+    \uCC0C\uAC1C\uB3C4 \uC88B\uACE0"
+  - "\uB9E4\uCF64\uD55C \uC591\uB150\uC73C\uB85C \uBC84\uBB34\uB9B0 \uAC15\uACE0\uAE30\uB3C4
+    \uC88B\uACA0\uB2E4"
+  - "\uBB50\uB4E0\u2026"
+  options: []

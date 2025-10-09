@@ -1,0 +1,53 @@
+using UnityEngine;
+
+public interface IMovement
+{
+    Vector2 CurrentVelocity { get; }
+    float HorizontalDirection { get; }
+    bool IsGrounded { get; set; }
+    void Move(float x);
+    void Idle();
+
+}
+
+public interface IDashable
+{
+    void Dash(float x);
+}
+
+public abstract class MovementBase : MonoBehaviour, IMovement
+{
+    [SerializeField] protected float moveSpeed;
+    protected float walkSpeed;
+    protected Rigidbody2D rigidbody2D;
+
+    protected virtual void Awake()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    public Vector2 CurrentVelocity => rigidbody2D.velocity;
+    public float HorizontalDirection => Mathf.Sign(rigidbody2D.velocity.x);
+    public bool IsGrounded { get; set; }
+
+    public virtual void Move(float x) => OnMovement(x, false);
+    public virtual void Idle() => OnMovement(0, false);
+
+    //public virtual void Jump() => On
+    public virtual void OnMovement(float x, bool isDash = false)
+    {
+        float yVelocity = isDash ? 0f : rigidbody2D.velocity.y;
+
+        if (isDash)
+        {
+            Vector2 moveDirection = new Vector2(x * moveSpeed * 4, yVelocity);
+            rigidbody2D.velocity = moveDirection;
+        }
+        else
+        {
+            Vector2 moveDirection = new Vector2(x * moveSpeed, yVelocity);
+            rigidbody2D.velocity = moveDirection;
+        }
+    }
+
+}
