@@ -78,6 +78,7 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
     private void CheckState()
     {
+
         if (currentState is IEnemyState state)
         {
             if (state.CanChase) // 추격 가능한 상태

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EffectBase : MonoBehaviour
@@ -8,6 +9,7 @@ public class EffectBase : MonoBehaviour
     private float destroyDuration;
 
     private float durationTime;
+
     private void Awake()
     {
         durationTime = Effects[0].duration;

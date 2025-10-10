@@ -26,6 +26,10 @@ public class GuardedEnterance : InteractableEnterance
             {
                 if (guardNode != null)
                     guardNPC.StartDialogueWithNode(guardNode);
+                else
+                {
+                    guardNPC.Interactive();
+                }
             }
         }
     }

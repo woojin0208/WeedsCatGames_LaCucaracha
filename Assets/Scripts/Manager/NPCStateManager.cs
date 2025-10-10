@@ -36,5 +36,6 @@ public enum NPCId
     DesertMan,
     TurtleBoy,
     WhiteGuard,
-    PinkGirl
+    PinkGirl,
+    TutorialSpeaker,
 }

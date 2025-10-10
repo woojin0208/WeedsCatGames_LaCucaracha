@@ -19,6 +19,8 @@ public class EnemyIdleState : IEnemyState
 
     public void UpdateState(EnemyController enemyController)
     {
+        if (enemyController.PatrolTime == 0) return;
+
         stateTime -= Time.deltaTime;
 
         if (stateTime <= 0)

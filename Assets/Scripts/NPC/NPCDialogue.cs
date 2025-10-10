@@ -60,7 +60,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         }
     }
 
-    public void Interactive(EntityBase _ = null)
+    public virtual void Interactive(EntityBase _ = null)
     {
         var state = NPCStateManager.Instance.GetState(NPCId);
         Debug.Log($"[NPCDialogue] Start by state = {state}");
