@@ -30,6 +30,8 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
     private bool canThrow = true; // Debug¿ë 
     private bool isStop;
     //private bool canClimbLadder = false;
+
+    private Coroutine slowEffectCoroutine;
     private void Awake()
     {
         // API initialization
@@ -171,16 +173,35 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         switch (effectData.kind)
         {
             case EffectKind.WallJump:
-                
-                ChangeState(new PlayerWallClingState(effectData.duration));
+                ChangeState(new PlayerWallClingState(effectData.duration, effectData.xDir));
                 break;
             case EffectKind.Slow:
+                playerBase.slowCoroutine = StartCoroutine(playerBase.OnSlowEffect(effectData.duration, effectData.rate));
                 break;
             case EffectKind.Damage:
                 break;
 
         }
     }
+
+    public void IgnoreEffect(StatusEffectData effectData)
+    {
+        if (!effectData.target.Contains(EffectTargetKind.Player)) return;
+
+        switch (effectData.kind)
+        {
+            case EffectKind.WallJump:
+                ChangeState(new PlayerIdleState());
+                break;
+            case EffectKind.Slow:
+                StopCoroutine(playerBase.slowCoroutine);
+                break;
+            case EffectKind.Damage:
+                break;
+
+        }
+    }
+
 
     public void OnLadder(Vector2 startPosition, Vector2 endPosition)
     {

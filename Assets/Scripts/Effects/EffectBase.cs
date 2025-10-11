@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EffectBase : MonoBehaviour
@@ -9,6 +9,8 @@ public class EffectBase : MonoBehaviour
     private float destroyDuration;
 
     private float durationTime;
+
+    private List<IStatusEffectHandler> effectHandlers = new List<IStatusEffectHandler>();
 
     private void Awake()
     {
@@ -22,17 +24,57 @@ public class EffectBase : MonoBehaviour
 
         if (destroyDuration <= 0) Destroy(this.gameObject);
     }
-    private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Wall"))
+        {
+            float xDir = collision.transform.position.x > transform.position.x ? 1 : -1;
+            foreach (StatusEffectData e in Effects) e.xDir = xDir;
+        }
+
+        if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
+        {
+            effectHandlers.Add(handler);
+
+            ApplyEffect(handler);
+        }
+
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
         {
-            foreach (var e in Effects)
-            {
-                e.duration = destroyDuration;
-                handler.ApplyEffect(e);
-                Effects[0].duration = durationTime;
-            }
+            IgnoreEffect(handler);
+
+            effectHandlers.Remove(handler);
         }
     }
+
+    private void OnDisable()
+    {
+        foreach (var e in Effects)
+            foreach (var eh in effectHandlers) eh.IgnoreEffect(e);
+
+        effectHandlers.Clear();
+    }
+    private void ApplyEffect(IStatusEffectHandler handler)
+    {
+        foreach (var e in Effects)
+        {
+            e.duration = destroyDuration;
+            handler.ApplyEffect(e);
+            Effects[0].duration = durationTime;
+        }
+
+    }
+
+    private void IgnoreEffect(IStatusEffectHandler handler)
+    {
+        foreach (var e in Effects) handler.IgnoreEffect(e);
+    }
+
 
 }

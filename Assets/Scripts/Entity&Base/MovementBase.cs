@@ -7,6 +7,8 @@ public interface IMovement
     bool IsGrounded { get; set; }
     void Move(float x);
     void Idle();
+    void ChangeGravity(float scale);
+
 
 }
 
@@ -50,4 +52,9 @@ public abstract class MovementBase : MonoBehaviour, IMovement
         }
     }
 
+    public void ChangeGravity(float scale)
+    {
+        rigidbody2D.velocity = Vector2.zero;
+        rigidbody2D.gravityScale = scale;
+    }
 }

@@ -17,6 +17,8 @@ public class MovementAPI
     public void Move(float x) => _movement.Move(x);
 
     public void Dash(float x) => _dashable?.Dash(x);
+
+    public void ChangeGravity(float gravity) => _movement.ChangeGravity(gravity);
     
     //public void Jump() => _movement.Jump();
     //public void ClimbLadder => 

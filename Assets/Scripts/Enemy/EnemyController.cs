@@ -167,7 +167,28 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
             case EffectKind.Damage:
                 break;
             case EffectKind.Slow:
-                StartCoroutine(OnSlowEffect(effectData.duration, effectData.rate));
+                enemyBase.slowCoroutine = StartCoroutine(enemyBase.OnSlowEffect(effectData.duration, effectData.rate));
+                break;
+        }
+    }
+
+    public void IgnoreEffect(StatusEffectData effectData)
+    {
+        foreach (EffectTargetKind e in effectData.target)
+        {
+            if (!effectData.target.Contains(EffectTargetKind.Enemy)) return;
+        }
+
+        switch (effectData.kind)
+        {
+            case EffectKind.Blind:
+                //StartCoroutine(OnBlindEffect(effectData.duration));
+                break;
+            case EffectKind.Damage:
+                break;
+            case EffectKind.Slow:
+                StopCoroutine(enemyBase.slowCoroutine);
+                
                 break;
         }
     }
@@ -180,14 +201,5 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
         ChangeState(new EnemyIdleState());
     }
-
-    private IEnumerator OnSlowEffect(float duration, float rate)
-    {
-        float bonusSpeed = enemyBase.stats.GetStat(StatType.MoveSpeed).DefaultValue;
-        bonusSpeed *= rate / 100;// 70 ÀÌ¸י 0.7
-        enemyBase.ChangeBonusStat(StatType.MoveSpeed, -bonusSpeed);
-        yield return new WaitForSeconds(duration);
-
-        enemyBase.ChangeBonusStat(StatType.MoveSpeed, 0);
-    }
+    
 }

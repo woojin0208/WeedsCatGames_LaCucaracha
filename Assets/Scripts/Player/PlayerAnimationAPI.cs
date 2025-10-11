@@ -12,10 +12,11 @@ public class PlayerAnimationAPI : AnimationAPI
     }
 
     public void Jump(int count) => playerRenderer.JumpAnim(count);
-    public void Attack(int combo) => playerRenderer.AttackAnim(combo);
     public void Dash() => playerRenderer.DashAnim();
     public void Throw() => playerRenderer.ThrowAnim();
     //public void ClingWall(bool isClinging) => playerRenderer.ClingWallAnim(isClinging);
-    public void Ladder(bool climb) => playerRenderer.LadderAnim(climb);
+    public void Ladder(bool isClimb) => playerRenderer.LadderAnim(isClimb);
+
+    public void WallCling(bool isCling, float xDir = 0) => playerRenderer.WallClingAnim(isCling, xDir);
 
 }

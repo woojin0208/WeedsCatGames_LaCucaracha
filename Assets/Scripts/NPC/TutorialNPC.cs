@@ -28,11 +28,9 @@ public class TutorialNPC : NPCDialogue
     {
         OnSpeak();
 
-        if (currentTextIndex >= tutorialTexts.Length)
-        {
-            NPCStateManager.Instance.SetState(NPCId, NPCState.Completed);
-            currentTextIndex = 0;
-        }
+        if (currentTextIndex >= tutorialTexts.Length - 1) NPCStateManager.Instance.SetState(NPCId, NPCState.Completed);
+        if (currentTextIndex >= tutorialTexts.Length) currentTextIndex = 0;
+        
 
         tutorialText.text = tutorialTexts[currentTextIndex];
         textIndex.text = $"{currentTextIndex + 1} / {tutorialTexts.Length}";

@@ -8,6 +8,7 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
 
     [field: SerializeField] public int Durability { get; private set; } = 1;
     [field: SerializeField] public Sprite WeaponSprite { get; private set; }
+    [field: SerializeField] public Transform InteractivePos { get; set; }
 
     [SerializeField] Vector2 weaponPosition;
 

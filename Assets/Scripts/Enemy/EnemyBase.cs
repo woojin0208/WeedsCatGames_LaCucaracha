@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyBase : EntityBase
 {
     public event Action OnDamagedAction;
-    
 
     private EnemyMovement enemyMovement;
     private EnemyRenderer enemyRenderer;

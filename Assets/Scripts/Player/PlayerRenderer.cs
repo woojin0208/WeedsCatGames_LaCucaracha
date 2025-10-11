@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerRenderer : AnimationBase
 {
@@ -18,7 +19,6 @@ public class PlayerRenderer : AnimationBase
     /// <param name="jump"></param>
     public void JumpAnim(int jump)
     {
-        
         animator.SetInteger("JumpCount", jump);
     }
 
@@ -36,9 +36,13 @@ public class PlayerRenderer : AnimationBase
         animator.SetTrigger("OnDashTrigger");
     }
 
-    public void ClingWallAnim(bool isCling)
+    public void WallClingAnim(bool isCling, float xDir = 0)
     {
-
+        animator.SetBool("OnCling", isCling);
+       
+        Vector3 xScale = transform.localScale;
+        xScale.x = xDir;
+        transform.localScale = xScale;
     }
     public void LadderAnim(bool isClimb)
     {

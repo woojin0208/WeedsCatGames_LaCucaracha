@@ -13,4 +13,11 @@ public class EffectableEnvironment : MonoBehaviour, IStatusEffectHandler
         }
     }
 
+    public void IgnoreEffect(StatusEffectData effectData)
+    {
+        foreach (EffectTargetKind e in effectData.target)
+        {
+            if (effectData.target.Contains(environmentKind)) return;
+        }
+    }
 }

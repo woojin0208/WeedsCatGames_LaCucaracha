@@ -2635,6 +2635,7 @@ MonoBehaviour:
   inventorySlot: {fileID: 9140287566105814657, guid: a601042a5f1826d44841ebcf416789e2, type: 3}
   inventorySprite: {fileID: 21300000, guid: 83829e07cd6f0b948bb7cddc15ac2813, type: 3}
   selectInventorySprite: {fileID: 21300000, guid: 9330f33f352349b44ad90cf89a7218c2, type: 2}
+  slotIndex: {fileID: 0}
 --- !u!1 &5076737300218343887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4498,7 +4499,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4437154201096814954
 CanvasRenderer:
@@ -4521,14 +4522,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 0.5254902}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2f0272531a4f37d479e62103076a1e87, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4695,7 +4696,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC0AC\uC6B4\uB4DC"
+  m_text: "\uAC8C\uC784 \uC7AC\uC2DC\uC791"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1affc7848f2034d41bd18a35afb8d203, type: 2}
   m_sharedMaterial: {fileID: -2587379990159227101, guid: 1affc7848f2034d41bd18a35afb8d203, type: 2}
@@ -4810,7 +4811,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5029424448633803590}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ClickControlSetting
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5245,7 +5246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2023725984664463799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6718,6 +6719,7 @@ MonoBehaviour:
   dialogueUI: {fileID: 0}
   quitImage: {fileID: 6889214646864401019}
   inventoryUI: {fileID: 4837200304529309082}
+  canViewVideo: 0
 --- !u!1 &8835673769745271799
 GameObject:
   m_ObjectHideFlags: 0
@@ -7528,7 +7530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9015259166414821237, guid: c183fe1ddfde08845809a98da8190ca5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 9015259166414821237, guid: c183fe1ddfde08845809a98da8190ca5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

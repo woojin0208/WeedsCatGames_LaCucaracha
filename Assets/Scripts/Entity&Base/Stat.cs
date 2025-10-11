@@ -47,7 +47,7 @@ public class Stat
     public float BonusValue
     {
         get => bonusValue;
-        set => bonusValue = value;
+        set => bonusValue = Mathf.Clamp(value, -defaultValue + 1, maxValue);
     }
 
     private void TryInvokeValueChangedEvent(float prev, float current)

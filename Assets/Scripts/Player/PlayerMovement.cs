@@ -177,7 +177,7 @@ public class PlayerMovement : MovementBase, IDashable
     {
         IsClimingWall = true;
         rigidbody2D.sharedMaterial = physicMat[1];
-        currentJumpCount = 1;
+        currentJumpCount = 2;
         yield return new WaitForSeconds(duration);
 
         rigidbody2D.sharedMaterial = physicMat[0];

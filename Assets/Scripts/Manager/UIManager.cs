@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject inventoryUI;
 
-    public bool canViewVideo = true;
+    public bool canViewVideo = false;
     private void Awake()
     {
         if (instance != null)
@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (dialogueUI.gameObject.activeSelf || minimap.activeSelf) return;
@@ -133,7 +133,7 @@ public class UIManager : MonoBehaviour
         panel.SetActive(true);
         pausePanel.SetActive(false);
     }
-    
+
     public void OnPausePanel()
     {
         pausePanel.SetActive(true);
@@ -168,12 +168,14 @@ public class UIManager : MonoBehaviour
 
         if (target != null)
         {
-            Vector3 screenPoint = Camera.main.WorldToScreenPoint(target.position);
-            screenPoint.y += 50;
+            Transform interactive  = target.GetComponent<IInteractable>().InteractivePos;
+
+            Vector3 screenPoint = interactive != null ?
+                Camera.main.WorldToScreenPoint(interactive.position)
+                : Camera.main.WorldToScreenPoint(target.position + new Vector3(0, 50, 0));
+
             interactiveImage.position = screenPoint;
         }
-
-        //if (target != null) Debug.Log(target.position);
 
     }
 

@@ -29,6 +29,7 @@ public class FirstViewCutScene : MonoBehaviour
         }
         else
         {
+            // º¼ ¶§
             um.gameObject.SetActive(false);
         }
         

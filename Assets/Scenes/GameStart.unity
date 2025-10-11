@@ -582,17 +582,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1646334445 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9004682033950887564, guid: 5d95e91d9ff719c4193f8e27b2fed79a, type: 3}
-  m_PrefabInstance: {fileID: 7265137085630744106}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7712a3c806a7a6c46bf4fdc9e1f5e5d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1987643328
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,18 +876,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2784905255293241291, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3409968097432296416, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5029424448633803590, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: dialogueUI
-      value: 
-      objectReference: {fileID: 1646334445}
     - target: {fileID: 5289687529202061774, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -983,37 +960,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6055371794084999625, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_text
-      value: "\uAC8C\uC784 \uC7AC\uC2DC\uC791"
-      objectReference: {fileID: 0}
-    - target: {fileID: 6887374448531216412, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7592357244775182560, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Restart
-      objectReference: {fileID: 0}
     - target: {fileID: 8690057556867865541, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_Name
       value: UIManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004410839234543484, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004410839234543484, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004410839234543484, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9004410839234543484, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

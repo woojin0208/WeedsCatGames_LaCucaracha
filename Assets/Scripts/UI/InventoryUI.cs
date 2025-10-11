@@ -48,12 +48,16 @@ public class InventoryUI : MonoBehaviour
 
     private void InitInventory()
     {
+        if (PM.HasWeapons.Count < 1) return;
         for (int i = 0; i < PM.HasWeapons.Count; i++)
         {
             var wi = PM.HasWeapons[i];
 
             var iconGO = Instantiate(weaponIconsPrefab, currentSlots[i]);
-            WeaponBase weaponBase = weaponData.GetCurrentWeaponData(wi.WeaponName);
+
+            Debug.Log(wi.WeaponName);
+#nullable disable
+            WeaponBase? weaponBase = weaponData.GetCurrentWeaponData(wi.WeaponName);
             Sprite weaponSprite = weaponBase.WeaponSprite;
 
             if (weaponSprite != null)

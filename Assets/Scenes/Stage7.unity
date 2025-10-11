@@ -172,6 +172,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 1
   nextArea: Stage13
   <NextSpawnPoint>k__BackingField: 1
+  <InteractivePos>k__BackingField: {fileID: 0}
 --- !u!61 &564843
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -412,6 +413,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7029f68583342f34fa75f63472a343d5, type: 3}
+--- !u!1 &221228807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221228808}
+  m_Layer: 10
+  m_Name: InteractivePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &221228808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221228807}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 640680734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &416422611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -866,6 +898,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 0
   nextArea: Stage6
   <NextSpawnPoint>k__BackingField: 1
+  <InteractivePos>k__BackingField: {fileID: 221228808}
 --- !u!61 &640680732
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -972,10 +1005,11 @@ Transform:
   m_GameObject: {fileID: 640680730}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2071047, y: -2.3439274, z: -0.013136574}
+  m_LocalPosition: {x: -2.284, y: -2.089, z: -0.013136574}
   m_LocalScale: {x: 0.75337505, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 221228808}
   m_Father: {fileID: 444956134}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &754764712

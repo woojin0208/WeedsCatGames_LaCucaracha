@@ -37,6 +37,8 @@ public class NPCDialogue : MonoBehaviour, IInteractable
     [SerializeField] private UnityEvent[] optionEvents;
 
     [field: SerializeField] public NPCId NPCId { get; private set; }
+    [field: SerializeField] public Transform InteractivePos { get; set; }
+
 
     private readonly Dictionary<DialogueNodeData, NodeEvent> _eventMap = new();
 

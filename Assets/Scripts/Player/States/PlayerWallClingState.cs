@@ -6,31 +6,40 @@ public class PlayerWallClingState : IPlayerState
     public bool CanJump { get; } = true;
     public bool CanDash { get; } = false;
 
-    public bool CanWalk { get; } = true;
+    public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = false;
     private float duration;
-    public PlayerWallClingState(float duration)
+    private float xDir;
+    public PlayerWallClingState(float duration, float effectXPos)
     {
         this.duration = duration;
+        this.xDir = effectXPos;
     }
     public void EnterState(PlayerController playerController)
     {
-        Debug.Log(playerController.name);
         playerController.playerMovement.WallCling(duration);
-        
+        playerController.Move.ChangeGravity(0.05f);
+
+        playerController.Anim.WallCling(true, xDir);
+
+        Debug.Log(playerController.GetComponent<Rigidbody2D>().gravityScale);
         // ¾ÆÁ÷ ¾È³ª¿È playerController.Anim.WallCling(true);
     }
 
     public void UpdateState(PlayerController playerController)
     {
-        Debug.Log(playerController.Move.Velocity);
-        playerController.Anim.Idle();
-        if (!playerController.playerMovement.IsClimingWall) playerController.ChangeState(new PlayerIdleState());
+        duration -= Time.deltaTime;
+
+        if (duration <= 0) playerController.ChangeState(new PlayerIdleState());
+
+        playerController.Move.Move(playerController.Input.Horizontal);
     }
 
     public void ExitState(PlayerController playerController)
     {
-        //playerController.playerMovement.WallCling(duration, false);
+        playerController.Move.ChangeGravity(1f);
+
+        playerController.Anim.WallCling(false, 0);
     }
 }

@@ -10,6 +10,8 @@ public class Ladder : MonoBehaviour, IInteractable
     [SerializeField]
     private Transform endPosition;
 
+    [field: SerializeField] public Transform InteractivePos { get; set; }
+
     public void Interactive(EntityBase entity)
     {
         PlayerController playerController = entity.GetComponent<PlayerController>();
