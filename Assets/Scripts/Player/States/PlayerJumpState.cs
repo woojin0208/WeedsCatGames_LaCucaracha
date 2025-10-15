@@ -10,6 +10,7 @@ public class PlayerJumpState : IPlayerState
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = true;
+    public bool CanPipeWarp { get; } = true;
 
     /// <summary>
     ///  생성자 메서드

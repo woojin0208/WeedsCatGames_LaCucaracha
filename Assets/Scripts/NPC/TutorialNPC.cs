@@ -38,7 +38,7 @@ public class TutorialNPC : NPCDialogue
         currentTextIndex++;
     }
 
-    public override void Interactive(EntityBase _ = null)
+    public override void Interactive(PlayerBase _ = null)
     {
         OnSpeak();
 

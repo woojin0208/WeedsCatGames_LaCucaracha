@@ -10,6 +10,7 @@ public class PlayerWalkState : IPlayerState
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = true;
     public bool CanClingWall { get; } = true;
+    public bool CanPipeWarp { get; } = true;
     private bool wasGrounded;
 
     public void EnterState(PlayerController playerController)

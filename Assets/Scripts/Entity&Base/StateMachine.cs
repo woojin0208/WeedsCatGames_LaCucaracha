@@ -14,6 +14,8 @@ public interface IPlayerState : IState<PlayerController>
     bool CanWalk { get; }
     bool CanLadder { get; }
     bool CanClingWall { get; }
+
+    bool CanPipeWarp { get; }
 }
 
 public interface IEnemyState : IState<EnemyController>

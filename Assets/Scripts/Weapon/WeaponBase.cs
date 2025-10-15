@@ -165,12 +165,12 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     /// Entity 가 this object에 상호작용을 했을 때.
     /// </summary>
     /// <param name="entity"></param>
-    public virtual void Interactive(EntityBase entity)
+    public virtual void Interactive(PlayerBase player)
     {
         if (entityBase == null)
         {
-            entityBase = entity;
-            playerController = entity.GetComponent<PlayerController>();
+            entityBase = player;
+            playerController = player.GetComponent<PlayerController>();
             inventory = playerController.GetComponentInChildren<PlayerInventory>();
         }
 

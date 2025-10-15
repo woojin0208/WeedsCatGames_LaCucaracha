@@ -19,4 +19,5 @@ public class PlayerAnimationAPI : AnimationAPI
 
     public void WallCling(bool isCling, float xDir = 0) => playerRenderer.WallClingAnim(isCling, xDir);
 
+    public void PipeWarp(bool isStart, Vector3 pipePoint) => playerRenderer.PipeWarpAnim(isStart, pipePoint);
 }

@@ -10,7 +10,7 @@ public abstract class AnimationBase : MonoBehaviour
     [SerializeField]
     private Color hitColor = new Color(255, 170, 170);
 
-    private Color originColor;
+    protected Color originColor;
     private Coroutine hitFlashCoroutine;
 
     public bool IsLeft { get; protected set; }

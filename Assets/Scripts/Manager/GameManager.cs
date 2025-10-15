@@ -70,8 +70,7 @@ public class GameManager : MonoBehaviour
 
         sceneLoading = true;
 
-        if (UIManager.Instance.gameObject.activeSelf)
-            UIManager.Instance.CloseScene();
+        if (UIManager.Instance.gameObject.activeSelf) UIManager.Instance.CloseScene();
         StartCoroutine(LoadScene(sceneName));
     }
 

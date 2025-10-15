@@ -6,14 +6,14 @@ using UnityEngine;
 /// <summary>
 /// 1: Idle, 2: Walk, 3: Dash, 4: Jump, 5: Attack
 /// </summary>
-public enum PlayerState { Idle, Walk, Dash, Jump, Attack, ClingWall, OnLadder }
+public enum PlayerState { Idle, Walk, Dash, Jump, Attack, ClingWall, OnLadder, PipeWarp }
 public class PlayerController : StateMachine<PlayerController>, IStatusEffectHandler
 {
 
     [SerializeField] private KeyBindingData keyBindingData;
     [SerializeField] private Transform textPosition;
     public MovementAPI Move { get; private set; }
-    public PlayerAnimationAPI Anim {  get; private set; }
+    public PlayerAnimationAPI Anim { get; private set; }
     public InputAPI Input { get; private set; }
     //public LadderAPI Ladder { get; private set; }
     //public WallClingAPI WallCling { get; private set; }
@@ -21,7 +21,7 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
     private WeaponBase? currentWeapon;
 
-    public  PlayerMovement playerMovement { get; private set; }
+    public PlayerMovement playerMovement { get; private set; }
 
     protected PlayerRenderer playerRenderer;
     private PlayerInteraction playerInteraction;
@@ -209,6 +209,19 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         {
             if (state.CanLadder)
                 ChangeState(new PlayerClimbLadderState(startPosition, endPosition));
+        }
+    }
+
+    public void TryPipeWarp(bool isStart, Vector3 pipePoint)
+    {
+        if (currentState is IPlayerState state)
+        {
+            pipePoint.x -= 0.25f;
+            
+            transform.position = pipePoint;
+
+            if (state.CanPipeWarp)
+                ChangeState(new PlayerPipeWarpState(isStart, pipePoint));
         }
     }
 }

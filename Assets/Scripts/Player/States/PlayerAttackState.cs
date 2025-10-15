@@ -8,7 +8,7 @@ public class PlayerAttackState : IPlayerState
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = false;
-
+    public bool CanPipeWarp { get; } = false;
     private readonly int comboStep;
     private float timer;
 

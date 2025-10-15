@@ -11,7 +11,7 @@ public class PlayerClimbLadderState : IPlayerState
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = false;
-
+    public bool CanPipeWarp { get; } = false;
     private Vector2 startPos, endPos;
 
     public PlayerClimbLadderState(Vector2 start, Vector2 end)

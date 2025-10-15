@@ -7,12 +7,12 @@ public class PlayerBase : EntityBase
 
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
+
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAttack = GetComponentInChildren<PlayerAttack>();
         InitializeStats();
-
     }
 
     private void Start()

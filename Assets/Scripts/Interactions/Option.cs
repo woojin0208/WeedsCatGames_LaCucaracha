@@ -4,7 +4,7 @@ public class Option : MonoBehaviour, IInteractable
 {
     [field: SerializeField] public Transform InteractivePos { get; set; }
 
-    public void Interactive(EntityBase entity)
+    public void Interactive(PlayerBase player)
     {
         UIManager.Instance.OpenPause();
     }

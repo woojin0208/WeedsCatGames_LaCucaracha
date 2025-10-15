@@ -1,11 +1,10 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerRenderer : AnimationBase
 {
     private PlayerAttack playerAttack;
 
+    [SerializeField] private Color pipeWarpColor;
     protected override void Awake()
     {
         base.Awake();
@@ -39,7 +38,7 @@ public class PlayerRenderer : AnimationBase
     public void WallClingAnim(bool isCling, float xDir = 0)
     {
         animator.SetBool("OnCling", isCling);
-       
+
         Vector3 xScale = transform.localScale;
         xScale.x = xDir;
         transform.localScale = xScale;
@@ -59,6 +58,16 @@ public class PlayerRenderer : AnimationBase
     {
         animator.SetTrigger("OnThrow");
     }
+
+    public void PipeWarpAnim(bool isStart, Vector3 pipePoint)
+    {
+        entityRenderer.color = isStart ? pipeWarpColor : originColor;
+
+        Vector3 xScale = transform.position.x > pipePoint.x ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0);
+
+        animator.SetBool("OnPipe", isStart);
+    }
+
     public bool GetDirection()
     {
         return transform.localScale.x == 1 ? false : true;

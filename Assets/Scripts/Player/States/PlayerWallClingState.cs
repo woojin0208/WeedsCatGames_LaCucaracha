@@ -9,6 +9,8 @@ public class PlayerWallClingState : IPlayerState
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = false;
+    public bool CanPipeWarp { get; } = false;
+
     private float duration;
     private float xDir;
     public PlayerWallClingState(float duration, float effectXPos)

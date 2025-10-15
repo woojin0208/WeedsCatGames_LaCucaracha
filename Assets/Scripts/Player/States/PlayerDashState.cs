@@ -10,6 +10,7 @@ public class PlayerDashState : IPlayerState
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = false;
+    public bool CanPipeWarp { get; } = false;
     private bool started;
 
     public void EnterState(PlayerController playerController)

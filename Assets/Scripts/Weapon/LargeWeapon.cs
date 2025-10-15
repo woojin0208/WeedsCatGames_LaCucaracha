@@ -22,9 +22,9 @@ public class LargeWeapon : WeaponBase
         base.OnThrow(throwPosition);
     }
 
-    public override void Interactive(EntityBase entity)
+    public override void Interactive(PlayerBase player)
     {
-        base.Interactive(entity);
+        base.Interactive(player);
         
     }
 }
