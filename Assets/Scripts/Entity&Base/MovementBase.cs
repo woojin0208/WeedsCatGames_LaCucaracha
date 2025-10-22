@@ -8,8 +8,7 @@ public interface IMovement
     void Move(float x);
     void Idle();
     void ChangeGravity(float scale);
-
-
+    void Stop(bool isStop);
 }
 
 public interface IDashable
@@ -31,6 +30,12 @@ public abstract class MovementBase : MonoBehaviour, IMovement
     public Vector2 CurrentVelocity => rigidbody2D.velocity;
     public float HorizontalDirection => Mathf.Sign(rigidbody2D.velocity.x);
     public bool IsGrounded { get; set; }
+
+    public void Stop(bool isStop)
+    {
+        rigidbody2D.gravityScale = isStop ? 0f : 1f;
+        rigidbody2D.velocity = Vector2.zero;
+    }
 
     public virtual void Move(float x) => OnMovement(x, false);
     public virtual void Idle() => OnMovement(0, false);
@@ -55,6 +60,7 @@ public abstract class MovementBase : MonoBehaviour, IMovement
     public void ChangeGravity(float scale)
     {
         rigidbody2D.velocity = Vector2.zero;
+
         rigidbody2D.gravityScale = scale;
     }
 }

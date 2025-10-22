@@ -54,8 +54,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
         PlayerManager.Instance.PlayerTextPosition = textPosition;
 
-        ChangeState(new PlayerIdleState());
-
         GameManager.Instance.GameEventAction += HandleGameEvent;
     }
 
@@ -73,6 +71,8 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
         int selectWeaponNum = Input.GetSelectWeaponNumber();
         if (selectWeaponNum >= 0) playerInventory.ChangeWeapon(selectWeaponNum);
+
+        Debug.Log(currentState);
     }
 
     private void HandleOnHit()
@@ -173,7 +173,11 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         switch (effectData.kind)
         {
             case EffectKind.WallJump:
-                ChangeState(new PlayerWallClingState(effectData.duration, effectData.xDir));
+                if (currentState is IPlayerState state)
+                {
+                    if (state.CanClingWall)
+                        ChangeState(new PlayerWallClingState(effectData));
+                }
                 break;
             case EffectKind.Slow:
                 playerBase.slowCoroutine = StartCoroutine(playerBase.OnSlowEffect(effectData.duration, effectData.rate));
@@ -191,7 +195,7 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         switch (effectData.kind)
         {
             case EffectKind.WallJump:
-                ChangeState(new PlayerIdleState());
+                ChangeState(new PlayerFallState());
                 break;
             case EffectKind.Slow:
                 StopCoroutine(playerBase.slowCoroutine);
@@ -212,16 +216,24 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         }
     }
 
-    public void TryPipeWarp(bool isStart, Vector3 pipePoint)
+    public bool TryPipeWarp(bool isStart, PipeEnterance pipe)
     {
         if (currentState is IPlayerState state)
         {
-            pipePoint.x -= 0.25f;
-            
-            transform.position = pipePoint;
-
             if (state.CanPipeWarp)
-                ChangeState(new PlayerPipeWarpState(isStart, pipePoint));
+            {
+                Vector3 targetPos = pipe.transform.position;
+
+                targetPos.x += -pipe.XOffset; // pipe Ãß°¡ offset
+
+                ChangeState(new PlayerPipeWarpState(isStart, pipe.IsLeftStart));
+
+                transform.position = targetPos;
+                return true;
+            }
+            
         }
+
+        return false;
     }
 }

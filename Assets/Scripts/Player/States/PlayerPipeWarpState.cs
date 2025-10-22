@@ -11,23 +11,39 @@ public class PlayerPipeWarpState : IPlayerState
     public bool CanPipeWarp { get; } = false;
 
     private bool isStartPipeWarp;
-    private Vector3 pipePoint;
-    public PlayerPipeWarpState(bool isStart, Vector3 pipePoint)
+    private bool isLeftStart;
+
+    private float warpTime = 0.75f; // 나중에 event로 변경
+
+    public PlayerPipeWarpState(bool isStart, bool isLeft)
     {
         isStartPipeWarp = isStart;
-        this.pipePoint = pipePoint;
+        this.isLeftStart = isLeft;
     }
+
     public void EnterState(PlayerController playerController)
     {
-        playerController.Anim.PipeWarp(isStartPipeWarp, pipePoint);
+        playerController.Move.Stop(true);
+        playerController.Anim.PipeWarp(isStartPipeWarp, isLeftStart);
+
+        Debug.LogAssertion("Enter PipeWarp");
     }
 
     public void UpdateState(PlayerController playerController)
     {
+        warpTime -= Time.deltaTime;
 
+        if (warpTime <= 0)
+        {
+            playerController.Move.Stop(false);
+            playerController.ChangeState(new PlayerIdleState());
+        }
+        else playerController.Move.Stop(true);
     }
+
     public void ExitState(PlayerController playerController)
     {
-
+        playerController.Move.Stop(false);
+        Debug.LogAssertion("Exit PipeWarp");
     }
 }

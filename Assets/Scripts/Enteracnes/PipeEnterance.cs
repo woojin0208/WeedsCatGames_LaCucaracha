@@ -1,20 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PipeEnterance : InteractableEnterance
 {
+    [field: SerializeField] public bool IsLeftStart { get; private set; }
+    [field : SerializeField] public float XOffset { get; private set; } = 0.25f;
     public override void Interactive(PlayerBase player)
     {
-        player.GetComponent<PlayerController>().TryPipeWarp(true, transform.position);
-
-        PipeWarpCoroutine(player);
+        if (player.GetComponent<PlayerController>().TryPipeWarp(true, this))
+            StartCoroutine(PipeWarpCoroutine(player));
     }
 
     private IEnumerator PipeWarpCoroutine(PlayerBase player)
     {
         yield return new WaitForSeconds(0.5f);
 
-        base.EnterArea(nextArea);
+        base.EnterArea(nextArea, EnteranceType.Pipe);
     }
+
 }

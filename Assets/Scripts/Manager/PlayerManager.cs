@@ -14,9 +14,13 @@ public class PlayerManager : MonoBehaviour
     [field: SerializeField] public WeaponData? WeaponData { get; private set; }
 
     public string CurrentSceneName { private set; get; }
+    /*
     public int CurrentEnterance { private set; get; } = 0;
     public Vector3 CurrentSpawnPoint { set; get; }
+    */
 
+    public Enterance CurrentEnterance { get; set; }
+    public int CurrentSpawnPoint { get; set; } = 0;
     public Transform PlayerTextPosition { set; get; }
 
     private PlayerController playerController;
@@ -163,10 +167,12 @@ public class PlayerManager : MonoBehaviour
 
     public void SetCurrentScene(string sceneName, int spawnPoint)
     {
-        CurrentEnterance = spawnPoint;
+        CurrentSpawnPoint = spawnPoint;
         Debug.Log("Player Manager ø° ¿˙¿Â " + CurrentEnterance);
         CurrentSceneName = sceneName;
     }
+
+    
 
     public void SelectWeapon(string id)
     {

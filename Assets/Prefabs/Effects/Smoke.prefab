@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7748342452418575331}
   - component: {fileID: 7605565932734792685}
   - component: {fileID: 3317477743091538351}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 8457635379392495796}
   - component: {fileID: 3710227309122106315}
   - component: {fileID: 8434980254617668908}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Particle_Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}

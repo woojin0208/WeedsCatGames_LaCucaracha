@@ -3,12 +3,7 @@ using UnityEngine;
 public class HoneyEffect : WeaponEffectBase
 {
     private bool isEnemyTarget = false;
-    private EffectBase effectBase;
 
-    private void Awake()
-    {
-        effectBase = GetComponent<EffectBase>();
-    }
     private void Update()
     {
         if (!isEnemyTarget) return;
@@ -18,13 +13,7 @@ public class HoneyEffect : WeaponEffectBase
         if (rayHit.collider != null)
         {
             float targetY = rayHit.point.y;
-            /*
-            if (transform.position.y > targetY)
-            {
-                float newY = Mathf.MoveTowards(transform.position.y, targetY, 0.4f * Time.deltaTime);
-                transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-            }
-            */
+
             transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
         }
     }

@@ -13,12 +13,13 @@ public class GameManager : MonoBehaviour
 
     private bool sceneLoading;
 
+    public EnteranceType CurrentEnterance { get; private set; }
+
     private static GameManager instance;
     public static GameManager Instance
     {
         get { return instance; }
     }
-
 
     private void Awake()
     {
@@ -64,13 +65,16 @@ public class GameManager : MonoBehaviour
         */
     }
 
-    public void TryLoadScene(string sceneName)
+    public void TryLoadScene(string sceneName, EnteranceType enterance = EnteranceType.Normal)
     {
         if (sceneLoading) return;
 
         sceneLoading = true;
 
+        CurrentEnterance = enterance;
+
         if (UIManager.Instance.gameObject.activeSelf) UIManager.Instance.CloseScene();
+
         StartCoroutine(LoadScene(sceneName));
     }
 

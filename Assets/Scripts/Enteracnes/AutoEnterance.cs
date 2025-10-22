@@ -7,7 +7,7 @@ public class AutoEnterance : Enterance
     {
         if (collision.CompareTag("Player"))
         {
-            EnterArea(nextArea);
+            EnterArea(nextArea, EnteranceType.Auto);
         }
     }
 

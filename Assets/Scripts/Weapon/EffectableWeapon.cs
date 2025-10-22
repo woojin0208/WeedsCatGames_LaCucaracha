@@ -7,7 +7,7 @@ public class EffectableWeapon : MonoBehaviour
 
     private bool isInstantiated = false;
 
-    public void OnDestruction(EffectTargetKind target)
+    public void OnDestruction(EffectTargetKind target, bool isLeftThrow)
     {
         if (isInstantiated) return;
 
@@ -17,6 +17,7 @@ public class EffectableWeapon : MonoBehaviour
         if (effect.TryGetComponent<WeaponEffectBase>(out var w))
         {
             w.Initialize(target);
+            w.IsLeftThrow = isLeftThrow;
         }
 
         isInstantiated = true;

@@ -12,6 +12,8 @@ public class MovementAPI
     }
 
     // Commands
+
+    public void Stop(bool isStop) => _movement.Stop(isStop);
     public void Idle(float x) => _movement.Move(x);
 
     public void Move(float x) => _movement.Move(x);
@@ -19,8 +21,17 @@ public class MovementAPI
     public void Dash(float x) => _dashable?.Dash(x);
 
     public void ChangeGravity(float gravity) => _movement.ChangeGravity(gravity);
-    
-    //public void Jump() => _movement.Jump();
+
+    public void ResetJump()
+    {
+        if (_movement is PlayerMovement pm) pm.ResetJumpCount();
+    }
+
+    public void Jump()
+    {
+        if (_movement is PlayerMovement pm) pm.OnJump();
+    }
+
     //public void ClimbLadder => 
     //public void WallCling(
     // State

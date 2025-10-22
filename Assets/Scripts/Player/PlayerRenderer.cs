@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerRenderer : AnimationBase
@@ -5,6 +6,7 @@ public class PlayerRenderer : AnimationBase
     private PlayerAttack playerAttack;
 
     [SerializeField] private Color pipeWarpColor;
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,8 +41,8 @@ public class PlayerRenderer : AnimationBase
     {
         animator.SetBool("OnCling", isCling);
 
-        Vector3 xScale = transform.localScale;
-        xScale.x = xDir;
+        Vector3 xScale = Vector3.one;
+        if (xDir != 0) xScale.x = xDir;
         transform.localScale = xScale;
     }
     public void LadderAnim(bool isClimb)
@@ -59,13 +61,22 @@ public class PlayerRenderer : AnimationBase
         animator.SetTrigger("OnThrow");
     }
 
-    public void PipeWarpAnim(bool isStart, Vector3 pipePoint)
+    public void PipeWarpAnim(bool isStart, bool isLeft)
     {
-        entityRenderer.color = isStart ? pipeWarpColor : originColor;
+        Debug.Log($"{isLeft} = isLeft");
+        Vector3 xScale = transform.localScale;
+        xScale.x = isLeft ? 1 : -1;
+        transform.localScale = xScale;
 
-        Vector3 xScale = transform.position.x > pipePoint.x ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0);
-
-        animator.SetBool("OnPipe", isStart);
+        if (isStart)
+        {
+            animator.SetTrigger("OnPipe");
+        }
+        else
+        {
+            xScale.x *= -1;
+            animator.SetTrigger("ReversePipe");
+        }
     }
 
     public bool GetDirection()

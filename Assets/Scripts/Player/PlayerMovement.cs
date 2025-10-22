@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerMovement : MovementBase, IDashable
 {
     public int RemainingJumps => currentJumpCount;
-    public bool IsClimingWall { get; private set; }
     public bool IsDashing;
     public float currentDashCooldown = 0;
     public bool IsClimbLadder { private set; get; }
@@ -71,13 +70,6 @@ public class PlayerMovement : MovementBase, IDashable
 
         rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-        if (wallClimingCoroutine != null)
-        {
-            StopCoroutine(wallClimingCoroutine);
-
-            rigidbody2D.sharedMaterial = physicMat[0];
-            IsClimingWall = false;
-        }
 
         currentJumpCount--;
 
@@ -93,12 +85,6 @@ public class PlayerMovement : MovementBase, IDashable
 
     private void CheckGround()
     {
-        if (IsClimingWall)
-        {
-            IsGrounded = true;
-            return;
-        }
-
         float rayDistance = Mathf.Abs(rigidbody2D.position.y - footPosition.position.y);
         RaycastHit2D rayHit = Physics2D.BoxCast(
             footPosition.position,
@@ -168,20 +154,4 @@ public class PlayerMovement : MovementBase, IDashable
         IsDashing = false;
     }
 
-    public void WallCling(float duration)
-    {
-        Debug.Log("WallCling Сп");
-        wallClimingCoroutine = StartCoroutine(WallClingCoroutine(duration));
-    }
-    public IEnumerator WallClingCoroutine(float duration)
-    {
-        IsClimingWall = true;
-        rigidbody2D.sharedMaterial = physicMat[1];
-        currentJumpCount = 2;
-        yield return new WaitForSeconds(duration);
-
-        rigidbody2D.sharedMaterial = physicMat[0];
-        IsClimingWall = false;
-
-    }
 }

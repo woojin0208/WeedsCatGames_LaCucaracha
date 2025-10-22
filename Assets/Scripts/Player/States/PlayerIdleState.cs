@@ -12,7 +12,7 @@ public class PlayerIdleState : IPlayerState
 
     public bool CanWalk { get; } = true;
     public bool CanLadder { get; } = true;
-    public bool CanClingWall { get; } = true;
+    public bool CanClingWall { get; } = false;
     public bool CanPipeWarp { get; } = true;
 
     public void EnterState(PlayerController playerController)
@@ -23,42 +23,17 @@ public class PlayerIdleState : IPlayerState
 
     public void UpdateState(PlayerController playerController)
     {
-        
         bool grounded = playerController.Move.IsGrounded;
 
+        // ³«ÇÏ
         if (wasGrounded && !grounded && !playerController.Input.JumpPressed)
         {
-            playerController.ChangeState(new PlayerJumpState(true));
+            playerController.ChangeState(new PlayerFallState());
             return;
         }
         wasGrounded = grounded;
 
         playerController.Anim.Idle();
-        //Debug.Log(h);
-        /*
-        if (Mathf.Abs(h) > 0.01f)
-        {
-            playerController.ChangeState(new PlayerWalkState());
-            return;
-        }
-
-        if (playerController.Input.JumpPressed && playerController.Move.RemainingJumps > 0 )
-        {
-            playerController.ChangeState(new PlayerJumpState());
-            return;
-        }
-        if (playerController.Input.DashPressed)
-        {
-            playerController.ChangeState(new PlayerDashState());
-            return;
-        }
-
-        if (playerController.Input.AttackPressed)
-        {
-            playerController.ChangeState(new PlayerAttackState());
-            return;
-        }
-        */
     }
     public void ExitState(PlayerController playerController)
     {

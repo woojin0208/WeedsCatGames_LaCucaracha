@@ -21,8 +21,8 @@ TagManager:
   - Wall
   - Interactive
   - Enterance
-  - 
-  - 
+  - PlayerInteractive
+  - WeaponEffect
   - 
   - 
   - 

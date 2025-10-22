@@ -9,14 +9,16 @@ public class MapManager : MonoBehaviour
     private void Awake()
     {
         PlayerManager playerManger = PlayerManager.Instance;
+        
         enterances = GetComponentsInChildren<Enterance>();
 
+        // 현재 Enterance PM에 저장
         for (int i = 0; i < enterances.Length; i++)
         {
-            if (enterances[i].CurrentSpawnPoint == playerManger.CurrentEnterance)
+            if (enterances[i].CurrentSpawnPoint == playerManger.CurrentSpawnPoint)
             {
-                playerManger.CurrentSpawnPoint = enterances[i].transform.position;
-                
+                playerManger.CurrentEnterance = enterances[i];
+
                 Debug.Log(enterances[i].transform.position + enterances[i].transform.gameObject.name);
 
                 break;

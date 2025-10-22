@@ -1,35 +1,24 @@
 using UnityEngine;
-
-public class PlayerJumpState : IPlayerState
+public class PlayerFallState : IPlayerState
 {
     public bool CanAttack => true;
-    public bool CanJump => true;
+    public bool CanJump => true;      // 낙하 중 이중점프 허용
     public bool CanDash => true;
     public bool CanWalk => false;
     public bool CanLadder => false;
-    public bool CanClingWall => true;
+    public bool CanClingWall => true; // 벽매달림 허용
     public bool CanPipeWarp => true;
 
     public void EnterState(PlayerController playerController)
     {
-        // 실제 점프 수행(점프 카운트 소비 + 상향 속도 세팅)
-        playerController.playerMovement.OnJump();
-        playerController.Anim.Jump(playerController.Move.RemainingJumps);
+        playerController.Anim.Jump(-1); // 낙하 애니
     }
 
     public void UpdateState(PlayerController playerController)
     {
-        // 이중점프
         if (playerController.Input.JumpPressed && playerController.Move.RemainingJumps > 0)
         {
             playerController.ChangeState(new PlayerJumpState());
-            return;
-        }
-
-        // 상승 → 하강 전이
-        if (playerController.Move.Velocity.y <= 0f)
-        {
-            playerController.ChangeState(new PlayerFallState());
             return;
         }
 
@@ -39,6 +28,7 @@ public class PlayerJumpState : IPlayerState
             playerController.ChangeState(new PlayerIdleState());
             return;
         }
+
         // 공중 좌우 이동
         playerController.Move.Move(playerController.Input.Horizontal);
     }

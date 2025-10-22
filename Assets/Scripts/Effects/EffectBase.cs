@@ -18,6 +18,23 @@ public class EffectBase : MonoBehaviour
         destroyDuration = Effects[0].duration;
     }
 
+    private void Start()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.1f);
+
+        foreach (StatusEffectData e in Effects) e.effect = this;
+
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Wall"))
+            {
+                float xDir = transform.position.x > hit.transform.position.x ? -1 : 1;
+                Debug.LogAssertion($"Effect Pos = {transform.position.x} / Wall Pos = {hit.transform.position.x}");
+                foreach (StatusEffectData e in Effects) e.xDir = xDir;
+            }
+        }
+    }
+
     private void Update()
     {
         destroyDuration -= Time.deltaTime;
@@ -27,20 +44,24 @@ public class EffectBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Wall"))
-        {
-            float xDir = collision.transform.position.x > transform.position.x ? 1 : -1;
-            foreach (StatusEffectData e in Effects) e.xDir = xDir;
-        }
-
         if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
         {
             effectHandlers.Add(handler);
 
             ApplyEffect(handler);
         }
+    }
 
-        
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
+        {
+            if (!effectHandlers.Contains(handler))
+            {
+                effectHandlers.Add(handler);
+                ApplyEffect(handler);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -71,7 +92,7 @@ public class EffectBase : MonoBehaviour
 
     }
 
-    private void IgnoreEffect(IStatusEffectHandler handler)
+    public void IgnoreEffect(IStatusEffectHandler handler)
     {
         foreach (var e in Effects) handler.IgnoreEffect(e);
     }

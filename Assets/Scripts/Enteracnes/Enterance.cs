@@ -10,7 +10,7 @@ public class Enterance : MonoBehaviour
     [SerializeField] protected string nextArea = "";
     [field: SerializeField] public int NextSpawnPoint { get; private set; } = 0;
 
-    protected virtual void EnterArea(string sceneName)
+    protected virtual void EnterArea(string sceneName, EnteranceType enterance = EnteranceType.Normal)
     {
         if (sceneName == "ExitGame")
         {
@@ -19,6 +19,8 @@ public class Enterance : MonoBehaviour
         }
 
         PlayerManager.Instance.SetCurrentScene(sceneName, NextSpawnPoint);
-        GameManager.Instance.TryLoadScene(nextArea);
+
+        GameManager.Instance.TryLoadScene(nextArea, enterance);
     }
 }
+public enum EnteranceType { Normal, Auto, Interactable, Guard, Pipe, NPC }

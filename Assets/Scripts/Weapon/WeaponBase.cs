@@ -29,6 +29,8 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     private bool onThrow = false;
     [field: SerializeField] public string InstanceId { get; private set; }
 
+    private bool isLeftThrow;
+
     private void Awake()
     {
         //trigger2D = GetComponent<Collider2D>();
@@ -150,6 +152,7 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
 
         rigidbody2D.velocity = direction * throwSpeed;
 
+        isLeftThrow = rigidbody2D.velocity.x > 0 ? false : true;
         PlayerManager.Instance.SetWeapon(null);
 
         //collider2D.enabled = false;
@@ -214,7 +217,8 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
 
         if (TryGetComponent<EffectableWeapon>(out var effectable))
         {
-            effectable.OnDestruction(target);
+            effectable.OnDestruction(target, isLeftThrow);
+            
         }
         rigidbody2D.velocity = Vector2.zero;
 

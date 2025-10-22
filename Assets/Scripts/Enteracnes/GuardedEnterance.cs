@@ -9,19 +9,19 @@ public class GuardedEnterance : InteractableEnterance
     {
 
     }
-    protected override void EnterArea(string nextArea)
+    protected override void EnterArea(string nextArea, EnteranceType enterance)
     {
         if (guardNPC == null)
         {
-            base.EnterArea(nextArea);
+            base.EnterArea(nextArea, EnteranceType.Guard);
         }
         else if (!guardNPC.gameObject.activeInHierarchy || !guardNPC.gameObject.activeSelf)
         {
-            base.EnterArea(nextArea);
+            base.EnterArea(nextArea, EnteranceType.Guard);
         }
         else
         {
-            if ((int)NPCStateManager.Instance.GetState(guardNPC.NPCId) >= (int)NPCState.Completed) base.EnterArea(nextArea);
+            if ((int)NPCStateManager.Instance.GetState(guardNPC.NPCId) >= (int)NPCState.Completed) base.EnterArea(nextArea, EnteranceType.Guard);
             else
             {
                 if (guardNode != null)

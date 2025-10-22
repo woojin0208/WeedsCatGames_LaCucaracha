@@ -9,7 +9,7 @@ public class PlayerWalkState : IPlayerState
     public bool CanDash { get; } = true;
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = true;
-    public bool CanClingWall { get; } = true;
+    public bool CanClingWall { get; } = false;
     public bool CanPipeWarp { get; } = true;
     private bool wasGrounded;
 
@@ -38,7 +38,8 @@ public class PlayerWalkState : IPlayerState
 
         if (wasGrounded && !grounded && !playerController.Input.JumpPressed)
         {
-            playerController.ChangeState(new PlayerJumpState(true));
+            //³«ÇÏ
+            playerController.ChangeState(new PlayerFallState());
             return;
         }
 

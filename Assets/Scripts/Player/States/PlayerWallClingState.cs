@@ -8,40 +8,36 @@ public class PlayerWallClingState : IPlayerState
 
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
-    public bool CanClingWall { get; } = false;
+    public bool CanClingWall { get; } = true;
     public bool CanPipeWarp { get; } = false;
 
+    private StatusEffectData effectData;
     private float duration;
     private float xDir;
-    public PlayerWallClingState(float duration, float effectXPos)
+    public PlayerWallClingState(StatusEffectData effectData)
     {
-        this.duration = duration;
-        this.xDir = effectXPos;
+        this.effectData = effectData;
+        this.duration = effectData.duration;
+        this.xDir = effectData.xDir;
     }
     public void EnterState(PlayerController playerController)
     {
-        playerController.playerMovement.WallCling(duration);
         playerController.Move.ChangeGravity(0.05f);
-
+        playerController.Move.ResetJump();
         playerController.Anim.WallCling(true, xDir);
-
-        Debug.Log(playerController.GetComponent<Rigidbody2D>().gravityScale);
-        // ¾ÆÁ÷ ¾È³ª¿È playerController.Anim.WallCling(true);
     }
 
     public void UpdateState(PlayerController playerController)
     {
         duration -= Time.deltaTime;
-
+        playerController.Anim.WallCling(true, xDir);
         if (duration <= 0) playerController.ChangeState(new PlayerIdleState());
 
-        playerController.Move.Move(playerController.Input.Horizontal);
     }
 
     public void ExitState(PlayerController playerController)
     {
         playerController.Move.ChangeGravity(1f);
-
         playerController.Anim.WallCling(false, 0);
     }
 }

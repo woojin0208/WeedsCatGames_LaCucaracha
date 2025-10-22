@@ -52,7 +52,6 @@ public class UIManager : MonoBehaviour
 
         inventoryUI.SetActive(true);
 
-        //Debug.Log("ø® ø÷ æ»≈¥");
     }
     private void Update()
     {
