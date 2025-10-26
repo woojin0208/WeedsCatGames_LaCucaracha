@@ -1266,7 +1266,7 @@ GameObject:
   - component: {fileID: 704802346}
   - component: {fileID: 704802349}
   m_Layer: 11
-  m_Name: "A_Enterance_Stage12(\uAD50\uD68C)"
+  m_Name: A_Enterance_Stage7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

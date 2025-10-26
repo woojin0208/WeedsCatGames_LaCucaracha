@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
 {
+    [field: SerializeField] public WeaponDefinition WeaponDefinition { get; private set; }
+
     [Header("Weapon Stats")]
     [SerializeField] private float weaponDamage;
     [SerializeField] private float throwSpeed;
@@ -218,7 +220,7 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
         if (TryGetComponent<EffectableWeapon>(out var effectable))
         {
             effectable.OnDestruction(target, isLeftThrow);
-            
+
         }
         rigidbody2D.velocity = Vector2.zero;
 

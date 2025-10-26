@@ -44,6 +44,8 @@ public class PlayerManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        WeaponData.ResetOptainWeapons();
     }
 
 
@@ -91,6 +93,10 @@ public class PlayerManager : MonoBehaviour
         Debug.Log($"{wb} ÀÇ id : {instance.Id}");
         playerController.GetWeapon(wb);
         
+        if (WeaponData.TryRegisterWeapon(wb))
+        {
+            UIManager.Instance.ShowWeaponDescription(wb);
+        }
     }
 
     /// <summary>

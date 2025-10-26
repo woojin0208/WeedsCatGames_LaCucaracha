@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997d6a8ba71c89c44a1af753f7f95b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WeaponDefinition>k__BackingField: {fileID: 11400000, guid: a54567ccef63be24d8121ff5a63e630a, type: 2}
   weaponDamage: 1
   throwSpeed: 6
   <Durability>k__BackingField: 1

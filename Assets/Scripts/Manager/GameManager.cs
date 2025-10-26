@@ -36,33 +36,6 @@ public class GameManager : MonoBehaviour
     public void KeyChanger(KeyType keyType, KeyCode keyCode)
     {
         keyBindingData.keys[(int)keyType] = keyCode;
-        /*
-        switch (keyType)
-        {
-            case KeyType.Attack:
-                keyBindingData.keys[(int)keyType] = keyCode;
-                break;
-                
-            case KeyType.Dash:
-                keyBindingData.dashKey = keyCode;
-                break;
-            case KeyType.Jump:
-                keyBindingData.jumpKey = keyCode;
-                break;
-            case KeyType.Up:
-                keyBindingData.upKey = keyCode;
-                break;
-            case KeyType.Down:
-                keyBindingData.downKey = keyCode;
-                break;
-            case KeyType.Left:
-                keyBindingData.leftKey = keyCode;
-                break;
-            case KeyType.Right:
-                keyBindingData.rightKey = keyCode;
-                break;
-        }
-        */
     }
 
     public void TryLoadScene(string sceneName, EnteranceType enterance = EnteranceType.Normal)

@@ -9,29 +9,22 @@ public class UIManager : MonoBehaviour
         get { return instance; }
     }
 
-    [SerializeField]
-    private GameObject pausePanel; // pause Image
-    [SerializeField]
-    private GameObject settingPanel;
-    [SerializeField]
-    private GameObject controlSettingPanel;
+    [SerializeField] private GameObject pausePanel; // pause Image
+    [SerializeField] private GameObject settingPanel;
+    [SerializeField] private GameObject controlSettingPanel;
 
-    [SerializeField]
-    private GameObject loadPanel;
+    [SerializeField] private GameObject loadPanel;
 
-    [SerializeField]
-    private RectTransform interactiveImage;
+    [SerializeField] private RectTransform interactiveImage;
 
-    [SerializeField]
-    private GameObject minimap;
-    [SerializeField]
-    private DialogueUI dialogueUI;
+    [SerializeField] private GameObject minimap;
+    [SerializeField] private DialogueUI dialogueUI;
 
-    [SerializeField]
-    private GameObject quitImage;
+    [SerializeField] private GameObject quitImage;
 
-    [SerializeField]
-    private GameObject inventoryUI;
+    [SerializeField] private GameObject inventoryUI;
+
+    [SerializeField] private WeaponDescriptionUI weaponDescriptionUI;
 
     public bool canViewVideo = false;
     private void Awake()
@@ -167,7 +160,7 @@ public class UIManager : MonoBehaviour
 
         if (target != null)
         {
-            Transform interactive  = target.GetComponent<IInteractable>().InteractivePos;
+            Transform interactive = target.GetComponent<IInteractable>().InteractivePos;
 
             Vector3 screenPoint = interactive != null ?
                 Camera.main.WorldToScreenPoint(interactive.position)
@@ -184,5 +177,14 @@ public class UIManager : MonoBehaviour
         Time.timeScale = Time.timeScale == 1 ? 0 : 1;
         minimap.SetActive(!minimap.activeSelf);
 
+    }
+
+    public void ShowWeaponDescription(WeaponBase weapon)
+    {
+        if (weapon.WeaponDefinition == null) return;
+
+        weaponDescriptionUI.gameObject.SetActive(true);
+
+        weaponDescriptionUI.ViewDescription(weapon);
     }
 }
