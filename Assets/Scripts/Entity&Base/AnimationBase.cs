@@ -13,7 +13,7 @@ public abstract class AnimationBase : MonoBehaviour
     protected Color originColor;
     private Coroutine hitFlashCoroutine;
 
-    public bool IsLeft { get; protected set; }
+    public bool IsLeft { get; protected set; } = false;
 
     public event Action OnDieAction;
 

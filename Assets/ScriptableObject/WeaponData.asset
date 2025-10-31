@@ -19,8 +19,8 @@ MonoBehaviour:
   - {fileID: 7985188071814182186, guid: 1ba86d82297f1274ab3915ef66a5e0fc, type: 3}
   - {fileID: 288930925532981946, guid: 62c55235f506cf9438e82a70542cc6e4, type: 3}
   weaponIconSprites:
-  - {fileID: 21300000, guid: 6716c514a279de8408a20d5c53b0842f, type: 3}
-  - {fileID: 21300000, guid: bbd3779421e00d941986be60f07ab7d6, type: 3}
+  - {fileID: 21300000, guid: a6892f634ce53124d9083540853ee5f8, type: 3}
+  - {fileID: 21300000, guid: b295e5d2eb3ca144d8ce6033dac67e73, type: 3}
   - {fileID: 21300000, guid: f092cd759a6870c47aa890f9e2a6cd0d, type: 3}
   - {fileID: 21300000, guid: 3961bbd1f0f50954bbc1c25862c1cf26, type: 3}
   - {fileID: 21300000, guid: eb384ca478972f1478907747c62d3c74, type: 3}

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3870531d0f419cf47ba312509e953238, type: 3}
+  m_Name: NPCDialogueDefaultSet_Frog
+  m_EditorClassIdentifier: 
+  npcId: 0
+  byState:
+  - {fileID: 11400000, guid: 44ccff0b8d2028e409a2616f9d32394b, type: 2}
+  - {fileID: 11400000, guid: 0a256940da8b55847839c44ac794513d, type: 2}
+  - {fileID: 11400000, guid: b86de30e55069f3488c3f2eb2d1e5903, type: 2}
+  - {fileID: 11400000, guid: e699b36bcbb334041bb66205e068b073, type: 2}
+  - {fileID: 11400000, guid: 7a3a10764bef44c449d1ea528663a804, type: 2}
+  defaultNodeEvents:
+  - node: {fileID: 0}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    optionEvents: []
+  - node: {fileID: 0}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    optionEvents: []
+  - node: {fileID: 0}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    optionEvents: []
+  - node: {fileID: 0}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    optionEvents: []
+  - node: {fileID: 0}
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    optionEvents: []

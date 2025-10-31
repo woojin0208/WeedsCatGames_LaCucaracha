@@ -6,9 +6,6 @@ public class WeaponData : ScriptableObject
 {
     [SerializeField]
     private WeaponBase[] weaponsPrefabs;
-    [SerializeField]
-    private Sprite[] weaponIconSprites;
-
     public List<string> ObtainedWeapons { get; private set; } = new List<string>(); // ÀÌ¹Ì È¹µæÇÑ ¹«±â
 
     public WeaponBase GetCurrentWeaponData(string weaponName)

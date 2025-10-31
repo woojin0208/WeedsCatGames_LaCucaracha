@@ -16,8 +16,8 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
     [SerializeField] private float attackDistance = 1;       // 공격 거리
     [SerializeField] private bool hasSpecialAttack;          // 특수공격 존재 여부
     [SerializeField] private Transform groundCheck;
-    
 
+    [SerializeField] private EnemyState[] blockedStates; // 추후 추가
 
     private Transform targetPosition;       // Player Position
 
@@ -138,8 +138,7 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
     private void OnDrawGizmosSelected()
     {
-        if (Anim == null || enemyBase == null)
-            return;
+        if (Anim == null || enemyBase == null) return;
         Vector2 rayOrigin = transform.position;
         rayOrigin.x += Anim.IsLeft ? -startDetectPosition : startDetectPosition;
         Vector2 direction = Anim.IsLeft ? Vector2.right : Vector2.left;

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99780d4eddf3935469edab6cd8d64a12, type: 3}
+  m_Name: Quest_Frog01
+  m_EditorClassIdentifier: 
+  questId: Quest_Frog01
+  title: Frog_GoToStage1
+  description: Frog_GoToStage1
+  acceptFrom: 0
+  turnInTo: 0
+  requiredQuestCompleted: []
+  objectives:
+  - type: 3
+    targetId: Stage1
+    requireCount: 1
+    note: 
+  onAcceptActions: []
+  onCompleteActions: []
+  onFailActions: []
