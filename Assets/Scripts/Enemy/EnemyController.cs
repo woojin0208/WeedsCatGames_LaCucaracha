@@ -16,8 +16,8 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
     [SerializeField] private float attackDistance = 1;       // 공격 거리
     [SerializeField] private bool hasSpecialAttack;          // 특수공격 존재 여부
     [SerializeField] private Transform groundCheck;
-    
 
+    [SerializeField] private EnemyState[] blockedStates; // 추후 추가
 
     private Transform targetPosition;       // Player Position
 
@@ -73,19 +73,17 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         base.Update();
 
         CheckState();
-        //Debug.Log(currentState);
+        Debug.Log($"{gameObject.name}, {currentState}");
     }
 
     private void CheckState()
     {
-
         if (currentState is IEnemyState state)
         {
             if (state.CanChase) // 추격 가능한 상태
             {
                 TryDetectTarget();
             }
-
         }
     }
 
@@ -125,6 +123,7 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
     public bool CheckGroundAhead()
     {
+        if (groundCheck == null) return true;
         Vector2 rayOrigin = transform.position;
         rayOrigin.y = groundCheck.position.y;
         Vector2 rayDirection = Anim.IsLeft ? Vector2.left : Vector2.right;
@@ -138,8 +137,7 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
     private void OnDrawGizmosSelected()
     {
-        if (Anim == null || enemyBase == null)
-            return;
+        if (Anim == null || enemyBase == null) return;
         Vector2 rayOrigin = transform.position;
         rayOrigin.x += Anim.IsLeft ? -startDetectPosition : startDetectPosition;
         Vector2 direction = Anim.IsLeft ? Vector2.right : Vector2.left;

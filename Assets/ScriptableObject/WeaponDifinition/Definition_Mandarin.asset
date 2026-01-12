@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f2971ff1b71d3418b9db00944312a6, type: 3}
   m_Name: Definition_Mandarin
   m_EditorClassIdentifier: 
-  <WeaponIcon>k__BackingField: {fileID: 21300000, guid: 3961bbd1f0f50954bbc1c25862c1cf26, type: 3}
+  <WeaponIcon>k__BackingField: {fileID: 21300000, guid: 506f1c102ee96f04b9d7a0e7b2d99def, type: 3}
   <WeaponName>k__BackingField: "\uADE4"
   <WeaponDescript>k__BackingField: "\uBA39\uC744 \uC218 \uC788\uB294 \uACFC\uC77C\uC774\uB2E4."

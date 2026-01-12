@@ -44,7 +44,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         playerInteraction = GetComponentInChildren<PlayerInteraction>();
         playerBase = GetComponent<PlayerBase>();
         playerInventory = GetComponentInChildren<PlayerInventory>();
-        playerBase.OnHitAction += HandleOnHit;
     }
 
     private void Start()
@@ -75,10 +74,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         Debug.Log(currentState);
     }
 
-    private void HandleOnHit()
-    {
-        Anim.TakeDamaged();
-    }
 
     public bool IsGrounded => playerMovement.IsGrounded;
 

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8409585831325540980}
   - component: {fileID: 7650921972942036154}
   - component: {fileID: 6041692717336734985}
+  - component: {fileID: 85926336567365349}
+  - component: {fileID: 7939208016306680437}
   m_Layer: 6
   m_Name: Enemy_Bee_Renderer
   m_TagString: Untagged
@@ -100,6 +102,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitColor: {r: 1, g: 0.6650944, b: 0.6650944, a: 1}
+  vfxPlayer: {fileID: 7939208016306680437}
+  hitSoundNum: 3
+  dieSoundNum: 0
 --- !u!95 &6041692717336734985
 Animator:
   serializedVersion: 5
@@ -121,6 +126,120 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &85926336567365349
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561848347055908031}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &7939208016306680437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561848347055908031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2f17a01287584882479af1eacf13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxClips:
+  - {fileID: 8300000, guid: 47560e857f2af3e4e97290244fe24fb3, type: 3}
+  - {fileID: 8300000, guid: d1d77d98aef08bc4ea7ead06dbb98470, type: 3}
+  - {fileID: 8300000, guid: 19fcb1e15d31e3f4a8face6dd4de0a62, type: 3}
+  - {fileID: 8300000, guid: cf1b2ab129f13394cb563810d713fda6, type: 3}
+  audioSource: {fileID: 85926336567365349}
 --- !u!1 &2596241466126057197
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,8 +285,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f0740a5a135d84a9411dea3a1a1165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTypes: 
+  areaAttackPrefab: {fileID: 0}
+  projectileAttackPrefab: {fileID: 0}
   attackRangeX: 1
   attackRangeY: 0.5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  boxSize: {x: 3.736842, y: 1.6}
+  boxOffset: {x: 0, y: -0.69}
 --- !u!61 &6981112944386974565
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -433,6 +560,7 @@ MonoBehaviour:
   attackDistance: 1
   hasSpecialAttack: 0
   groundCheck: {fileID: 7450394230568321942}
+  blockedStates: 
   AttackDistance: 1
   <IdleTime>k__BackingField: 3
   <PatrolTime>k__BackingField: 3

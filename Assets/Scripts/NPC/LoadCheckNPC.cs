@@ -18,8 +18,15 @@ public class LoadCheckNPC : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            Debug.Log(NPCStateManager.Instance.GetState(NPCId.FrogBoy));
+        }
+    }
     public void Interactive() => Invoke(nameof(AutoInteractive), 0.55f);
-    
+
     private void AutoInteractive()
     {
         bool isTarget = targetStates.Any(s => NPCStateManager.Instance.GetState(targetNPC.NPCId) == s);

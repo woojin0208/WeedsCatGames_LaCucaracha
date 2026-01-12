@@ -6,6 +6,8 @@ public class WeaponRenderer : MonoBehaviour
 {
     private Animator animator;
 
+    [SerializeField] private AudioSource audioSource;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -13,9 +15,10 @@ public class WeaponRenderer : MonoBehaviour
 
     public void OnDestruction()
     {
+        audioSource.Play();
         if (animator.enabled == true)
             animator.SetTrigger("Destruction");
-  
+    
         Destroy(this.gameObject, 1);
     }
 }

@@ -44,8 +44,14 @@ public class NPCDialogue : MonoBehaviour, IInteractable
 
     public event Action OnDialogueSignal;
 
+    [SerializeField] private DialogueNodeData entry;
+    [SerializeField] private Animator npcAnimator;
+    public void SetEntry(DialogueNodeData node) => entry = node;
+
     protected virtual void Awake()
     {
+        npcAnimator = GetComponent<Animator>();
+
         _eventMap.Clear();
         if (nodeEvents != null)
         {
@@ -62,8 +68,41 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         }
     }
 
+    private void OnEnable()
+    {
+        DialogueManager.Instance.StartDialogueAction += DialogueAnim; 
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.Instance.StartDialogueAction -= DialogueAnim;
+    }
+
+    private void DialogueAnim(NPCId npcID, bool isStart)
+    {
+        if (npcID == this.NPCId)
+        {
+            if (isStart) npcAnimator?.SetBool("IsTalk", true);
+            else npcAnimator?.SetBool("IsTalk",false);
+        }
+    }
     public virtual void Interactive(PlayerBase _ = null)
     {
+        if (entry != null)
+        {
+            DialogueManager.Instance.StartDialogue(
+                entry,
+                optionEvents,
+                textPosition,
+                NPCId,
+                this
+            );
+
+            // 일회성으로만 쓰고 싶다면 null 처리
+            entry = null;
+            return;
+        }
+
         var state = NPCStateManager.Instance.GetState(NPCId);
         Debug.Log($"[NPCDialogue] Start by state = {state}");
 

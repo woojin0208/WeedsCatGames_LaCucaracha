@@ -37,5 +37,6 @@ public enum NPCId
     TurtleBoy,
     WhiteGuard,
     PinkGirl,
+    Kimbob,
     TutorialSpeaker,
 }

@@ -10,6 +10,7 @@ public class Enterance : MonoBehaviour
     [SerializeField] protected string nextArea = "";
     [field: SerializeField] public int NextSpawnPoint { get; private set; } = 0;
 
+    [SerializeField] private AudioSource audioSource;
     protected virtual void EnterArea(string sceneName, EnteranceType enterance = EnteranceType.Normal)
     {
         if (sceneName == "ExitGame")
@@ -18,6 +19,7 @@ public class Enterance : MonoBehaviour
             return;
         }
 
+        if (audioSource != null) audioSource.Play();
         PlayerManager.Instance.SetCurrentScene(sceneName, NextSpawnPoint);
 
         GameManager.Instance.TryLoadScene(nextArea, enterance);

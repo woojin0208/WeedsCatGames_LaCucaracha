@@ -1,16 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [SerializeField] private EnemyAttackType[] attackTypes;
+
+    [SerializeField] private GameObject areaAttackPrefab;
+    [SerializeField] private GameObject projectileAttackPrefab;
     [SerializeField] private float attackRangeX = 1.0f;
     [SerializeField] private float attackRangeY = 0.5f;
 
+    [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private Vector2 boxSize = new Vector2(3.736842f, 1.6f);
+    [SerializeField] private Vector2 boxOffset = new Vector2(0f, -0.69f);
+
     private EnemyRenderer enemyRenderer;
     private EnemyBase enemyBase;
-    
-    private float attackDamage;
+
+    private float attackDamage = 10;
+
     private void Awake()
     {
         enemyBase = GetComponentInParent<EnemyBase>();
@@ -19,7 +27,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void Start()
     {
-        enemyRenderer.OnAttackEvent += HandleAttackEvent;
+
     }
 
     public void Init(float attackDamage)
@@ -31,9 +39,9 @@ public class EnemyAttack : MonoBehaviour
     /// 1 : AttackTiming / 2 : EndAttackTiming / 2 : EndAttack
     /// </summary>
     /// <param name="isAttackTiming"></param>
-    private void HandleAttackEvent(int isAttackTiming)
+    public void HandleAttackEvent(int attackNum)
     {
-        if (isAttackTiming == 1)
+        if (attackNum == 0)
         {
             Vector2 dir = enemyBase.transform.localScale.x > 0 ? Vector2.left : Vector2.right;
             Vector2 origin = (Vector2)transform.position + dir * (attackRangeX * 0.5f);
@@ -48,7 +56,37 @@ public class EnemyAttack : MonoBehaviour
                     player.TakeDamage(attackDamage);
             }
         }
+        else if (attackNum == 1)
+        {
+            StartCoroutine(AreaAttackRoutine());
+        }
+        else if (attackNum == 2)
+        {
+            StartCoroutine(ProjectileAttackRoutine());
+        }
     }
+
+    private IEnumerator AreaAttackRoutine()
+    {
+        Vector2 areaPoint = FindObjectOfType<PlayerBase>().transform.position;
+        areaPoint.y = -2.6f;
+        areaPoint.x -= 0.67f;
+
+        var fx = Instantiate(areaAttackPrefab, areaPoint, Quaternion.identity);
+        Destroy(fx, 1.1f);
+
+        yield return null;
+    }
+
+    private IEnumerator ProjectileAttackRoutine()
+    {
+        var fx = Instantiate(projectileAttackPrefab, new Vector2(-1.87f, -2.202f), Quaternion.identity);
+        Destroy(fx, 1f);
+        yield return null;
+
+    }
+
+
 
     /*
     private void OnDrawGizmosSelected()
@@ -77,3 +115,5 @@ public class EnemyAttack : MonoBehaviour
     }
 
 }
+
+public enum EnemyAttackType { MeleeAttack, ProjectileAttack, AreaAttack, GlobalAttack }

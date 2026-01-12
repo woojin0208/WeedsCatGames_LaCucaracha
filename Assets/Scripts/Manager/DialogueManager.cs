@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +21,8 @@ public class DialogueManager : MonoBehaviour
 
     private bool enteredNodeHandled;     // 노드별 onEnter 1회 처리
     private UnityEvent[] optionEvents;
+
+    public event Action<NPCId, bool> StartDialogueAction;
 
     private void Awake()
     {
@@ -63,6 +66,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(DialogueNodeData dialogue, UnityEvent[] events,
                               Transform target, NPCId npcId, NPCDialogue hook)
     {
+        StartDialogueAction?.Invoke(npcId, true);
         currentNode = dialogue;
         optionEvents = events;
         currentNpcId = npcId;
@@ -162,6 +166,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
+        StartDialogueAction?.Invoke(currentNpcId, false);
         dialogueUI.Hide();
         currentNode = null;
         waitingForLine = waitingForOption = false;
@@ -171,5 +176,6 @@ public class DialogueManager : MonoBehaviour
     public void CloseDialogue()
     {
         dialogueUI.gameObject.SetActive(false);
+
     }
 }

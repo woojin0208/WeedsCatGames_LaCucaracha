@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class EnemyBase : EntityBase
@@ -27,7 +26,7 @@ public class EnemyBase : EntityBase
     private void Initialize()
     {
         enemyMovement.Init(stats.GetStat(StatType.MoveSpeed).DefaultValue + stats.GetStat(StatType.MoveSpeed).BonusValue);
-        enemyAttack.Init(stats.GetStat(StatType.AttackDamage).DefaultValue + stats.GetStat(StatType.AttackDamage).BonusValue);
+        if (enemyAttack != null) enemyAttack.Init(stats.GetStat(StatType.AttackDamage).DefaultValue + stats.GetStat(StatType.AttackDamage).BonusValue);
         enemyController.Init(stats.GetStat(StatType.AttackSpeed).DefaultValue + stats.GetStat(StatType.AttackSpeed).BonusValue);
     }
     public override void TakeDamage(float damage)

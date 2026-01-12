@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
@@ -25,5 +26,8 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        string MapName = SceneManager.GetActiveScene().name;
+
+        Debug.Log(MapName);
     }
 }

@@ -19,6 +19,8 @@ public class PlayerIdleState : IPlayerState
     {
         playerController.Move.Idle(0);
         playerController.Anim.Idle();
+
+        wasGrounded = true;
     }
 
     public void UpdateState(PlayerController playerController)

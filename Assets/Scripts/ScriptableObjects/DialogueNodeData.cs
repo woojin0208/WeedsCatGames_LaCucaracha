@@ -25,6 +25,14 @@ public class DialogueNodeData : ScriptableObject, IDialogueNode
 
     public IReadOnlyList<string> Texts => texts;
     public IReadOnlyList<IDialogueOption> Options => options;
+
+    public DialogueNodeData CloneRuntime()
+    {
+        var clone = Instantiate(this);
+        clone.texts = (string[])texts.Clone();       // 배열 깊은 복사
+        clone.options = (DialogueOption[])options.Clone(); // 참조 배열 복사
+        return clone;
+    }
 }
 
 [System.Serializable]

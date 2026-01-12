@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
 
     private bool sceneLoading;
 
+    public int donationScore = 0;
+
+    public bool Stage2CutScene = false;
     public EnteranceType CurrentEnterance { get; private set; }
 
     private static GameManager instance;

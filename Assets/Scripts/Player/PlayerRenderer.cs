@@ -4,12 +4,13 @@ using UnityEngine;
 public class PlayerRenderer : AnimationBase
 {
     private PlayerAttack playerAttack;
-
+    private VFXPlayer vfxPlayer;
     [SerializeField] private Color pipeWarpColor;
 
     protected override void Awake()
     {
         base.Awake();
+        vfxPlayer = GetComponent<VFXPlayer>();
         playerAttack = GetComponentInChildren<PlayerAttack>();
     }
 
@@ -58,6 +59,7 @@ public class PlayerRenderer : AnimationBase
 
     public void ThrowAnim()
     {
+        vfxPlayer.StartVFX(3);
         animator.SetTrigger("OnThrow");
     }
 

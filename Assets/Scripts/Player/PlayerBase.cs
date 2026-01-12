@@ -8,12 +8,13 @@ public class PlayerBase : EntityBase
     private PlayerMovement playerMovement;
     private PlayerController playerController;
     private PlayerAttack playerAttack;
-
+    private PlayerRenderer playerRenderer;
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerController = GetComponent<PlayerController>();
         playerAttack = GetComponentInChildren<PlayerAttack>();
+        playerRenderer = GetComponentInChildren<PlayerRenderer>();
         InitializeStats();
     }
 
@@ -62,5 +63,7 @@ public class PlayerBase : EntityBase
     {
         base.TakeDamage(damage);
         OnHitAction?.Invoke();
+
+        playerRenderer.TakeDamaged();
     }
 }

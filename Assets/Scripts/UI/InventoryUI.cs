@@ -58,7 +58,7 @@ public class InventoryUI : MonoBehaviour
             Debug.Log(wi.WeaponName);
 #nullable disable
             WeaponBase? weaponBase = weaponData.GetCurrentWeaponData(wi.WeaponName);
-            Sprite weaponSprite = weaponBase.WeaponSprite;
+            Sprite weaponSprite = weaponBase.WeaponDefinition.WeaponIcon;
 
             if (weaponSprite != null)
             {
@@ -154,7 +154,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         // 스프라이트/데이터 바인딩
-        var sprite = prefab.WeaponSprite;
+        var sprite = prefab.WeaponDefinition.WeaponIcon;
         if (sprite == null)
         {
             // 스프라이트 없으면 아이콘 제거
