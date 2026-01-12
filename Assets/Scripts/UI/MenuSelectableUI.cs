@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Setting UI ÀÇ Bar Class. Event Trigger ¸¦ ÅëÇÑ ½Ã°¢ º¯È­
+/// Setting UI ï¿½ï¿½ Bar Class. Event Trigger ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½È­
 /// </summary>
 public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -18,6 +18,10 @@ public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private Color activeTextColor;
     [SerializeField] private Color inactiveTextColor;
 
+
+    private VFXPlayer vfxPlayer;
+
+
     private void Awake()
     {
         if (selectBar != null) selectBar.color = inactiveBarColor;
@@ -25,7 +29,12 @@ public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (selectMark != null) selectMark.SetActive(false);
 
         if (menuText != null) menuText.color = inactiveTextColor;
+
+        if (vfxPlayer == null) vfxPlayer = GetComponent<VFXPlayer>();
+        HideSelectBar();
     }
+
+    private void OnEnable() => HideSelectBar();
 
     public void OnPointerEnter(PointerEventData data) => ViewSelectBar();
     public void OnPointerExit(PointerEventData data) => HideSelectBar();
@@ -34,6 +43,8 @@ public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (selectBar != null) selectBar.color = activeBarColor;
         if (selectMark != null) selectMark.SetActive(true);
         if (menuText != null) menuText.color = activeTextColor;
+
+        if (vfxPlayer != null) vfxPlayer.StartVFX(0);
     }
 
     public void HideSelectBar()

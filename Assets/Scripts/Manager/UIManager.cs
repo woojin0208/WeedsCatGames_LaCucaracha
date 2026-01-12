@@ -141,7 +141,7 @@ public class UIManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         // 에디터에서는 도중에 "재실행" 못하니까 그냥 StartScene 로드
-        SceneManager.LoadScene("StartScene");
+        SceneManager.LoadScene("GameStart");
 #else
         // 빌드된 게임에서는 프로세스 자체를 껐다 켜는 게 가장 확실
         Application.Quit();

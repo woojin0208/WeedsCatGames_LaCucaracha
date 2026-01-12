@@ -36,6 +36,7 @@ public class EnemyChaseState : IEnemyState
         }
 
         float distance = Vector2.Distance(enemyController.transform.position, targetPosition.position);
+        Debug.Log($"{enemyController.name}, {distance}");
         if (distance >= enemyController.MaxChaseDistance)
         {
             enemyController.ChangeState(new EnemyIdleState());

@@ -42,10 +42,16 @@ public class NPCDialogue : MonoBehaviour, IInteractable
 
     private readonly Dictionary<DialogueNodeData, NodeEvent> _eventMap = new();
 
-    public event Action OnDialogueSignal;   
+    public event Action OnDialogueSignal;
+
+    [SerializeField] private DialogueNodeData entry;
+    [SerializeField] private Animator npcAnimator;
+    public void SetEntry(DialogueNodeData node) => entry = node;
 
     protected virtual void Awake()
     {
+        npcAnimator = GetComponent<Animator>();
+
         _eventMap.Clear();
         if (nodeEvents != null)
         {
@@ -62,79 +68,64 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         }
     }
 
+    private void OnEnable()
+    {
+        DialogueManager.Instance.StartDialogueAction += DialogueAnim; 
+    }
+
+    private void OnDisable()
+    {
+        DialogueManager.Instance.StartDialogueAction -= DialogueAnim;
+    }
+
+    private void DialogueAnim(NPCId npcID, bool isStart)
+    {
+        if (npcID == this.NPCId)
+        {
+            if (isStart) npcAnimator?.SetBool("IsTalk", true);
+            else npcAnimator?.SetBool("IsTalk",false);
+        }
+    }
     public virtual void Interactive(PlayerBase _ = null)
     {
-        // 1) 퀘스트 기반 상태 산출 (기존 NPCStateManager → QuestJournal)
-        var state = QuestJournal.Instance
-            ? QuestJournal.Instance.GetNpcDialogueState(NPCId)
-            : NPCState.FirstMeet;
+        if (entry != null)
+        {
+            DialogueManager.Instance.StartDialogue(
+                entry,
+                optionEvents,
+                textPosition,
+                NPCId,
+                this
+            );
 
-        // 2) 시작 노드: 기본세트 + 오버레이 덮씌운 최종 노드
-        var start = DialogueResolver.Instance
-            ? DialogueResolver.Instance.ResolveStartNode(NPCId, state)
+            // 일회성으로만 쓰고 싶다면 null 처리
+            entry = null;
+            return;
+        }
+
+        var state = NPCStateManager.Instance.GetState(NPCId);
+        Debug.Log($"[NPCDialogue] Start by state = {state}");
+
+        int idx = (int)state;
+
+        DialogueNodeData start =
+            (dialogueNodeData != null && idx >= 0 && idx < dialogueNodeData.Length)
+            ? dialogueNodeData[idx]
             : null;
 
         if (start == null)
         {
-            Debug.LogWarning($"[NPCDialogue] 시작 노드가 비었습니다. state={state}", this);
+            Debug.LogWarning($"[NPCDialogue] 시작 노드가 비었습니다. state={state}, idx={idx}", this);
             return;
         }
 
-        // 3) NodeEvent 병합(기본 + 오버레이). 없으면 기존 nodeEvents 유지
-        NodeEvent[] mergedEvents = DialogueResolver.Instance
-            ? DialogueResolver.Instance.ResolveNodeEvents(NPCId, start, state)
-            : null;
-
-        RebuildEventMap(mergedEvents); // 내부 _eventMap 갱신
-
-        // 4) 옵션 이벤트 선택(해당 노드에 바인딩된 옵션 이벤트가 있으면 사용, 없으면 공용 optionEvents)
-        var opt = GetOptionEvents(start);
-
         DialogueManager.Instance.StartDialogue(
             start,
-            opt,
+            optionEvents,
             textPosition,
             NPCId,
             this
         );
-    }
-
-    // 내부 이벤트 맵을 오버레이 병합 결과로 갱신(없으면 기존 인스펙터 값 유지)
-    private void RebuildEventMap(NodeEvent[] merged)
-    {
-        _eventMap.Clear();
-
-        // 우선 merged 반영
-        if (merged != null)
-        {
-            foreach (var ne in merged)
-            {
-                if (ne.node == null) continue;
-                if (_eventMap.ContainsKey(ne.node)) continue;
-                _eventMap.Add(ne.node, ne);
-            }
-        }
-
-        // 병합 결과에 없는 노드는 기존 인스펙터 nodeEvents로 보강
-        if (nodeEvents != null)
-        {
-            foreach (var ne in nodeEvents)
-            {
-                if (ne.node == null) continue;
-                if (_eventMap.ContainsKey(ne.node)) continue;
-                _eventMap.Add(ne.node, ne);
-            }
-        }
-    }
-
-    // 옵션 이벤트 우선순위: 노드별 지정 → 공용 optionEvents
-    public UnityEvent[] GetOptionEvents(DialogueNodeData node)
-    {
-        if (node != null && _eventMap.TryGetValue(node, out var ev) && ev.optionEvents != null && ev.optionEvents.Length > 0)
-            return ev.optionEvents;
-
-        return optionEvents; // 공용
-
     }
     public void ViewNextNode()
     {
@@ -191,6 +182,16 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         {
             Debug.LogWarning($"[NPCDialogue] OnEnd 매핑 없음: {node?.name}", this);
         }
+    }
+    public UnityEvent[] GetOptionEvents(DialogueNodeData node)
+    {
+        if (node != null)
+        {
+            for (int i = 0; i < nodeEvents.Length; i++)
+                if (nodeEvents[i].node == node)
+                    return nodeEvents[i].optionEvents;
+        }
+        return optionEvents; // 등록 안 했으면 공용 배열 사용(선택)
     }
 
     // ---- 상태 헬퍼 ----

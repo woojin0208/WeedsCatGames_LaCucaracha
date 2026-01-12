@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2415413427558018400}
   - component: {fileID: 5613662971135780283}
   - component: {fileID: 2659970862594933462}
+  - component: {fileID: 7817185770652652981}
   m_Layer: 5
   m_Name: Resume_Bar
   m_TagString: Untagged
@@ -95,6 +96,23 @@ MonoBehaviour:
   menuText: {fileID: 2487161670372191723}
   activeTextColor: {r: 0, g: 0, b: 0, a: 1}
   inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
+--- !u!114 &7817185770652652981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182130819748031141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2f17a01287584882479af1eacf13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxClips:
+  - {fileID: 8300000, guid: 1db79946875adba4db4a01b26dc2263a, type: 3}
+  - {fileID: 8300000, guid: bc2823f3dd17103448d8d58b237b255c, type: 3}
+  - {fileID: 8300000, guid: 141e1d7f897a2094083363f7693820a9, type: 3}
+  audioSource: {fileID: 4953969921988638824}
 --- !u!1 &254696820348790315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,6 +1389,7 @@ GameObject:
   - component: {fileID: 4167018591328561742}
   - component: {fileID: 5951806099383419041}
   - component: {fileID: 1103286260428401024}
+  - component: {fileID: 3624603332204046089}
   m_Layer: 5
   m_Name: Exit_Bar
   m_TagString: Untagged
@@ -1454,6 +1473,23 @@ MonoBehaviour:
   menuText: {fileID: 4707086726796424686}
   activeTextColor: {r: 0, g: 0, b: 0, a: 1}
   inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
+--- !u!114 &3624603332204046089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090558417572600611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2f17a01287584882479af1eacf13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxClips:
+  - {fileID: 8300000, guid: 1db79946875adba4db4a01b26dc2263a, type: 3}
+  - {fileID: 8300000, guid: bc2823f3dd17103448d8d58b237b255c, type: 3}
+  - {fileID: 8300000, guid: 141e1d7f897a2094083363f7693820a9, type: 3}
+  audioSource: {fileID: 4953969921988638824}
 --- !u!1 &2124117905128322586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,6 +1951,7 @@ GameObject:
   - component: {fileID: 4382896486449196991}
   - component: {fileID: 4722057229773943584}
   - component: {fileID: 5888455644199204581}
+  - component: {fileID: 8198629923683951753}
   m_Layer: 5
   m_Name: Restart_Bar
   m_TagString: Untagged
@@ -1998,6 +2035,23 @@ MonoBehaviour:
   menuText: {fileID: 6055371794084999625}
   activeTextColor: {r: 0, g: 0, b: 0, a: 1}
   inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
+--- !u!114 &8198629923683951753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2828306165817343203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2f17a01287584882479af1eacf13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxClips:
+  - {fileID: 8300000, guid: 1db79946875adba4db4a01b26dc2263a, type: 3}
+  - {fileID: 8300000, guid: bc2823f3dd17103448d8d58b237b255c, type: 3}
+  - {fileID: 8300000, guid: 141e1d7f897a2094083363f7693820a9, type: 3}
+  audioSource: {fileID: 4953969921988638824}
 --- !u!1 &2908861293703541934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,6 +2064,7 @@ GameObject:
   - component: {fileID: 4267493950395305134}
   - component: {fileID: 353278845312237160}
   - component: {fileID: 5802204084888203956}
+  - component: {fileID: 3289130726483269954}
   m_Layer: 5
   m_Name: Control_Bar
   m_TagString: Untagged
@@ -2093,6 +2148,23 @@ MonoBehaviour:
   menuText: {fileID: 626017503717179591}
   activeTextColor: {r: 0, g: 0, b: 0, a: 1}
   inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
+--- !u!114 &3289130726483269954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2908861293703541934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2f17a01287584882479af1eacf13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxClips:
+  - {fileID: 8300000, guid: 1db79946875adba4db4a01b26dc2263a, type: 3}
+  - {fileID: 8300000, guid: bc2823f3dd17103448d8d58b237b255c, type: 3}
+  - {fileID: 8300000, guid: 141e1d7f897a2094083363f7693820a9, type: 3}
+  audioSource: {fileID: 4953969921988638824}
 --- !u!1 &3400834417129625448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2225,6 +2297,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7817185770652652981}
+        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
+        m_MethodName: StartVFX
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3409968097432296416
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,6 +2320,7 @@ GameObject:
   - component: {fileID: 6044917956310959171}
   - component: {fileID: 2358805467366880319}
   - component: {fileID: 8461976715277701519}
+  - component: {fileID: 6282041349419581405}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -2301,6 +2386,102 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!82 &6282041349419581405
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3409968097432296416}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 04bec0ee1370f9642ae5b7c0c4563893, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3626359049788638891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2835,6 +3016,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 3624603332204046089}
+        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
+        m_MethodName: StartVFX
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &4256174315546843955
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,6 +3215,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7817185770652652981}
+        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
+        m_MethodName: StartVFX
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3617,6 +3822,7 @@ GameObject:
   - component: {fileID: 6914516527639981305}
   - component: {fileID: 5329446518948282220}
   - component: {fileID: 5107566602988062779}
+  - component: {fileID: 1612930070409832670}
   m_Layer: 5
   m_Name: Language_Bar
   m_TagString: Untagged
@@ -3700,6 +3906,23 @@ MonoBehaviour:
   menuText: {fileID: 4817263275889829327}
   activeTextColor: {r: 0, g: 0, b: 0, a: 1}
   inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
+--- !u!114 &1612930070409832670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212855402938085904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed2f17a01287584882479af1eacf13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxClips:
+  - {fileID: 8300000, guid: 1db79946875adba4db4a01b26dc2263a, type: 3}
+  - {fileID: 8300000, guid: bc2823f3dd17103448d8d58b237b255c, type: 3}
+  - {fileID: 8300000, guid: 141e1d7f897a2094083363f7693820a9, type: 3}
+  audioSource: {fileID: 4953969921988638824}
 --- !u!1 &5258810303098841762
 GameObject:
   m_ObjectHideFlags: 0
@@ -5901,6 +6124,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8198629923683951753}
+        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
+        m_MethodName: StartVFX
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7035207196421730472
 GameObject:
   m_ObjectHideFlags: 0
@@ -8010,6 +8245,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1612930070409832670}
+        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
+        m_MethodName: StartVFX
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8690057556867865541
 GameObject:
   m_ObjectHideFlags: 0
@@ -8023,6 +8270,7 @@ GameObject:
   - component: {fileID: 8562787445124380410}
   - component: {fileID: 5448829650149602251}
   - component: {fileID: 5029424448633803590}
+  - component: {fileID: 4953969921988638824}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: Untagged
@@ -8143,6 +8391,102 @@ MonoBehaviour:
   inventoryUI: {fileID: 4837200304529309082}
   weaponDescriptionUI: {fileID: 8180255423490491442}
   canViewVideo: 0
+--- !u!82 &4953969921988638824
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8690057556867865541}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8835673769745271799
 GameObject:
   m_ObjectHideFlags: 0
@@ -8330,6 +8674,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3289130726483269954}
+        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
+        m_MethodName: StartVFX
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
+  m_Name: WGuard_D_Inprogress
+  m_EditorClassIdentifier: 
+  entityName: White_Guard
+  texts:
+  - "\uC774\uBC29\uC778. \uD5CC\uAE08\uC744 \uB123\uC5B4\uB77C."
+  - "\uADF8\uB798\uC57C \uB4E4\uC5B4\uAC08 \uC218 \uC788\uB2E4."
+  options: []

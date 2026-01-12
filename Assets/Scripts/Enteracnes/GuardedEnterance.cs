@@ -5,10 +5,6 @@ public class GuardedEnterance : InteractableEnterance
     [SerializeField] private NPCDialogue guardNPC;
     [SerializeField] private DialogueNodeData guardNode;
 
-    private void Start()
-    {
-
-    }
     protected override void EnterArea(string nextArea, EnteranceType enterance)
     {
         if (guardNPC == null)

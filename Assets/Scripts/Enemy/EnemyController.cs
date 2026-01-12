@@ -73,19 +73,17 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         base.Update();
 
         CheckState();
-        //Debug.Log(currentState);
+        Debug.Log($"{gameObject.name}, {currentState}");
     }
 
     private void CheckState()
     {
-
         if (currentState is IEnemyState state)
         {
             if (state.CanChase) // 추격 가능한 상태
             {
                 TryDetectTarget();
             }
-
         }
     }
 
@@ -125,6 +123,7 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
     public bool CheckGroundAhead()
     {
+        if (groundCheck == null) return true;
         Vector2 rayOrigin = transform.position;
         rayOrigin.y = groundCheck.position.y;
         Vector2 rayDirection = Anim.IsLeft ? Vector2.left : Vector2.right;

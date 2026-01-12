@@ -11,7 +11,7 @@ public class ItemRequirementChecker : MonoBehaviour
 
     public void CheckItem()
     {
-        
+
         Debug.Log("TryCheckItem");
         PlayerManager pm = PlayerManager.Instance;
         WeaponBase currentWeapon = pm.CurrentWeapon;
@@ -21,7 +21,6 @@ public class ItemRequirementChecker : MonoBehaviour
         bool isMatch = requirments.Any(w => w.name == currentWeapon.name);
         if (isMatch)
         {
-            Debug.Log("엥 이러면 안되는 거 아니에오..>?");
             currentNPC.SetCompleted();
             pm.RemoveWeapon(pm.CurrentEquipId, false);
         }

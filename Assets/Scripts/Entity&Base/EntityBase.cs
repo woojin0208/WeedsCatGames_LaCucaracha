@@ -10,7 +10,7 @@ public class EntityBase : MonoBehaviour
     private bool isDead => Stats.HPStat != null && Mathf.Approximately(Stats.HPStat.Value, 0f);
 
     public Coroutine slowCoroutine { get; set; }
-
+    
     public event Action OnDiedAction;
 
     public virtual void TakeDamage(float damage)

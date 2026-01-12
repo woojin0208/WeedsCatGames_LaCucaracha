@@ -27,7 +27,7 @@ public class MapManager : MonoBehaviour
         }
 
         string MapName = SceneManager.GetActiveScene().name;
-        QuestEvents.ReportEnter(MapName);
+
         Debug.Log(MapName);
     }
 }

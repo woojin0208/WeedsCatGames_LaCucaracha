@@ -5,6 +5,9 @@ public class EnemyRenderer : AnimationBase
 {   
     public event Action EndHitEvent;
 
+    [SerializeField] private VFXPlayer vfxPlayer;
+    [SerializeField] private int hitSoundNum = 3;
+    [SerializeField] private int dieSoundNum;
     protected override void Awake()
     {
         base.Awake();
@@ -24,6 +27,8 @@ public class EnemyRenderer : AnimationBase
     }
     public void TakeDamage()
     {
+        if (vfxPlayer != null) vfxPlayer.StartVFX(hitSoundNum);
+
         base.TakeDamaged();
         animator.SetTrigger("DamagedTrigger");
     }
@@ -32,5 +37,4 @@ public class EnemyRenderer : AnimationBase
     {
         animator.SetFloat("XDirection", 0);
     }
-
 }

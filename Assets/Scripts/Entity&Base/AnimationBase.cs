@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AnimationBase : MonoBehaviour
@@ -8,7 +9,7 @@ public abstract class AnimationBase : MonoBehaviour
     protected Animator animator;
 
     [SerializeField]
-    private Color hitColor = new Color(255, 170, 170);
+    private Color hitColor;
 
     protected Color originColor;
     private Coroutine hitFlashCoroutine;
@@ -16,20 +17,22 @@ public abstract class AnimationBase : MonoBehaviour
     public bool IsLeft { get; protected set; } = false;
 
     public event Action OnDieAction;
+    MaterialPropertyBlock mpb;
 
     protected virtual void Awake()
     {
-        entityRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-
+        entityRenderer = GetComponent<SpriteRenderer>();
         originColor = entityRenderer.color;
+        mpb = new MaterialPropertyBlock();
     }
+
 
     /// <summary>
     /// Renderer 방향 전환 및 Animator 파라미터 전달
     /// </summary>
     /// <param name="x"></param>
-    public void WalkAnim(float x)
+    public virtual void WalkAnim(float x)
     {
         //if (x != 0) playerSprite.flipX = x < 0 ? true : false;
         if (x != 0) IsLeft = x < 0 ? true : false;
@@ -44,7 +47,7 @@ public abstract class AnimationBase : MonoBehaviour
     /// attackNum : 콤보 또는 SpecialAttack Number
     /// </summary>
     /// <param name="attackNum"></param>
-    public void AttackAnim(int attackNum) 
+    public virtual void AttackAnim(int attackNum) 
     {
         //Debug.Log($"attackNum == {attackNum}");
         animator.SetInteger("AttackNum", attackNum);
@@ -54,7 +57,7 @@ public abstract class AnimationBase : MonoBehaviour
     /// 1 : Attack Timing / 2 : EndAttackTiming / 0 : EndAttack
     /// </summary>
     /// <param name="isAttackTiming"></param>
-    public void OnAttackTiming(int isAttackTiming)
+    public virtual void OnAttackTiming(int isAttackTiming)
     {
         //Debug.Log(isAttackTiming);
         OnAttackEvent?.Invoke(isAttackTiming);
@@ -64,7 +67,7 @@ public abstract class AnimationBase : MonoBehaviour
     {
         OnDieAction?.Invoke();
     }
-    public void TakeDamaged()
+    public virtual void TakeDamaged()
     {
         if (hitFlashCoroutine != null)
         {
@@ -76,12 +79,21 @@ public abstract class AnimationBase : MonoBehaviour
 
     private IEnumerator FlashHit()
     {
-        entityRenderer.color = hitColor;
-        yield return new WaitForSeconds(0.2f);
-        entityRenderer.color = originColor;
+        float t = 0f, dur = 0.2f;
+        while (t < dur)
+        {
+            entityRenderer.GetPropertyBlock(mpb);
+            mpb.SetColor("_Color", hitColor);      // Sprites/Default / URP 2D 호환
+            entityRenderer.SetPropertyBlock(mpb);
+            t += Time.deltaTime;
+            yield return null;                     // 매 프레임 재적용
+        }
+        entityRenderer.GetPropertyBlock(mpb);
+        mpb.SetColor("_Color", originColor);
+        entityRenderer.SetPropertyBlock(mpb);
     }
 
-    public void DieAnim()
+    public virtual void DieAnim()
     {
         animator.SetBool("IsDie", true);
     }

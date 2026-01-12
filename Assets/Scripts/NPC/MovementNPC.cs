@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +9,7 @@ public interface IMovementNPC
 
 public class MovementNPC : NPCDialogue, IMovementNPC
 {
-    [SerializeField] private Vector2 targetPosition; // µµÂøÁö
+    [SerializeField] private Vector2 targetPosition;
     [SerializeField] private bool isExpired;
     //[SerializeField] private GameObject vCam;
     private MovementBase movementBase;
@@ -29,13 +29,13 @@ public class MovementNPC : NPCDialogue, IMovementNPC
         StartCoroutine(MovementCoroutine());
         //vCam.SetActive(true);
     }
-    
+
     private IEnumerator MovementCoroutine()
     {
         while (Vector2.Distance(targetPosition, transform.position) > 0.1f)
         {
             float x = targetPosition.x - transform.position.x > 0 ? 1 : -1;
-            
+
             movementBase.OnMovement(x);
             animator.SetFloat("moveDirection", 1);
             spriteRenderer.flipX = x > 0 ? true : false;
