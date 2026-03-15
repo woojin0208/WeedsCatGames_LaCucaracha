@@ -2,21 +2,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// ¹«±â º° Ã¹ È¹µæ ½Ã ¾È³»»çÇ× UI
-/// </summary>
+// ë¬´ê¸° ì„¤ëª… UIë¥¼ í‘œì‹œí•œë‹¤.
 public class WeaponDescriptionUI : MonoBehaviour
 {
     [SerializeField] private Image weaponIconImage;
     [SerializeField] private TextMeshProUGUI weaponNameText;
     [SerializeField] private TextMeshProUGUI weaponDescriptionText;
 
-    private void OnEnable() // NULL INPUT Ãß°¡ ½Ã »èÁ¦
+    private void OnEnable()
     {
         Time.timeScale = 0f;
     }
 
-    private void OnDisable() // NULL INPUT Ãß°¡ ½Ã »èÁ¦
+    private void OnDisable()
     {
         Time.timeScale = 1f;
     }
@@ -26,6 +24,7 @@ public class WeaponDescriptionUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) gameObject.SetActive(false);
     }
 
+    // ë¬´ê¸° ì •ì˜ ë°ì´í„°ë¥¼ UIì— í‘œì‹œí•œë‹¤.
     public void ViewDescription(WeaponBase weapon)
     {
         WeaponDefinition definition = weapon.WeaponDefinition;
@@ -33,5 +32,4 @@ public class WeaponDescriptionUI : MonoBehaviour
         weaponNameText.text = definition.WeaponName;
         weaponDescriptionText.text = definition.WeaponDescript;
     }
-
 }

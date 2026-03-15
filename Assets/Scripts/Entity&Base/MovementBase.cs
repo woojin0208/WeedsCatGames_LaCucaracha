@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 이동 컴포넌트가 구현해야 하는 공통 동작을 정의한다.
 public interface IMovement
 {
     Vector2 CurrentVelocity { get; }
@@ -11,11 +12,13 @@ public interface IMovement
     void Stop(bool isStop);
 }
 
+// 대시 기능이 있는 이동 컴포넌트 규약을 정의한다.
 public interface IDashable
 {
     void Dash(float x);
 }
 
+// 리지드바디 기반 이동의 공통 처리를 제공한다.
 public abstract class MovementBase : MonoBehaviour, IMovement
 {
     [SerializeField] protected float moveSpeed;
@@ -40,7 +43,6 @@ public abstract class MovementBase : MonoBehaviour, IMovement
     public virtual void Move(float x) => OnMovement(x, false);
     public virtual void Idle() => OnMovement(0, false);
 
-    //public virtual void Jump() => On
     public virtual void OnMovement(float x, bool isDash = false)
     {
         float yVelocity = isDash ? 0f : rigidbody2D.velocity.y;

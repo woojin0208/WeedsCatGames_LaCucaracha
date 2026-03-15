@@ -1,3 +1,4 @@
+// 적 피격 경직 상태를 정의한다.
 public class EnemyHitState : IEnemyState
 {
     public bool CanHitAnim { get; } = false;

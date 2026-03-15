@@ -1,8 +1,9 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// ëŒ€í™” ì§„í–‰ê³¼ ì„ íƒì§€ ì…ë ¥ì„ ê´€ë¦¬í•œë‹¤.
 public class DialogueManager : MonoBehaviour
 {
     private static DialogueManager instance;
@@ -15,11 +16,15 @@ public class DialogueManager : MonoBehaviour
     private NPCDialogue hookOwner;
     private int lineIndex;
 
-    private bool waitingForLine;         // Space·Î ´ÙÀ½ ´ë»ç
-    private bool waitingForOption;       // Space/Enter·Î ¿É¼Ç ¼±ÅÃ
-    private int pendingOptionIndex = -1; // ¼±ÅÃ ´ë±â ÁßÀÎ ¿É¼Ç ÀÎµ¦½º
+    // ë‹¤ìŒ ëŒ€ì‚¬ í‘œì‹œë¥¼ ê¸°ë‹¤ë¦¬ëŠ” ìƒíƒœë‹¤.
+    private bool waitingForLine;
+    // ì„ íƒì§€ í™•ì • ì…ë ¥ì„ ê¸°ë‹¤ë¦¬ëŠ” ìƒíƒœë‹¤.
+    private bool waitingForOption;
+    // í˜„ì¬ ì„ íƒ ëŒ€ê¸° ì¤‘ì¸ ì˜µì…˜ ì¸ë±ìŠ¤ë‹¤.
+    private int pendingOptionIndex = -1;
 
-    private bool enteredNodeHandled;     // ³ëµåº° onEnter 1È¸ Ã³¸®
+    // ë…¸ë“œ ì§„ì… ì´ë²¤íŠ¸ë¥¼ í•œ ë²ˆë§Œ ì‹¤í–‰í•˜ê¸° ìœ„í•œ í”Œë˜ê·¸ë‹¤.
+    private bool enteredNodeHandled;
     private UnityEvent[] optionEvents;
 
     public event Action<NPCId, bool> StartDialogueAction;
@@ -50,7 +55,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // ¡è/¡é Å°·Î ¿É¼Ç ÀÌµ¿
+        // ìœ„ì•„ë˜ ì…ë ¥ìœ¼ë¡œ í˜„ì¬ ì„ íƒì§€ë¥¼ ì´ë™í•œë‹¤.
         if (waitingForOption && Input.GetKeyDown(KeyCode.UpArrow))
         {
             pendingOptionIndex = Mathf.Max(0, pendingOptionIndex - 1);
@@ -86,7 +91,6 @@ public class DialogueManager : MonoBehaviour
     {
         if (enteredNodeHandled || currentNode == null) return;
 
-        // ³ëµå OnEnter ÀÌº¥Æ®
         hookOwner?.InvokeOnEnter(currentNode);
         enteredNodeHandled = true;
     }
@@ -109,7 +113,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // ³ëµå OnEnd ÀÌº¥Æ®
         hookOwner?.InvokeOnEnd(currentNode);
 
         var opts = currentNode.options;
@@ -118,16 +121,14 @@ public class DialogueManager : MonoBehaviour
             if (opts.Length == 1)
             {
                 optionEvents = hookOwner?.GetOptionEvents(currentNode) ?? optionEvents;
-                // ¿É¼ÇÀÌ 1°³ÀÏ ¶§ ¡æ Player ´ë»çÃ³·³ ¹öÆ° 1°³ Ç¥½Ã
                 var only = opts[0];
                 dialogueUI.ShowOption(new List<string> { only.label }, idx => SelectOption(idx));
 
                 pendingOptionIndex = 0;
-                waitingForOption = true; // Space/Enter·Î ¼±ÅÃ °¡´É
+                waitingForOption = true;
             }
             else
             {
-                // ¿É¼Ç ¿©·¯ °³
                 var labels = new List<string>(opts.Length);
                 for (int i = 0; i < opts.Length; i++) labels.Add(opts[i].label);
 
@@ -138,7 +139,6 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            // ¿É¼Ç ¾øÀ¸¸é ±×³É ³¡
             EndDialogue();
         }
     }
@@ -152,11 +152,9 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // ¿É¼Ç ÀÌº¥Æ® ½ÇÇà
         if (optionEvents != null && idx < optionEvents.Length)
             optionEvents[idx]?.Invoke();
 
-        // ´ÙÀ½ ³ëµå·Î ÁøÇà
         currentNode = opts[idx].nextNode;
         lineIndex = 0;
         enteredNodeHandled = false;
@@ -176,6 +174,5 @@ public class DialogueManager : MonoBehaviour
     public void CloseDialogue()
     {
         dialogueUI.gameObject.SetActive(false);
-
     }
 }

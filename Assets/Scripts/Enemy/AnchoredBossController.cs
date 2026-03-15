@@ -1,16 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
+// ê³ ì •í˜• ë³´ìŠ¤ì˜ ê³µê²© ë£¨í”„ë¥¼ ì œì–´í•œë‹¤.
 public class AnchoredBossController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private AnchoredBossRenderer bossRenderer;   // Head ¸ŞÀÎ + Body µ¿±âÈ­
-    [SerializeField] private EnemyAttack enemyAttack;             // Áö±İ ¾²½Ã´ø Attack ´ÜÀÏ Å¬·¡½º
-    [SerializeField] private Transform player;                    // Ä³½Ì
+    [SerializeField] private AnchoredBossRenderer bossRenderer;
+    [SerializeField] private EnemyAttack enemyAttack;
+    [SerializeField] private Transform player;
 
     [Header("Attack Loop")]
-    [SerializeField] private float openDelay = 0.5f;              // ÀüÅõ ½ÃÀÛ Àü ¿¬Ãâ ´ë±â
-    [SerializeField] private float attackInterval = 1.2f;         // ÆĞÅÏ °£ °£°İ
+    [SerializeField] private float openDelay = 0.5f;
+    [SerializeField] private float attackInterval = 1.2f;
     [SerializeField] private bool loop = true;
     [SerializeField] private EnemyAttackType[] attackTypes;
 
@@ -21,7 +22,6 @@ public class AnchoredBossController : MonoBehaviour
     private void Awake()
     {
         if (player == null) player = FindObjectOfType<PlayerBase>()?.transform;
-        // EnemyBase OnDamagedAction ¡æ bossRenderer.TakeDamaged() ÂÊÀº ±âÁ¸Ã³·³ ¿¬°á
     }
 
     public void StartBattle() => StartCoroutine(BossLoop());
@@ -39,7 +39,8 @@ public class AnchoredBossController : MonoBehaviour
             }
             else
             {
-                int type = Random.Range(0, attackTypes.Length); // ¡ç Length + 1 ¾²¸é OOR
+                // ê³µê²© ë°°ì—´ ê¸¸ì´ ë²”ìœ„ ì•ˆì—ì„œë§Œ ëœë¤ ì¸ë±ìŠ¤ë¥¼ ì„ íƒí•œë‹¤.
+                int type = Random.Range(0, attackTypes.Length);
 
                 if (attackTypes[type] == EnemyAttackType.AreaAttack)
                 {
@@ -51,7 +52,6 @@ public class AnchoredBossController : MonoBehaviour
                     bossRenderer.AttackAnim(2);
                     enemyAttack.HandleAttackEvent(2);
                 }
-
             }
 
             yield return new WaitForSeconds(attackInterval);
@@ -62,6 +62,5 @@ public class AnchoredBossController : MonoBehaviour
         if (isDead) return;
         isDead = true;
         bossRenderer.DieAnim();
-        // µå¶ø/¿¬Ãâ µî
     }
 }

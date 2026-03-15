@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// PlayerPipeWarpState ìƒíƒœë¥¼ ì •ì˜í•œë‹¤.
 public class PlayerPipeWarpState : IPlayerState
 {
     public bool CanAttack { get; } = false;
@@ -12,8 +13,7 @@ public class PlayerPipeWarpState : IPlayerState
 
     private bool isStartPipeWarp;
     private bool isLeftStart;
-
-    private float warpTime = 0.75f; // ³ªÁß¿¡ event·Î º¯°æ
+    private float warpTime = 0.75f;
 
     public PlayerPipeWarpState(bool isStart, bool isLeft)
     {

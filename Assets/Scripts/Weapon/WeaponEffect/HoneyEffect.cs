@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 꿀 효과 동작을 처리한다.
 public class HoneyEffect : WeaponEffectBase
 {
     private bool isEnemyTarget = false;
@@ -23,7 +24,6 @@ public class HoneyEffect : WeaponEffectBase
         Debug.Log(target);
         if (target == EffectTargetKind.Wall)
         {
-            //Debug.Log("ȸ��");
             transform.rotation = Quaternion.Euler(0, 0, 90);
         }
         else if (target == EffectTargetKind.Enemy)
@@ -33,8 +33,6 @@ public class HoneyEffect : WeaponEffectBase
         }
         else if (target == EffectTargetKind.Ground)
         {
-
         }
     }
-
 }

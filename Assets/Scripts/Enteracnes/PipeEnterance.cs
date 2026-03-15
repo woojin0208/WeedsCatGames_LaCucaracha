@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// 파이프 이동 연출 후 씬 전환을 시작하는 입장 지점이다.
 public class PipeEnterance : InteractableEnterance
 {
     [field: SerializeField] public bool IsLeftStart { get; private set; }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 상태 이상 효과의 적용, 유지, 해제를 처리한다.
 public class EffectBase : MonoBehaviour
 {
     public StatusEffectData[] Effects;
@@ -96,6 +97,4 @@ public class EffectBase : MonoBehaviour
     {
         foreach (var e in Effects) handler.IgnoreEffect(e);
     }
-
-
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// ê²Œì„ UI íŒ¨ë„ê³¼ ë©”ë‰´ ìƒíƒœë¥¼ ê´€ë¦¬í•œë‹¤.
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
@@ -9,24 +10,19 @@ public class UIManager : MonoBehaviour
         get { return instance; }
     }
 
-    [SerializeField] private GameObject pausePanel; // pause Image
+    [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject controlSettingPanel;
-
     [SerializeField] private GameObject loadPanel;
-
     [SerializeField] private RectTransform interactiveImage;
-
     [SerializeField] private GameObject minimap;
     [SerializeField] private DialogueUI dialogueUI;
-
     [SerializeField] private GameObject quitImage;
-
     [SerializeField] private GameObject inventoryUI;
-
     [SerializeField] private WeaponDescriptionUI weaponDescriptionUI;
 
     public bool canViewVideo = false;
+
     private void Awake()
     {
         if (instance != null)
@@ -36,19 +32,16 @@ public class UIManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-
     }
 
     private void Start()
     {
         loadPanel.SetActive(false);
-
         inventoryUI.SetActive(true);
-
     }
+
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (dialogueUI.gameObject.activeSelf || minimap.activeSelf) return;
@@ -72,17 +65,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
     public void OpenPause()
     {
         pausePanel.SetActive(true);
         Time.timeScale = 0;
     }
+
     public void ExitSetting()
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
     }
+
     public void ClickContinue()
     {
         ClickSettingUI(pausePanel);
@@ -112,8 +106,6 @@ public class UIManager : MonoBehaviour
 
     public void ClickExitGame()
     {
-        //GameManager.Instance.ExitGame();
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
@@ -134,26 +126,24 @@ public class UIManager : MonoBehaviour
     public void CloseScene()
     {
         loadPanel.SetActive(true);
-
     }
 
     public void Restart()
     {
 #if UNITY_EDITOR
-        // ¿¡µğÅÍ¿¡¼­´Â µµÁß¿¡ "Àç½ÇÇà" ¸øÇÏ´Ï±î ±×³É StartScene ·Îµå
         SceneManager.LoadScene("GameStart");
 #else
-        // ºôµåµÈ °ÔÀÓ¿¡¼­´Â ÇÁ·Î¼¼½º ÀÚÃ¼¸¦ ²°´Ù ÄÑ´Â °Ô °¡Àå È®½Ç
         Application.Quit();
         System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
 #endif
     }
+
+    // ìƒí˜¸ì‘ìš© UIë¥¼ í‘œì‹œí•˜ê³  í•„ìš”í•˜ë©´ ëŒ€ìƒ ìœ„ì¹˜ë¡œ ì´ë™í•œë‹¤.
     public void CanInteraction(bool can, Transform target = null)
     {
         if (Time.timeScale == 0)
         {
             interactiveImage.gameObject.SetActive(false);
-
             return;
         }
         interactiveImage.gameObject.SetActive(can);
@@ -168,7 +158,6 @@ public class UIManager : MonoBehaviour
 
             interactiveImage.position = screenPoint;
         }
-
     }
 
     public void OpenMinimap()
@@ -176,7 +165,6 @@ public class UIManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Tutorial") return;
         Time.timeScale = Time.timeScale == 1 ? 0 : 1;
         minimap.SetActive(!minimap.activeSelf);
-
     }
 
     public void ShowWeaponDescription(WeaponBase weapon)
@@ -184,7 +172,6 @@ public class UIManager : MonoBehaviour
         if (weapon.WeaponDefinition == null) return;
 
         weaponDescriptionUI.gameObject.SetActive(true);
-
         weaponDescriptionUI.ViewDescription(weapon);
     }
 }

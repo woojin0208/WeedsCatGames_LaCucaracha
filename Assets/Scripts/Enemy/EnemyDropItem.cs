@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 적 사망 시 드롭 아이템 생성을 처리한다.
 public class EnemyDropItem : MonoBehaviour
 {
     [SerializeField] private GameObject[] items;
@@ -35,6 +36,5 @@ public class EnemyDropItem : MonoBehaviour
 
     private void OnDisable()
     {
-        //enemyBase.OnDiedAction -= TryDropItem;
     }
 }

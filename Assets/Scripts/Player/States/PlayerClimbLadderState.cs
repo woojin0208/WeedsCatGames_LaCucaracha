@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// PlayerClimbLadderState 상태를 정의한다.
 public class PlayerClimbLadderState : IPlayerState
 {
     public bool CanAttack { get; } = false;
     public bool CanJump { get; } = false;
     public bool CanDash { get; } = false;
-
     public bool CanWalk { get; } = false;
     public bool CanLadder { get; } = false;
     public bool CanClingWall { get; } = false;
@@ -18,7 +18,6 @@ public class PlayerClimbLadderState : IPlayerState
     {
         startPos = start;
         endPos = end;
-        
     }
 
     public void EnterState(PlayerController playerController)

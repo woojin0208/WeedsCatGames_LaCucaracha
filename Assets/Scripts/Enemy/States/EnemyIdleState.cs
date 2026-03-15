@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 적 대기 상태를 정의한다.
 public class EnemyIdleState : IEnemyState
 {
     public bool CanHitAnim { get; } = true;
@@ -14,7 +15,6 @@ public class EnemyIdleState : IEnemyState
 
         enemyController.Move.Idle(0);
         enemyController.Anim.Idle();
-
     }
 
     public void UpdateState(EnemyController enemyController)
@@ -28,11 +28,9 @@ public class EnemyIdleState : IEnemyState
             enemyController.ChangeState(new EnemyPatrolState());
             return;
         }
-
     }
 
     public void ExitState(EnemyController enemyController)
     {
-
     }
 }

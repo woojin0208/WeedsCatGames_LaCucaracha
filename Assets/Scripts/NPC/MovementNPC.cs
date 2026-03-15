@@ -1,17 +1,18 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// 이동하는 NPC의 Interface를 정의한다.
 public interface IMovementNPC
 {
     void OnMovement();
 }
 
+// 이동하는 NPC 동작을 처리한다.
 public class MovementNPC : NPCDialogue, IMovementNPC
 {
     [SerializeField] private Vector2 targetPosition;
     [SerializeField] private bool isExpired;
-    //[SerializeField] private GameObject vCam;
     private MovementBase movementBase;
 
     private Animator animator;
@@ -27,7 +28,6 @@ public class MovementNPC : NPCDialogue, IMovementNPC
     public void OnMovement()
     {
         StartCoroutine(MovementCoroutine());
-        //vCam.SetActive(true);
     }
 
     private IEnumerator MovementCoroutine()
@@ -49,7 +49,6 @@ public class MovementNPC : NPCDialogue, IMovementNPC
         if (isExpired) gameObject.SetActive(false);
 
         animator.SetFloat("moveDirection", 0);
-        //vCam.SetActive(false);
         yield return null;
     }
 }

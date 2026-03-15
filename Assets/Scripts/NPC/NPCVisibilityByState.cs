@@ -1,12 +1,12 @@
 using System.Linq;
 using UnityEngine;
 
+// NPC 상태에 따라 표시 여부를 전환한다.
 public class NPCVisibilityByState : MonoBehaviour
 {
     [SerializeField] private NPCDialogue targetNPC;
     [SerializeField] private NPCState[] visibilityStates;
 
-    //[SerializeField] private bool checkInRunTime;
     private void Start()
     {
         CheckVisibility(NPCStateManager.Instance.GetState(targetNPC.NPCId));
@@ -20,5 +20,4 @@ public class NPCVisibilityByState : MonoBehaviour
 
         targetNPC.gameObject.SetActive(false);
     }
-
 }

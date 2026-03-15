@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// 플레이어 애니메이션과 렌더링을 담당한다.
 public class PlayerRenderer : AnimationBase
 {
     private PlayerAttack playerAttack;
@@ -14,11 +15,7 @@ public class PlayerRenderer : AnimationBase
         playerAttack = GetComponentInChildren<PlayerAttack>();
     }
 
-    /// <summary>
-    /// JumpCount -1 : Fall / 2 : Null / 1 : Jump1 / 0 : Jump2
-    /// </summary>
-    /// 
-    /// <param name="jump"></param>
+    // JumpCount 파라미터 값으로 점프 단계와 낙하 상태를 구분한다.
     public void JumpAnim(int jump)
     {
         animator.SetInteger("JumpCount", jump);

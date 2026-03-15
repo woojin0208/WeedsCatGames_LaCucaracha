@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 
+// 시작 연출 영상을 재생한다.
 public class StartVideo : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
@@ -17,7 +18,6 @@ public class StartVideo : MonoBehaviour
 
     private void Start()
     {
-        //Invoke(nameof(PlayVideo), 0.5f);
         Invoke(nameof(StartImage), 0.2f);
         Invoke(nameof(StartGame), 3f);
     }

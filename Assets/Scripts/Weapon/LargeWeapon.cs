@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 대형 무기 동작을 정의한다.
 public class LargeWeapon : WeaponBase
 {
     public override void GetWeapon()
@@ -25,6 +26,5 @@ public class LargeWeapon : WeaponBase
     public override void Interactive(PlayerBase player)
     {
         base.Interactive(player);
-        
     }
 }

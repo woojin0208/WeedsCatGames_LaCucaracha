@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 사다리 상호작용을 통해 플레이어 이동을 시작한다.
 public class Ladder : MonoBehaviour, IInteractable
 {
     [Header("Ladder Setting")]

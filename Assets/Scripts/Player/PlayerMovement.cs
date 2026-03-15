@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// í”Œë ˆì´ì–´ ì´ë™ê³¼ ëŒ€ì‹œë¥¼ ì²˜ë¦¬í•œë‹¤.
 public class PlayerMovement : MovementBase, IDashable
 {
     public int RemainingJumps => currentJumpCount;
@@ -23,7 +24,6 @@ public class PlayerMovement : MovementBase, IDashable
         base.Awake();
 
         currentJumpCount = maxJumpCount;
-
     }
 
     public void InitStats(float moveSpeed, float dashSpeed, float jumpForce)
@@ -37,24 +37,20 @@ public class PlayerMovement : MovementBase, IDashable
     private void Update()
     {
         CheckGround();
-        //Debug.Log(currentJumpCount);
 
         if (currentDashCooldown >= 0)
         {
             currentDashCooldown -= Time.deltaTime;
         }
-
-
     }
     public void Dash(float x)
     {
         if (currentDashCooldown > 0)
         {
-            Debug.Log("°Å¸£±â ¼º°ø");
+            Debug.Log("ê±°ë¥´ê¸° ì„±ê³µ");
             return;
         }
         currentDashCooldown = dashCooldownTime;
-        //StopCoroutine(DashCoroutine(x));
         StartCoroutine(DashCoroutine(x));
     }
 
@@ -70,11 +66,9 @@ public class PlayerMovement : MovementBase, IDashable
 
         rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-
         currentJumpCount--;
 
         int jumpCount = currentJumpCount == 1 ? 1 : 2;
-
     }
 
     public void DecrementJumpCount()
@@ -88,7 +82,8 @@ public class PlayerMovement : MovementBase, IDashable
         float rayDistance = Mathf.Abs(rigidbody2D.position.y - footPosition.position.y);
         RaycastHit2D rayHit = Physics2D.BoxCast(
             footPosition.position,
-            new Vector2(0.22f, 0.05f), // Player Collider Size.x º¸´Ù ¾ÆÁÖ ¾à°£ ÀÛ°Ô , °¨Áö¿ë ÀÛÀº y
+            // ë°œë°‘ë§Œ ê°ì§€í•˜ë„ë¡ í”Œë ˆì´ì–´ ì½œë¼ì´ë”ë³´ë‹¤ ì•½ê°„ ì‘ì€ í¬ê¸°ë¥¼ ì‚¬ìš©í•œë‹¤.
+            new Vector2(0.22f, 0.05f),
             0,
             Vector2.down,
             0.01f,

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// NPC별 진행 상태를 저장하고 조회한다.
 public class NPCStateManager : MonoBehaviour
 {
     private readonly Dictionary<NPCId, NPCState> npcStates = new();
@@ -29,6 +30,7 @@ public class NPCStateManager : MonoBehaviour
         => npcStates[id] = state;
 }
 
+// NPC 식별자를 정의한다.
 public enum NPCId
 {
     FrogBoy,

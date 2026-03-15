@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 애니메이션 관련 공통 기능을 제공한다.
 public class AnimationAPI
 {
     protected AnimationBase entityRenderer;

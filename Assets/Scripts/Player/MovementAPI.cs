@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 이동 관련 공통 기능을 제공한다.
 public class MovementAPI
 {
     private readonly IMovement _movement;
@@ -10,8 +11,6 @@ public class MovementAPI
         _movement = movement;
         _dashable = dashable;
     }
-
-    // Commands
 
     public void Stop(bool isStop) => _movement.Stop(isStop);
     public void Idle(float x) => _movement.Move(x);
@@ -31,10 +30,6 @@ public class MovementAPI
     {
         if (_movement is PlayerMovement pm) pm.OnJump();
     }
-
-    //public void ClimbLadder => 
-    //public void WallCling(
-    // State
     public Vector2 Velocity => _movement.CurrentVelocity;
     public float HorizontalDirection => _movement.HorizontalDirection;
 

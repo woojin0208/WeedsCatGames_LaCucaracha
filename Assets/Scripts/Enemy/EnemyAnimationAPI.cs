@@ -1,8 +1,8 @@
 using System;
 
+// 적 애니메이션 이벤트 접근을 단순화한다.
 public class EnemyAnimationAPI : AnimationAPI
 {
-
     private readonly EnemyRenderer enemyRenderer;
 
     public bool EndAttack { get; set; } = false;
@@ -20,7 +20,6 @@ public class EnemyAnimationAPI : AnimationAPI
 
     public event Action<int> OnAttackEvent
     {
-        
         add => entityRenderer.OnAttackEvent += value;
         remove => entityRenderer.OnAttackEvent -= value;
     }
@@ -32,5 +31,5 @@ public class EnemyAnimationAPI : AnimationAPI
         enemyRenderer.TakeDamage();
     }
 
-    public bool IsLeft => enemyRenderer.IsLeft; 
+    public bool IsLeft => enemyRenderer.IsLeft;
 }

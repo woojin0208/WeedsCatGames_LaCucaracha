@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+// 저장 상태에 따라 NPC 노출을 제어한다.
 public class LoadCheckNPC : MonoBehaviour
 {
     [SerializeField] private NPCDialogue targetNPC;

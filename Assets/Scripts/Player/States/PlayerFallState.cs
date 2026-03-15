@@ -1,17 +1,19 @@
 using UnityEngine;
+
+// PlayerFallState ìƒíƒœë¥¼ ì •ì˜í•œë‹¤.
 public class PlayerFallState : IPlayerState
 {
     public bool CanAttack => true;
-    public bool CanJump => true;      // ³«ÇÏ Áß ÀÌÁßÁ¡ÇÁ Çã¿ë
+    public bool CanJump => true;
     public bool CanDash => true;
     public bool CanWalk => false;
     public bool CanLadder => false;
-    public bool CanClingWall => true; // º®¸Å´Ş¸² Çã¿ë
+    public bool CanClingWall => true;
     public bool CanPipeWarp => true;
 
     public void EnterState(PlayerController playerController)
     {
-        playerController.Anim.Jump(-1); // ³«ÇÏ ¾Ö´Ï
+        playerController.Anim.Jump(-1);
     }
 
     public void UpdateState(PlayerController playerController)
@@ -29,7 +31,7 @@ public class PlayerFallState : IPlayerState
             return;
         }
 
-        // °øÁß ÁÂ¿ì ÀÌµ¿
+        // ë‚™í•˜ ì¤‘ì—ë„ ì¢Œìš° ì´ë™ì€ ìœ ì§€í•œë‹¤.
         playerController.Move.Move(playerController.Input.Horizontal);
     }
 

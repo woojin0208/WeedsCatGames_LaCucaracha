@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 경비 NPC 상태에 따라 통행 여부가 결정되는 입장 지점이다.
 public class GuardedEnterance : InteractableEnterance
 {
     [SerializeField] private NPCDialogue guardNPC;
@@ -29,6 +30,4 @@ public class GuardedEnterance : InteractableEnterance
             }
         }
     }
-
-
 }

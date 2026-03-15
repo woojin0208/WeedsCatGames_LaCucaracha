@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
+// 단일 스탯 값과 변경 이벤트를 보관한다.
 public class Stat
 {
     public delegate void ValueChangedHandler(Stat stat, float prev, float current);
@@ -60,4 +61,5 @@ public class Stat
     }
 }
 
+// 프로젝트에서 사용하는 스탯 종류를 정의한다.
 public enum StatType { AttackDamage = 0, HP, Stamina, MoveSpeed, DashSpeed, JumpForce, AttackSpeed, RecoverHP, RecoverStamina, }

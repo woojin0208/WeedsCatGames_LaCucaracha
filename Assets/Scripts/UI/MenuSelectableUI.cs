@@ -1,56 +1,21 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-/// <summary>
-/// Setting UI �� Bar Class. Event Trigger �� ���� �ð� ��ȭ
-/// </summary>
+// 메뉴 선택 UI의 강조 상태를 처리한다.
 public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image selectBar;
-    [SerializeField] private GameObject selectMark;
-    [SerializeField] private TextMeshProUGUI menuText;
+    [SerializeField] private Image selectedBar;
 
-    private Color activeBarColor = Color.white;
-    private Color inactiveBarColor = new Color(1, 1, 1, 0);
-
-    [SerializeField] private Color activeTextColor;
-    [SerializeField] private Color inactiveTextColor;
-
-
-    private VFXPlayer vfxPlayer;
-
-
-    private void Awake()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        if (selectBar != null) selectBar.color = inactiveBarColor;
-
-        if (selectMark != null) selectMark.SetActive(false);
-
-        if (menuText != null) menuText.color = inactiveTextColor;
-
-        if (vfxPlayer == null) vfxPlayer = GetComponent<VFXPlayer>();
-        HideSelectBar();
+        if (selectedBar != null)
+            selectedBar.gameObject.SetActive(true);
     }
 
-    private void OnEnable() => HideSelectBar();
-
-    public void OnPointerEnter(PointerEventData data) => ViewSelectBar();
-    public void OnPointerExit(PointerEventData data) => HideSelectBar();
-    public void ViewSelectBar()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        if (selectBar != null) selectBar.color = activeBarColor;
-        if (selectMark != null) selectMark.SetActive(true);
-        if (menuText != null) menuText.color = activeTextColor;
-
-        if (vfxPlayer != null) vfxPlayer.StartVFX(0);
-    }
-
-    public void HideSelectBar()
-    {
-        if (selectBar != null) selectBar.color = inactiveBarColor;
-        if (selectMark != null) selectMark.SetActive(false);
-        if (menuText != null) menuText.color = inactiveTextColor;
+        if (selectedBar != null)
+            selectedBar.gameObject.SetActive(false);
     }
 }

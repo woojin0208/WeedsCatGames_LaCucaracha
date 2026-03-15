@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// í”Œë ˆì´ì–´ ìƒí˜¸ìž‘ìš© ëŒ€ìƒì„ íƒìƒ‰í•˜ê³  ì‹¤í–‰í•œë‹¤.
 public class PlayerInteraction : MonoBehaviour
 {
     private IInteractable currentInteractable;
@@ -24,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
         Vector2 dir = Vector2.zero;
         int layerMask = LayerMask.GetMask("Weapon", "Enterance", "Interactive", "NPC");
 
-        // 1) ¸ðµç È÷Æ® °¡Á®¿À±â
+        // ë²”ìœ„ ì•ˆì˜ ìƒí˜¸ìž‘ìš© í›„ë³´ë¥¼ ëª¨ë‘ ìˆ˜ì§‘í•œë‹¤.
         RaycastHit2D[] natural_hits = Physics2D.CircleCastAll(origin, radius, dir, 0, layerMask);
         if (natural_hits == null || natural_hits.Length == 0)
         {
@@ -32,10 +33,10 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
-        // 2) µ¿ÀÏ ÄÝ¶óÀÌ´õ Áßº¹ Á¦°Å
+        // ë™ì¼ ì½œë¼ì´ë”ê°€ ì¤‘ë³µ ê²€ì¶œëœ ê²½ìš° í•˜ë‚˜ë§Œ ë‚¨ê¸´ë‹¤.
         var hits = natural_hits.GroupBy(h => h.collider).Select(g => g.First()).ToArray();
 
-        // 3) ¸¶Áö¸· »óÈ£ÀÛ¿ë °´Ã¼ Á¦¿Ü
+        // ì§ì „ì— ìƒí˜¸ìž‘ìš©í•œ ìžê¸° ë¬´ê¸°ëŠ” í›„ë³´ì—ì„œ ì œì™¸í•œë‹¤.
         var filtered = hits
             .Where(h => !(h.collider.TryGetComponent<WeaponBase>(out var we) && we.GetEntity() == playerBase)).ToArray();
 
@@ -45,7 +46,7 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
-        // 4) °¡Àå °¡±î¿î È÷Æ® ¼±ÅÃ
+        // ê°€ìž¥ ê°€ê¹Œìš´ ëŒ€ìƒì„ í˜„ìž¬ ìƒí˜¸ìž‘ìš© ëŒ€ìƒìœ¼ë¡œ ì„ íƒí•œë‹¤.
         var nearest = filtered.OrderBy(h => h.distance).First();
 
         if (nearest.collider.TryGetComponent<IInteractable>(out var interactable))

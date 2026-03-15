@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// PlayerAttackState ìƒíƒœë¥¼ ì •ì˜í•œë‹¤.
 public class PlayerAttackState : IPlayerState
 {
     public bool CanAttack { get; } = false;
@@ -12,14 +13,11 @@ public class PlayerAttackState : IPlayerState
     private readonly int comboStep;
     private float timer;
 
-    // ÃÖ´ë ÄŞº¸ ´Ü°è
     private const int MaxCombo = 3;
-    // ÄŞº¸ ÀÔ·ÂÀ» Çã¿ëÇÒ ÃÖ´ë ´ë±â ½Ã°£
     private const float ComboWindow = 0.43f;
     private bool tryCombo = false;
-    /// <summary>
-    /// step: ÇöÀç ÄŞº¸ ´Ü°è (1ºÎÅÍ ½ÃÀÛ)
-    /// </summary>
+
+    // í˜„ì¬ ì½¤ë³´ ë‹¨ê³„ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
     public PlayerAttackState(int step = 1)
     {
         comboStep = Mathf.Clamp(step, 1, MaxCombo);
@@ -38,11 +36,11 @@ public class PlayerAttackState : IPlayerState
         timer += Time.deltaTime;
         if (timer < ComboWindow)
         {
-            // (3) ÄŞº¸ À©µµ¿ì ¾È¿¡ °ø°İ ¹öÆ°À» ¶Ç ´©¸£¸é ´ÙÀ½ ÄŞº¸·Î ÀüÈ¯
+            // ì½¤ë³´ ì…ë ¥ ê°€ëŠ¥ ì‹œê°„ ì•ˆì— ê³µê²© ì…ë ¥ì´ ë“¤ì–´ì˜¤ë©´ ë‹¤ìŒ ì½¤ë³´ë¥¼ ì˜ˆì•½í•œë‹¤.
             if (playerController.Input.AttackPressed && comboStep < MaxCombo)
             {
                 tryCombo = true;
-                Debug.Log("ÄŞº¸ ½Ãµµ");
+                Debug.Log("ì½¤ë³´ ì‹œë„");
             }
         }
         else
@@ -50,7 +48,6 @@ public class PlayerAttackState : IPlayerState
             if (tryCombo) playerController.ChangeState(new PlayerAttackState(comboStep + 1));
             else playerController.ChangeState(new PlayerIdleState());
         }
-
     }
 
     public void ExitState(PlayerController playerController)

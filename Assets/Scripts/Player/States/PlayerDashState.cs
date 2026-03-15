@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// PlayerDashState 상태를 정의한다.
 public class PlayerDashState : IPlayerState
 {
     public bool CanAttack { get; } = false;
@@ -22,8 +23,7 @@ public class PlayerDashState : IPlayerState
 
     public void UpdateState(PlayerController playerController)
     {
-        //Debug.Log(playerController.Move.IsDashing);
-        // Once dash coroutine ends, return to Idle
+        // 대시가 끝나면 대기 상태로 복귀한다.
         if (!playerController.Move.IsDashing)
         {
             playerController.ChangeState(new PlayerIdleState());

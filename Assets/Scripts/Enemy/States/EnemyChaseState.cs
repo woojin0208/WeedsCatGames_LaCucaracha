@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 적 추격 상태를 정의한다.
 public class EnemyChaseState : IEnemyState
 {
     private Transform targetPosition;
@@ -30,7 +31,6 @@ public class EnemyChaseState : IEnemyState
         }
         else
         {
-            //Debug.Log(chaseDirection);
             enemyController.Move.Move(chaseDirection);
             enemyController.Anim.Walk(chaseDirection);
         }
@@ -51,6 +51,5 @@ public class EnemyChaseState : IEnemyState
 
     public void ExitState(EnemyController enemyContoller)
     {
-
     }
 }

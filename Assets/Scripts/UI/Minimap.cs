@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// 미니맵 UI를 제어한다.
 public class Minimap : MonoBehaviour
 {
     [SerializeField]

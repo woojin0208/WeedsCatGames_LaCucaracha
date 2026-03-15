@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+
+// 일반 적의 피격과 상태 애니메이션을 처리한다.
 public class EnemyRenderer : AnimationBase
 {   
     public event Action EndHitEvent;
@@ -13,13 +15,6 @@ public class EnemyRenderer : AnimationBase
         base.Awake();
         animator = GetComponent<Animator>();
     }
-
-    /*
-    public void OnAttackTiming(int isAttackTiming)
-    {
-        OnAttackEvenet?.Invoke(isAttackTiming == 1 ? true : false);
-    }
-    */
 
     public void EndHitTiming()
     {

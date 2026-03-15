@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 
+// 시작 컷신 연출을 제어한다.
 public class FirstViewCutScene : MonoBehaviour
 {
     UIManager um;
@@ -32,10 +33,8 @@ public class FirstViewCutScene : MonoBehaviour
         }
         else
         {
-            // �� ��
             um.gameObject.SetActive(false);
         }
-        
     }
 
     private void OnVideoEnd(VideoPlayer vp)

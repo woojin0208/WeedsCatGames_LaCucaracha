@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// PlayerWalkState ìƒíƒœë¥¼ ì •ì˜í•œë‹¤.
 public class PlayerWalkState : IPlayerState
 {
     public bool CanAttack { get; } = true;
@@ -34,39 +35,18 @@ public class PlayerWalkState : IPlayerState
         }
 
         playerController.Anim.Walk(xVelocity);
-        //Debug.Log(xVelocity);
 
         if (wasGrounded && !grounded && !playerController.Input.JumpPressed)
         {
-            //³«ÇÏ
             playerController.ChangeState(new PlayerFallState());
             return;
         }
 
         playerController.Anim.Walk(playerController.Move.HorizontalDirection);
-        /*
-        if (playerController.Input.JumpPressed && playerController.Move.RemainingJumps > 0)
-        {
-            playerController.ChangeState(new PlayerJumpState());
-            return;
-        }
-
-        if (playerController.Input.DashPressed)
-        {
-            playerController.ChangeState(new PlayerDashState());
-            return;
-        }
-
-        if (playerController.Input.AttackPressed)
-        {
-            playerController.ChangeState(new PlayerAttackState());
-            return;
-        }
-        */
         wasGrounded = grounded;
     }
-    public void ExitState(PlayerController playerController) 
-    { 
 
+    public void ExitState(PlayerController playerController)
+    {
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 적 순찰 상태를 정의한다.
 public class EnemyPatrolState : IEnemyState
 {
     public bool CanHitAnim { get; } = true;
@@ -32,7 +33,7 @@ public class EnemyPatrolState : IEnemyState
         }
         else
         {
-            Debug.Log("Ground �߰� ����.");
+            Debug.Log("Ground 발견 못함.");
             enemyController.Move.Move(0);
         }
         enemyController.Anim.Walk(xDirection);
@@ -40,6 +41,5 @@ public class EnemyPatrolState : IEnemyState
 
     public void ExitState(EnemyController enemyController)
     {
-
     }
 }

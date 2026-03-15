@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// 인벤토리 슬롯 아이콘 표시를 담당한다.
 public class InventoryIcon : MonoBehaviour
 {
 
@@ -35,6 +36,5 @@ public class InventoryIcon : MonoBehaviour
         var pointerData = (PointerEventData)eventData;
 
         if (pointerData.button == PointerEventData.InputButton.Left) OnSelect();
-        //else if (pointerData.button == PointerEventData.InputButton.Right) 
     }
 }

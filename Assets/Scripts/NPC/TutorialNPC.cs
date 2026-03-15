@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+// 튜토리얼 NPC 동작을 정의한다.
 public class TutorialNPC : NPCDialogue
 {
     [SerializeField] private EnemyBase enemyBase;
@@ -30,7 +31,6 @@ public class TutorialNPC : NPCDialogue
 
         if (currentTextIndex >= tutorialTexts.Length - 1) NPCStateManager.Instance.SetState(NPCId, NPCState.Completed);
         if (currentTextIndex >= tutorialTexts.Length) currentTextIndex = 0;
-
 
         tutorialText.text = tutorialTexts[currentTextIndex];
         textIndex.text = $"{currentTextIndex + 1} / {tutorialTexts.Length}";

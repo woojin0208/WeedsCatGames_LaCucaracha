@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// 아이템 지급 NPC 동작을 처리한다.
 public class ItemGiver : MonoBehaviour
 {
     [SerializeField] private WeaponBase targetItem;

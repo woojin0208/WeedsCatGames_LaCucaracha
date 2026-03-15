@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Video;
 
+// 엔딩 컷신 연출을 제어한다.
 public class EndCutScene : MonoBehaviour
 {
     [SerializeField] private GameObject[] disableObjs;

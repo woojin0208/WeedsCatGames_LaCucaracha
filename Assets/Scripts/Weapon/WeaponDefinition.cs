@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// Weapon Description UI�� WeaponDefinition
-/// </summary>
-[CreateAssetMenu(fileName = "WeaponDefinition", menuName = "Game/WeaponDefinition")]
+// 무기 정의 데이터를 보관한다.
 public class WeaponDefinition : ScriptableObject
 {
     [field: SerializeField] public Sprite WeaponIcon { get; private set; }

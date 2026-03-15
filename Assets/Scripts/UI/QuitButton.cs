@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 게임 종료 버튼 동작을 처리한다.
 public class QuitButton : MonoBehaviour
 {
     private void OnEnable()

@@ -2,28 +2,31 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
+// ì  ìƒíƒœ ì „ì´ì™€ íƒì§€ ë¡œì§ì„ ì œì–´í•œë‹¤.
 public enum EnemyState { Idle, Patrol, Chase, Attack, Die, Blind }
+
+// ì  ìƒíƒœ ì „ì´ì™€ íƒì§€ ë¡œì§ì„ ì œì–´í•œë‹¤.
 public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandler
 {
     [Header("EnemyAI Setting")]
     [SerializeField]
-    private float detectRange = 3f;         // Player Å½Áö °Å¸®
+    private float detectRange = 3f;
     [SerializeField]
-    private float startDetectPosition = 1;  // Patrol ½Ã ¿¬»ê¿¡ ÇÊ¿äÇÑ º¯¼ö
+    private float startDetectPosition = 1;
 
-    public float MaxChaseDistance { get; } = 5f;   // ÃÖ´ë Ãß°İ °Å¸®. (Å½Áö ½Ã, Å½Áö °Å¸® ¹Û±îÁö Ãß°İ °¡´ÉÇÏµµ·Ï)
-    [SerializeField] private float patrolDistance = 2;       // Patrol °Å¸®
-    [SerializeField] private float attackDistance = 1;       // °ø°İ °Å¸®
-    [SerializeField] private bool hasSpecialAttack;          // Æ¯¼ö°ø°İ Á¸Àç ¿©ºÎ
+    public float MaxChaseDistance { get; } = 5f;
+    [SerializeField] private float patrolDistance = 2;
+    [SerializeField] private float attackDistance = 1;
+    [SerializeField] private bool hasSpecialAttack;
     [SerializeField] private Transform groundCheck;
 
-    [SerializeField] private EnemyState[] blockedStates; // ÃßÈÄ Ãß°¡
+    [SerializeField] private EnemyState[] blockedStates;
 
-    private Transform targetPosition;       // Player Position
+    private Transform targetPosition;
 
-    private float originPosition;           // ±âº» À§Ä¡
-    private float patrolPosition;           // Å½»ö À§Ä¡
-    private float currentStateTime = 0;     //
+    private float originPosition;
+    private float patrolPosition;
+    private float currentStateTime = 0;
     private float attackSpeed = 0;
 
     private float currentAttackTime;
@@ -33,8 +36,8 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
     private EnemyMovement enemyMovement;
     private EnemyRenderer enemyRenderer;
     [field: SerializeField] public float AttackDistance = 1;
-    [field: SerializeField] public float IdleTime { get; private set; } = 3;             // Patrol ½Ã °®´Â Idle ½Ã°£
-    [field: SerializeField] public float PatrolTime { get; private set; } = 3;           // Patorl ½Ã °®´Â Patrol ½Ã°£
+    [field: SerializeField] public float IdleTime { get; private set; } = 3;
+    [field: SerializeField] public float PatrolTime { get; private set; } = 3;
     [field: SerializeField] public int AttackIndex { get; private set; }
     [field: SerializeField] public float AttackTime { get; private set; }
     public MovementAPI Move { get; private set; }
@@ -54,12 +57,10 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         enemyBase.OnDamagedAction += HandleDamaged;
     }
 
-
     private void Start()
     {
         originPosition = transform.position.x;
         patrolPosition = originPosition;
-        //Debug.Log(originPosition);
         ChangeState(new EnemyIdleState());
     }
 
@@ -80,7 +81,7 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
     {
         if (currentState is IEnemyState state)
         {
-            if (state.CanChase) // Ãß°İ °¡´ÉÇÑ »óÅÂ
+            if (state.CanChase)
             {
                 TryDetectTarget();
             }
@@ -107,10 +108,10 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         Vector2 rayDirection = Anim.IsLeft ? Vector2.right : Vector2.left;
 
         RaycastHit2D rayHit = Physics2D.CircleCast(
-            rayOrigin,              // °¨Áö "½ÃÀÛÁ¡"
-            detectRange,            // °¨Áö "¹İÁö¸§"
-            rayDirection,           // °¨Áö "¹æÇâ"
-            detectRange,            // °¨Áö "°Å¸®"
+            rayOrigin,
+            detectRange,
+            rayDirection,
+            detectRange,
             LayerMask.GetMask("Player")
         );
 
@@ -128,11 +129,11 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         rayOrigin.y = groundCheck.position.y;
         Vector2 rayDirection = Anim.IsLeft ? Vector2.left : Vector2.right;
         float rayDistance = groundCheck.position.x - rayOrigin.x;
-        
 
         RaycastHit2D rayHit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, LayerMask.GetMask("Ground"));
 
-        return rayHit.collider != null; // ¶¥ÀÌ ÀÖ´Ù¸é true. ¾ø´Ù¸é false;
+        // ì „ë°© ë ˆì´ìºìŠ¤íŠ¸ì— ë•…ì´ ê°ì§€ë˜ë©´ ê³„ì† ì´ë™ ê°€ëŠ¥í•˜ë‹¤.
+        return rayHit.collider != null;
     }
 
     private void OnDrawGizmosSelected()
@@ -143,10 +144,10 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         Vector2 direction = Anim.IsLeft ? Vector2.right : Vector2.left;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(rayOrigin, detectRange); // ¿ø ½ÃÀÛ ÁöÁ¡
+        Gizmos.DrawWireSphere(rayOrigin, detectRange);
 
         Vector2 endPoint = rayOrigin + direction * detectRange;
-        Gizmos.DrawWireSphere(endPoint, detectRange); // ¿ø ³¡ ÁöÁ¡
+        Gizmos.DrawWireSphere(endPoint, detectRange);
         Gizmos.DrawLine(rayOrigin, endPoint);
     }
 
@@ -180,13 +181,11 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
         switch (effectData.kind)
         {
             case EffectKind.Blind:
-                //StartCoroutine(OnBlindEffect(effectData.duration));
                 break;
             case EffectKind.Damage:
                 break;
             case EffectKind.Slow:
                 StopCoroutine(enemyBase.slowCoroutine);
-                
                 break;
         }
     }
@@ -199,5 +198,4 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
 
         ChangeState(new EnemyIdleState());
     }
-    
 }

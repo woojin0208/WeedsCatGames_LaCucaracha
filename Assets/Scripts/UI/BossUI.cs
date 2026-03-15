@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 보스 체력 UI를 표시한다.
 public class BossUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI bossName;

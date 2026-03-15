@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// 아이템 요구 조건을 검사한다.
 public class ItemRequirementChecker : MonoBehaviour
 {
     [SerializeField] private NPCDialogue currentNPC;
@@ -11,7 +12,6 @@ public class ItemRequirementChecker : MonoBehaviour
 
     public void CheckItem()
     {
-
         Debug.Log("TryCheckItem");
         PlayerManager pm = PlayerManager.Instance;
         WeaponBase currentWeapon = pm.CurrentWeapon;

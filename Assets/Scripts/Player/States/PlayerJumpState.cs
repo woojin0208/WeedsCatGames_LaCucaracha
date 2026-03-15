@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// PlayerJumpState ìƒíƒœë¥¼ ì •ì˜í•œë‹¤.
 public class PlayerJumpState : IPlayerState
 {
     public bool CanAttack => true;
@@ -12,21 +13,21 @@ public class PlayerJumpState : IPlayerState
 
     public void EnterState(PlayerController playerController)
     {
-        // ½ÇÁ¦ Á¡ÇÁ ¼öÇà(Á¡ÇÁ Ä«¿îÆ® ¼Òºñ + »óÇâ ¼Óµµ ¼¼ÆÃ)
+        // ì í”„ ì¹´ìš´íŠ¸ë¥¼ ì†Œë¹„í•˜ê³  ìƒìŠ¹ ì†ë„ë¥¼ ì ìš©í•œë‹¤.
         playerController.playerMovement.OnJump();
         playerController.Anim.Jump(playerController.Move.RemainingJumps);
     }
 
     public void UpdateState(PlayerController playerController)
     {
-        // ÀÌÁßÁ¡ÇÁ
+        // ê³µì¤‘ì—ì„œ ì¶”ê°€ ì í”„ ì…ë ¥ì´ ë“¤ì–´ì˜¤ë©´ ì´ì¤‘ ì í”„ë¥¼ ì²˜ë¦¬í•œë‹¤.
         if (playerController.Input.JumpPressed && playerController.Move.RemainingJumps > 0)
         {
             playerController.ChangeState(new PlayerJumpState());
             return;
         }
 
-        // »ó½Â ¡æ ÇÏ°­ ÀüÀÌ
+        // ìƒìŠ¹ì´ ëë‚˜ë©´ ë‚™í•˜ ìƒíƒœë¡œ ì „í™˜í•œë‹¤.
         if (playerController.Move.Velocity.y <= 0f)
         {
             playerController.ChangeState(new PlayerFallState());
@@ -39,7 +40,8 @@ public class PlayerJumpState : IPlayerState
             playerController.ChangeState(new PlayerIdleState());
             return;
         }
-        // °øÁß ÁÂ¿ì ÀÌµ¿
+
+        // ê³µì¤‘ì—ì„œë„ ì¢Œìš° ì´ë™ì€ ìœ ì§€í•œë‹¤.
         playerController.Move.Move(playerController.Input.Horizontal);
     }
 

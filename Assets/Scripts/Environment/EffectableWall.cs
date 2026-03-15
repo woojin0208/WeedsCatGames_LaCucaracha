@@ -1,14 +1,13 @@
 using UnityEngine;
 
+// 벽 오브젝트 전용 효과 확장 지점을 제공한다.
 public class EffectableWall : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 

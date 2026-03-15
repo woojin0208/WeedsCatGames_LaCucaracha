@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// NPCì˜ ìƒíƒœë¥¼ ì •ì˜í•œë‹¤.
 public enum NPCState
 {
     Completed = 4,
@@ -13,6 +14,7 @@ public enum NPCState
     FirstMeet = 0
 }
 
+// í˜„ì¬ nodeë¥¼ ì •ì˜í•œë‹¤.
 [System.Serializable]
 public struct NodeEvent
 {
@@ -20,25 +22,23 @@ public struct NodeEvent
     public UnityEvent onEnter;
     public UnityEvent onEnd;
 
-    // Ãß°¡: ÀÌ ³ëµå¿¡¼­ÀÇ ¿É¼Ç ÀÌº¥Æ®µé(¿É¼Ç ¼ö/¼ø¼­¿Í ¸ÅÄª)
     public UnityEvent[] optionEvents;
 }
 
+// NPC ëŒ€í™”ì™€ ìƒí˜¸ì‘ìš©ì„ ì²˜ë¦¬í•œë‹¤.
 public class NPCDialogue : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform textPosition;
 
-    // (¼±ÅÃ) ½ºÅ¸Æ® ÀÎµ¦½º·Î ¾²°í ½ÍÀ¸¸é À¯Áö
     [SerializeField] private DialogueNodeData[] dialogueNodeData;
 
-    [Header("Node ¡ê Event Mapping (³ëµå ÂüÁ¶·Î Á÷Á¢ ¸ÅÄª)")]
+    [Header("Node â†” Event Mapping (ë…¸ë“œ ì°¸ì¡°ë¡œ ì§ì ‘ ë§¤ì¹­)")]
     [SerializeField] private NodeEvent[] nodeEvents;
 
     [SerializeField] private UnityEvent[] optionEvents;
 
     [field: SerializeField] public NPCId NPCId { get; private set; }
     [field: SerializeField] public Transform InteractivePos { get; set; }
-
 
     private readonly Dictionary<DialogueNodeData, NodeEvent> _eventMap = new();
 
@@ -60,7 +60,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
                 if (ne.node == null) continue;
                 if (_eventMap.ContainsKey(ne.node))
                 {
-                    Debug.LogWarning($"[NPCDialogue] Áßº¹ ³ëµå µî·Ï: {ne.node.name}", this);
+                    Debug.LogWarning($"[NPCDialogue] ì¤‘ë³µ ë…¸ë“œ ë“±ë¡: {ne.node.name}", this);
                     continue;
                 }
                 _eventMap.Add(ne.node, ne);
@@ -83,7 +83,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         if (npcID == this.NPCId)
         {
             if (isStart) npcAnimator?.SetBool("IsTalk", true);
-            else npcAnimator?.SetBool("IsTalk",false);
+            else npcAnimator?.SetBool("IsTalk", false);
         }
     }
     public virtual void Interactive(PlayerBase _ = null)
@@ -98,7 +98,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
                 this
             );
 
-            // ÀÏÈ¸¼ºÀ¸·Î¸¸ ¾²°í ½Í´Ù¸é null Ã³¸®
+            // ì¼íšŒì„± ì‹œì‘ ë…¸ë“œëŠ” í•œ ë²ˆ ì‚¬ìš© í›„ ë¹„ìš´ë‹¤.
             entry = null;
             return;
         }
@@ -115,7 +115,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
 
         if (start == null)
         {
-            Debug.LogWarning($"[NPCDialogue] ½ÃÀÛ ³ëµå°¡ ºñ¾ú½À´Ï´Ù. state={state}, idx={idx}", this);
+            Debug.LogWarning($"[NPCDialogue] ì‹œì‘ ë…¸ë“œê°€ ë¹„ì—ˆìŠµë‹ˆë‹¤. state={state}, idx={idx}", this);
             return;
         }
 
@@ -141,7 +141,8 @@ public class NPCDialogue : MonoBehaviour, IInteractable
     {
         OnDialogueSignal?.Invoke(); Debug.Log("odk");
     }
-    /// <summary>¿ÜºÎ(¿¹: GuardedEntrance)¿¡¼­ Æ¯Á¤ ³ëµå·Î °­Á¦ ½ÃÀÛ</summary>
+
+    // ì™¸ë¶€ ì‹œìŠ¤í…œì´ íŠ¹ì • ë…¸ë“œë¥¼ ì§ì ‘ ì‹œì‘í•  ë•Œ ì‚¬ìš©í•œë‹¤.
     public void StartDialogueWithNode(DialogueNodeData node, UnityEvent[] overrideOptionEvents = null)
     {
         if (node == null)
@@ -159,7 +160,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         );
     }
 
-    // ---- DialogueManager°¡ È£ÃâÇÏ´Â ÈÅ ----
+    // DialogueManagerê°€ ë…¸ë“œ ì§„ì… ì‹œ í˜¸ì¶œí•˜ëŠ” í›…ì´ë‹¤.
     public void InvokeOnEnter(DialogueNodeData node)
     {
         if (node != null && _eventMap.TryGetValue(node, out var ev))
@@ -168,10 +169,11 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         }
         else
         {
-            Debug.LogWarning($"[NPCDialogue] OnEnter ¸ÅÇÎ ¾øÀ½: {node?.name}", this);
+            Debug.LogWarning($"[NPCDialogue] OnEnter ë§¤í•‘ ì—†ìŒ: {node?.name}", this);
         }
     }
 
+    // DialogueManagerê°€ ë…¸ë“œ ì¢…ë£Œ ì‹œ í˜¸ì¶œí•˜ëŠ” í›…ì´ë‹¤.
     public void InvokeOnEnd(DialogueNodeData node)
     {
         if (node != null && _eventMap.TryGetValue(node, out var ev))
@@ -180,7 +182,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         }
         else
         {
-            Debug.LogWarning($"[NPCDialogue] OnEnd ¸ÅÇÎ ¾øÀ½: {node?.name}", this);
+            Debug.LogWarning($"[NPCDialogue] OnEnd ë§¤í•‘ ì—†ìŒ: {node?.name}", this);
         }
     }
     public UnityEvent[] GetOptionEvents(DialogueNodeData node)
@@ -191,10 +193,11 @@ public class NPCDialogue : MonoBehaviour, IInteractable
                 if (nodeEvents[i].node == node)
                     return nodeEvents[i].optionEvents;
         }
-        return optionEvents; // µî·Ï ¾È ÇßÀ¸¸é °ø¿ë ¹è¿­ »ç¿ë(¼±ÅÃ)
+        // ë…¸ë“œë³„ ë“±ë¡ì´ ì—†ìœ¼ë©´ ê³µìš© ì„ íƒì§€ ì´ë²¤íŠ¸ ë°°ì—´ì„ ì‚¬ìš©í•œë‹¤.
+        return optionEvents;
     }
 
-    // ---- »óÅÂ ÇïÆÛ ----
+    // ìƒíƒœ ë³€ê²½ í—¬í¼ë¥¼ ì œê³µí•œë‹¤.
     public void SetState(NPCState s)
         => NPCStateManager.Instance.SetState(NPCId, s);
 

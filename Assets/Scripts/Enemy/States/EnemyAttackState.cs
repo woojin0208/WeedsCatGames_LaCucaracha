@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 적 공격 상태를 정의한다.
 public class EnemyAttackState : IEnemyState
 {
     public bool CanHitAnim { get; } = false;
@@ -30,6 +31,4 @@ public class EnemyAttackState : IEnemyState
         enemyController.Anim.Attack(0);
         enemyController.CurrentAttackTime = Time.time;
     }
-
-
 }
