@@ -40,37 +40,71 @@ public class DialogueManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (waitingForLine && Input.GetKeyUp(KeyCode.Space))
-        {
-            waitingForLine = false;
-            ShowNextLine();
-            return;
-        }
-        else if (waitingForOption && (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)))
-        {
-            waitingForOption = false;
-            SelectOption(pendingOptionIndex);
-            return;
-        }
+        SetInputEventSubscription(true);
+    }
 
-        // 위아래 입력으로 현재 선택지를 이동한다.
-        if (waitingForOption && Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            pendingOptionIndex = Mathf.Max(0, pendingOptionIndex - 1);
-            dialogueUI.HighlightOption(pendingOptionIndex);
-        }
-        if (waitingForOption && Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            pendingOptionIndex = Mathf.Min(currentNode.options.Length - 1, pendingOptionIndex + 1);
-            dialogueUI.HighlightOption(pendingOptionIndex);
-        }
+    private void OnDisable()
+    {
+        SetInputEventSubscription(false);
+    }
+
+    private void SetInputEventSubscription(bool isSubscribe)
+    {
+        InputStateManager manager = InputStateManager.Instance;
+        if (manager == null) return;
+
+        manager.DialogueNextRequested -= HandleDialogueNextRequested;
+        manager.DialogueSubmitRequested -= HandleDialogueSubmitRequested;
+        manager.DialogueUpRequested -= HandleDialogueUpRequested;
+        manager.DialogueDownRequested -= HandleDialogueDownRequested;
+
+        if (!isSubscribe) return;
+
+        manager.DialogueNextRequested += HandleDialogueNextRequested;
+        manager.DialogueSubmitRequested += HandleDialogueSubmitRequested;
+        manager.DialogueUpRequested += HandleDialogueUpRequested;
+        manager.DialogueDownRequested += HandleDialogueDownRequested;
+    }
+
+    private void HandleDialogueNextRequested()
+    {
+        if (!waitingForLine) return;
+
+        waitingForLine = false;
+        ShowNextLine();
+    }
+
+    private void HandleDialogueSubmitRequested()
+    {
+        if (!waitingForOption) return;
+
+        waitingForOption = false;
+        SelectOption(pendingOptionIndex);
+    }
+
+    private void HandleDialogueUpRequested()
+    {
+        if (!waitingForOption || currentNode == null) return;
+
+        pendingOptionIndex = Mathf.Max(0, pendingOptionIndex - 1);
+        dialogueUI.HighlightOption(pendingOptionIndex);
+    }
+
+    private void HandleDialogueDownRequested()
+    {
+        if (!waitingForOption || currentNode == null || currentNode.options == null) return;
+
+        pendingOptionIndex = Mathf.Min(currentNode.options.Length - 1, pendingOptionIndex + 1);
+        dialogueUI.HighlightOption(pendingOptionIndex);
     }
 
     public void StartDialogue(DialogueNodeData dialogue, UnityEvent[] events,
                               Transform target, NPCId npcId, NPCDialogue hook)
     {
+        SetInputEventSubscription(true);
+        InputStateManager.Instance?.ChangeState(InputStateType.Dialogue);
         StartDialogueAction?.Invoke(npcId, true);
         currentNode = dialogue;
         optionEvents = events;
@@ -169,10 +203,16 @@ public class DialogueManager : MonoBehaviour
         currentNode = null;
         waitingForLine = waitingForOption = false;
         hookOwner = null;
+        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
     }
 
     public void CloseDialogue()
     {
         dialogueUI.gameObject.SetActive(false);
+        waitingForLine = false;
+        waitingForOption = false;
+        currentNode = null;
+        hookOwner = null;
+        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
     }
 }

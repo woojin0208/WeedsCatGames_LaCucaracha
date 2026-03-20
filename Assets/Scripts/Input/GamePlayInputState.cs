@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-// 게임플레이 상태에서 사용하는 입력 조회를 담당한다.
 public class GameplayInputState : IInputState
 {
     private readonly KeyBindingData keyBindingData;
+    private int blockedUntilFrame = -1;
 
     public InputStateType StateType => InputStateType.Gameplay;
 
@@ -13,19 +12,29 @@ public class GameplayInputState : IInputState
         this.keyBindingData = keyBindingData;
     }
 
-    public float Horizontal =>
-        Input.GetKey(keyBindingData.keys[(int)KeyType.Left]) ? -1f :
-        Input.GetKey(keyBindingData.keys[(int)KeyType.Right]) ? 1f : 0f;
+    public void BlockInputThisFrame()
+    {
+        blockedUntilFrame = Time.frameCount;
+    }
 
-    public bool JumpPressed => Input.GetKeyDown(keyBindingData.keys[(int)KeyType.Jump]);
-    public bool DashPressed => Input.GetKeyDown(keyBindingData.keys[(int)KeyType.Dash]);
-    public bool AttackPressed => Input.GetKeyDown(keyBindingData.keys[(int)KeyType.Attack]);
-    public bool InteractPressed => Input.GetKeyDown(keyBindingData.keys[(int)KeyType.Interaction]);
-    public bool ThrowPressed => Input.GetKeyDown(keyBindingData.keys[(int)KeyType.Throw]);
-    public bool PausePressed => Input.GetKeyDown(KeyCode.Escape);
+    private bool IsBlockedThisFrame => Time.frameCount <= blockedUntilFrame;
+
+    public float Horizontal =>
+        IsBlockedThisFrame ? 0f :
+        Input.GetKey(keyBindingData.GetGameplayKey(KeyType.Left)) ? -1f :
+        Input.GetKey(keyBindingData.GetGameplayKey(KeyType.Right)) ? 1f : 0f;
+
+    public bool JumpPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Jump));
+    public bool DashPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Dash));
+    public bool AttackPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Attack));
+    public bool InteractPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Interaction));
+    public bool ThrowPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Throw));
+    public bool PausePressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetPauseKey());
 
     public int GetSelectWeaponNumber()
     {
+        if (IsBlockedThisFrame) return -1;
+
         int maxCount = PlayerManager.Instance.MaxWeaponCount;
         for (int i = 0; i < maxCount; i++)
         {
@@ -39,7 +48,7 @@ public class GameplayInputState : IInputState
     {
         get
         {
-            Vector2 screenPosition = Mouse.current.position.ReadValue();
+            Vector2 screenPosition = Input.mousePosition;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
             worldPosition.z = 0f;
             return worldPosition;

@@ -5526,6 +5526,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitColor: {r: 1, g: 0.6650944, b: 0.6650944, a: 1}
+  vfxPlayer: {fileID: 0}
+  hitSoundNum: 3
+  dieSoundNum: 0
 --- !u!212 &1292173876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8127,8 +8130,8 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2396179003909319620, guid: 7616885b51a55a046a9086ff41884da2, type: 3}
-      propertyPath: m_LocalPosition.x
+      - target: {fileID: 2396179003909319620, guid: 7616885b51a55a046a9086ff41884da2, type: 3}
+        propertyPath: m_LocalPosition.x
       value: 1.16
       objectReference: {fileID: 0}
     - target: {fileID: 2396179003909319620, guid: 7616885b51a55a046a9086ff41884da2, type: 3}

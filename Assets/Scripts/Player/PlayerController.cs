@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerController : StateMachine<PlayerController>, IStatusEffectHandler
 {
 
-    [SerializeField] private KeyBindingData keyBindingData;
     [SerializeField] private Transform textPosition;
     public MovementAPI Move { get; private set; }
     public PlayerAnimationAPI Anim { get; private set; }
@@ -30,7 +29,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         var movement = GetComponent<PlayerMovement>();
         Move = new MovementAPI(movement, movement as IDashable);
         Anim = new PlayerAnimationAPI(GetComponentInChildren<PlayerRenderer>());
-        Input = new GameplayInputState(keyBindingData);
 
         playerMovement = GetComponent<PlayerMovement>();
         playerInteraction = GetComponentInChildren<PlayerInteraction>();
@@ -40,6 +38,22 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
     private void Start()
     {
+        InputStateManager manager = InputStateManager.Instance;
+        if (manager == null)
+        {
+            Debug.LogError("PlayerController requires InputStateManager.");
+            enabled = false;
+            return;
+        }
+
+        Input = manager.GameplayState;
+        if (Input == null)
+        {
+            Debug.LogError("PlayerController requires GameplayInputState.");
+            enabled = false;
+            return;
+        }
+
         // 씬 전환 이후 현재 장착 무기를 다시 연결한다.
         PlayerManager.Instance.Init(this);
 
@@ -64,7 +78,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
         Debug.Log(currentState);
     }
-
 
     public bool IsGrounded => playerMovement.IsGrounded;
 
@@ -222,3 +235,4 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         return false;
     }
 }
+

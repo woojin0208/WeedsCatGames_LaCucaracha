@@ -12,4 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb15bff7e36295458a2408cf0bc8ca6, type: 3}
   m_Name: KeyBindingData
   m_EditorClassIdentifier: 
-  keys: 640000006100000073000000110100001201000014010000130100001301000013010000
+  gameplay:
+    attack: 323
+    jump: 32
+    dash: 304
+    up: 119
+    down: 115
+    left: 97
+    right: 100
+    throwKey: 324
+    interaction: 101
+  pause:
+    pause: 27
+  dialogue:
+    next: 32
+    submit: 13
+    up: 119
+    down: 115
+  cutscene:
+    skip: 32

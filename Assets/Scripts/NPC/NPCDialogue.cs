@@ -70,12 +70,24 @@ public class NPCDialogue : MonoBehaviour, IInteractable
 
     private void OnEnable()
     {
-        DialogueManager.Instance.StartDialogueAction += DialogueAnim; 
+        SetDialogueEventSubscription(true);
     }
 
     private void OnDisable()
     {
-        DialogueManager.Instance.StartDialogueAction -= DialogueAnim;
+        SetDialogueEventSubscription(false);
+    }
+
+    private void SetDialogueEventSubscription(bool isSubscribe)
+    {
+        DialogueManager manager = DialogueManager.Instance;
+        if (manager == null) return;
+
+        manager.StartDialogueAction -= DialogueAnim;
+        if (isSubscribe)
+        {
+            manager.StartDialogueAction += DialogueAnim;
+        }
     }
 
     private void DialogueAnim(NPCId npcID, bool isStart)

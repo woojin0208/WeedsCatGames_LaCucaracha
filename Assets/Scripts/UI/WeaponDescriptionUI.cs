@@ -19,11 +19,6 @@ public class WeaponDescriptionUI : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)) gameObject.SetActive(false);
-    }
-
     // 무기 정의 데이터를 UI에 표시한다.
     public void ViewDescription(WeaponBase weapon)
     {

@@ -670,7 +670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e0ab01b0d1b1045a97c650541f231e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyBindingData: {fileID: 11400000, guid: a6c9affcdb8b50f4492f5a54062fcfd3, type: 2}
   textPosition: {fileID: 2494156051932627325}
 --- !u!61 &8357937535413517801
 BoxCollider2D:

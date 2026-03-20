@@ -1938,7 +1938,6 @@ MonoBehaviour:
   - {fileID: 9001917997780621217}
   - {fileID: 5227680052613211772}
   - {fileID: 1498557567777211110}
-  keyBindingData: {fileID: 11400000, guid: a6c9affcdb8b50f4492f5a54062fcfd3, type: 2}
 --- !u!1 &2828306165817343203
 GameObject:
   m_ObjectHideFlags: 0

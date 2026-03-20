@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private WeaponDescriptionUI weaponDescriptionUI;
 
     public bool canViewVideo = false;
+    private bool isPauseInputSubscribed;
 
     private void Awake()
     {
@@ -40,22 +41,21 @@ public class UIManager : MonoBehaviour
         inventoryUI.SetActive(true);
     }
 
+    private void OnEnable()
+    {
+        SetInputEventSubscription(true);
+    }
+
+    private void OnDisable()
+    {
+        SetInputEventSubscription(false);
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!isPauseInputSubscribed)
         {
-            if (dialogueUI.gameObject.activeSelf || minimap.activeSelf) return;
-            if (settingPanel.activeSelf || controlSettingPanel.activeSelf) return;
-            if (quitImage.activeSelf)
-            {
-                quitImage.SetActive(false);
-                return;
-            }
-            if (pausePanel.activeSelf)
-            {
-                ExitSetting();
-            }
-            else OpenPause();
+            SetInputEventSubscription(true);
         }
 
         if (Time.timeScale == 0)
@@ -65,22 +65,68 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void SetInputEventSubscription(bool isSubscribe)
+    {
+        InputStateManager manager = InputStateManager.Instance;
+        if (manager == null) return;
+
+        if (isSubscribe)
+        {
+            manager.PauseToggleRequested -= TryTogglePause;
+            manager.PauseToggleRequested += TryTogglePause;
+            isPauseInputSubscribed = true;
+        }
+        else
+        {
+            manager.PauseToggleRequested -= TryTogglePause;
+            isPauseInputSubscribed = false;
+        }
+    }
+
+    private void TryTogglePause()
+    {
+        if (dialogueUI.gameObject.activeSelf || minimap.activeSelf) return;
+        if (settingPanel.activeSelf || controlSettingPanel.activeSelf) return;
+        if (weaponDescriptionUI != null && weaponDescriptionUI.gameObject.activeSelf)
+        {
+            weaponDescriptionUI.gameObject.SetActive(false);
+            return;
+        }
+
+        if (quitImage.activeSelf)
+        {
+            quitImage.SetActive(false);
+            return;
+        }
+
+        if (pausePanel.activeSelf)
+        {
+            ExitSetting();
+            return;
+        }
+
+        OpenPause();
+    }
+
     public void OpenPause()
     {
         pausePanel.SetActive(true);
         Time.timeScale = 0;
+        InputStateManager.Instance?.ChangeState(InputStateType.Pause);
     }
 
     public void ExitSetting()
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
+        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
     }
 
     public void ClickContinue()
     {
         ClickSettingUI(pausePanel);
         Time.timeScale = 1f;
+        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
     }
 
     public void ClickRestart()
@@ -121,6 +167,7 @@ public class UIManager : MonoBehaviour
     public void OnPausePanel()
     {
         pausePanel.SetActive(true);
+        InputStateManager.Instance?.ChangeState(InputStateType.Pause);
     }
 
     public void CloseScene()
@@ -154,7 +201,7 @@ public class UIManager : MonoBehaviour
 
             Vector3 screenPoint = interactive != null ?
                 Camera.main.WorldToScreenPoint(interactive.position)
-                : Camera.main.WorldToScreenPoint(target.position + new Vector3(0, 50, 0));
+                : Camera.main.WorldToScreenPoint(target.position + new Vector3(0, 50, 0)); // interactive UI 표시 offset
 
             interactiveImage.position = screenPoint;
         }
