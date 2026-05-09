@@ -6,16 +6,32 @@ using UnityEngine.UI;
 public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image selectedBar;
+    private bool isPointerEnabled = true;
+
+    public void SetSelected(bool isSelected)
+    {
+        if (selectedBar != null)
+            selectedBar.gameObject.SetActive(isSelected);
+    }
+
+    public void SetPointerEnabled(bool isEnabled)
+    {
+        isPointerEnabled = isEnabled;
+        if (!isPointerEnabled)
+        {
+            SetSelected(false);
+        }
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (selectedBar != null)
-            selectedBar.gameObject.SetActive(true);
+        if (!isPointerEnabled) return;
+        SetSelected(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (selectedBar != null)
-            selectedBar.gameObject.SetActive(false);
+        if (!isPointerEnabled) return;
+        SetSelected(false);
     }
 }

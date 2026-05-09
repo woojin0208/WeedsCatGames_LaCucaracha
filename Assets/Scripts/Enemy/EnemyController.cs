@@ -166,6 +166,11 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
             case EffectKind.Damage:
                 break;
             case EffectKind.Slow:
+                if (enemyBase.slowCoroutine != null)
+                {
+                    StopCoroutine(enemyBase.slowCoroutine);
+                }
+
                 enemyBase.slowCoroutine = StartCoroutine(enemyBase.OnSlowEffect(effectData.duration, effectData.rate));
                 break;
         }
@@ -185,7 +190,11 @@ public class EnemyController : StateMachine<EnemyController>, IStatusEffectHandl
             case EffectKind.Damage:
                 break;
             case EffectKind.Slow:
-                StopCoroutine(enemyBase.slowCoroutine);
+                if (enemyBase.slowCoroutine != null)
+                {
+                    StopCoroutine(enemyBase.slowCoroutine);
+                    enemyBase.slowCoroutine = null;
+                }
                 break;
         }
     }

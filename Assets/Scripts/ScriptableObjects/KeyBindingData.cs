@@ -115,3 +115,4 @@ public class KeyBindingData : ScriptableObject
 
     public KeyCode GetCutsceneSkipKey() => cutscene.Skip;
 }
+ 

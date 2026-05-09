@@ -1,10 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 인벤토리 UI 표시와 선택 상태를 관리한다.
+// ?몃깽?좊━ UI ?쒖떆? ?좏깮 ?곹깭瑜?愿由ы븳??
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private Transform weaponIconParent;
@@ -20,9 +21,36 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI slotIndex;
     private PlayerManager PM;
     private Transform[] currentSlots = new Transform[] { };
+    private bool slotsReady;
 
     private void Start()
     {
+        EnsureSlots();
+        RefreshInventory();
+    }
+
+    private void OnEnable()
+    {
+        if (PM == null) PM = PlayerManager.Instance;
+
+        if (PM != null) PM.OnChangedWeapon += HandleChangeWeapon;
+        if (GameManager.Instance != null) GameManager.Instance.SceneChangeAction += HandleChangeScene;
+
+        StartCoroutine(RefreshInventoryNextFrame());
+    }
+
+    private void OnDisable()
+    {
+        if (PM != null) PM.OnChangedWeapon -= HandleChangeWeapon;
+        if (GameManager.Instance != null) GameManager.Instance.SceneChangeAction -= HandleChangeScene;
+    }
+
+    private void EnsureSlots()
+    {
+        if (slotsReady) return;
+        if (PM == null) PM = PlayerManager.Instance;
+        if (PM == null) return;
+
         currentSlots = new Transform[PM.MaxWeaponCount];
 
         for (int i = 0; i < currentSlots.Length; i++)
@@ -34,53 +62,43 @@ public class InventoryUI : MonoBehaviour
             currentSlots[i] = slotClone.transform;
         }
 
-        InitInventory();
+        slotsReady = true;
     }
 
-    private void OnEnable()
+    private IEnumerator RefreshInventoryNextFrame()
     {
-        if (PM == null) PM = PlayerManager.Instance;
-
-        PM.OnChangedWeapon += HandleChangeWeapon;
-        GameManager.Instance.SceneChangeAction += HandleChangeScene;
+        yield return null;
+        RefreshInventory();
     }
 
-    private void InitInventory()
+    private void RefreshInventory()
     {
-        if (PM.HasWeapons.Count < 1) return;
-        for (int i = 0; i < PM.HasWeapons.Count; i++)
+        EnsureSlots();
+        if (!slotsReady || PM == null || PM.HasWeapons.Count < 1) return;
+
+        for (int i = 0; i < currentSlots.Length; i++)
         {
-            var wi = PM.HasWeapons[i];
-            var iconGO = Instantiate(weaponIconsPrefab, currentSlots[i]);
-
-            Debug.Log(wi.WeaponName);
-#nullable disable
-            WeaponBase? weaponBase = weaponData.GetCurrentWeaponData(wi.WeaponName);
-            Sprite weaponSprite = weaponBase.WeaponDefinition.WeaponIcon;
-
-            if (weaponSprite != null)
-            {
-                iconGO.sprite = weaponSprite;
-                iconGO.TryGetComponent<InventoryIcon>(out var icon);
-                icon.SetWeapon(weaponBase, PM.HasWeapons[i].Durability);
-            }
-            else
-                iconGO.enabled = false;
+            UpdateSlot(i);
         }
 
-        List<WeaponInstance> hasWeapons = PM.HasWeapons.ToList();
+        if (PM.CurrentWeapon == null) return;
 
-        int idx = hasWeapons.FindIndex(w => w.Id == PM.CurrentWeapon.InstanceId);
-        if (idx < 1) return;
-        selectWeaponIcon.gameObject.SetActive(true);
-        selectWeaponIcon.transform.parent = currentSlots[idx];
+        List<WeaponInstance> hasWeapons = PM.HasWeapons.ToList();
+        int idx = hasWeapons.FindIndex(w => w != null && w.Id == PM.CurrentWeapon.InstanceId);
+        if (idx < 0) return;
+
+        SelectWeapon(idx);
     }
 
     private void SelectWeapon(int weaponNum)
     {
+        if (currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length) return;
+
         bool select = false;
         foreach (Transform currentSlot in currentSlots)
         {
+            if (currentSlot == null) continue;
+
             Image slotImage = currentSlot.GetComponent<Image>();
 
             if (currentSlot == currentSlots[weaponNum])
@@ -100,10 +118,20 @@ public class InventoryUI : MonoBehaviour
         selectWeaponIcon.gameObject.SetActive(select);
     }
 
-    // 무기 목록 변경 사항을 인벤토리 UI에 반영한다.
+    // 臾닿린 紐⑸줉 蹂寃??ы빆???몃깽?좊━ UI??諛섏쁺?쒕떎.
     private void HandleChangeWeapon(int weaponNum)
     {
+        EnsureSlots();
         if (PM == null || currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length) return;
+
+        UpdateSlot(weaponNum);
+        SelectWeapon(weaponNum);
+    }
+
+    private void UpdateSlot(int weaponNum)
+    {
+        if (PM == null || currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length) return;
+        if (weaponNum >= PM.HasWeapons.Count) return;
         if (weaponData == null) { Debug.LogWarning("weaponData is null"); return; }
 
         var slot = currentSlots[weaponNum];
@@ -112,7 +140,6 @@ public class InventoryUI : MonoBehaviour
         var childIcon = slot.GetComponentInChildren<InventoryIcon>(true);
         var inst = PM.HasWeapons[weaponNum];
 
-        SelectWeapon(weaponNum);
         if (inst == null)
         {
             if (childIcon != null) Destroy(childIcon.gameObject);

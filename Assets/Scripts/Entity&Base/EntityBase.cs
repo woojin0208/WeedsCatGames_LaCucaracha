@@ -11,8 +11,14 @@ public class EntityBase : MonoBehaviour
     private bool isDead => Stats.HPStat != null && Mathf.Approximately(Stats.HPStat.Value, 0f);
 
     public Coroutine slowCoroutine { get; set; }
+    private MovementBase movement;
     
     public event Action OnDiedAction;
+
+    protected virtual void Awake()
+    {
+        movement = GetComponent<MovementBase>();
+    }
 
     public virtual void TakeDamage(float damage)
     {
@@ -37,15 +43,18 @@ public class EntityBase : MonoBehaviour
 
     public IEnumerator OnSlowEffect(float duration, float rate)
     {
-        float bonusSpeed = stats.GetStat(StatType.MoveSpeed).DefaultValue * (rate / 100f);
+        Stat moveSpeed = stats.GetStat(StatType.MoveSpeed);
+        float bonusSpeed = moveSpeed.DefaultValue * (rate / 100f);
         try
         {
-            stats.GetStat(StatType.MoveSpeed).BonusValue -= bonusSpeed;
+            moveSpeed.BonusValue -= bonusSpeed;
+            movement?.SetMoveSpeed(moveSpeed.Value);
             yield return new WaitForSeconds(duration);
         }
         finally
         {
-            stats.GetStat(StatType.MoveSpeed).BonusValue -= bonusSpeed; ;
+            moveSpeed.BonusValue += bonusSpeed;
+            movement?.SetMoveSpeed(moveSpeed.Value);
         }
         
     }

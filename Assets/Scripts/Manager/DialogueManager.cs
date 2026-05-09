@@ -156,10 +156,11 @@ public class DialogueManager : MonoBehaviour
             {
                 optionEvents = hookOwner?.GetOptionEvents(currentNode) ?? optionEvents;
                 var only = opts[0];
-                dialogueUI.ShowOption(new List<string> { only.label }, idx => SelectOption(idx));
+                dialogueUI.ShowOption(new List<string> { only.label });
 
                 pendingOptionIndex = 0;
                 waitingForOption = true;
+                dialogueUI.HighlightOption(pendingOptionIndex);
             }
             else
             {
@@ -167,7 +168,8 @@ public class DialogueManager : MonoBehaviour
                 for (int i = 0; i < opts.Length; i++) labels.Add(opts[i].label);
 
                 pendingOptionIndex = 0;
-                dialogueUI.ShowOption(labels, idx => SelectOption(idx));
+                waitingForOption = true;
+                dialogueUI.ShowOption(labels);
                 dialogueUI.HighlightOption(pendingOptionIndex);
             }
         }

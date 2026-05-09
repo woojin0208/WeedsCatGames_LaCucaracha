@@ -10,8 +10,10 @@ public class PlayerBase : EntityBase
     private PlayerController playerController;
     private PlayerAttack playerAttack;
     private PlayerRenderer playerRenderer;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         playerMovement = GetComponent<PlayerMovement>();
         playerController = GetComponent<PlayerController>();
         playerAttack = GetComponentInChildren<PlayerAttack>();
@@ -61,6 +63,8 @@ public class PlayerBase : EntityBase
 
     public override void TakeDamage(float damage)
     {
+        if (playerMovement != null && playerMovement.IsDashing) return;
+
         base.TakeDamage(damage);
         OnHitAction?.Invoke();
 

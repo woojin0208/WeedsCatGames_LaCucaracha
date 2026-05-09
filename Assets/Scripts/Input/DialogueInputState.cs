@@ -13,6 +13,6 @@ public class DialogueInputState : IInputState
 
     public bool NextPressed => Input.GetKeyDown(keyBindingData.GetDialogueNextKey());
     public bool SubmitPressed => Input.GetKeyDown(keyBindingData.GetDialogueSubmitKey());
-    public bool UpPressed => Input.GetKeyDown(keyBindingData.GetDialogueUpKey());
-    public bool DownPressed => Input.GetKeyDown(keyBindingData.GetDialogueDownKey());
+    public bool UpPressed => Input.GetKeyDown(keyBindingData.GetDialogueUpKey()) || Input.GetKeyDown(KeyCode.UpArrow);
+    public bool DownPressed => Input.GetKeyDown(keyBindingData.GetDialogueDownKey()) || Input.GetKeyDown(KeyCode.DownArrow);
 }

@@ -142,6 +142,11 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
     }
     public void TryThrow(Vector2 throwPosition)
     {
+        if (!canThrow)
+        {
+            return;
+        }
+
         if (PlayerManager.Instance.CurrentWeapon == null)
         {
             return;
@@ -177,6 +182,11 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
                 }
                 break;
             case EffectKind.Slow:
+                if (playerBase.slowCoroutine != null)
+                {
+                    StopCoroutine(playerBase.slowCoroutine);
+                }
+
                 playerBase.slowCoroutine = StartCoroutine(playerBase.OnSlowEffect(effectData.duration, effectData.rate));
                 break;
             case EffectKind.Damage:
@@ -195,7 +205,11 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
                 ChangeState(new PlayerFallState());
                 break;
             case EffectKind.Slow:
-                StopCoroutine(playerBase.slowCoroutine);
+                if (playerBase.slowCoroutine != null)
+                {
+                    StopCoroutine(playerBase.slowCoroutine);
+                    playerBase.slowCoroutine = null;
+                }
                 break;
             case EffectKind.Damage:
                 break;

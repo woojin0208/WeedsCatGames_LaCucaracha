@@ -11,8 +11,10 @@ public class EnemyBase : EntityBase
     private EnemyAttack enemyAttack;
     private EnemyController enemyController;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         enemyMovement = GetComponent<EnemyMovement>();
         enemyRenderer = GetComponentInChildren<EnemyRenderer>();
         enemyAttack = GetComponentInChildren<EnemyAttack>();

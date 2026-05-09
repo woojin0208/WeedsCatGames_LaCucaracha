@@ -40,6 +40,12 @@ public abstract class MovementBase : MonoBehaviour, IMovement
         rigidbody2D.velocity = Vector2.zero;
     }
 
+    public virtual void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+        walkSpeed = speed;
+    }
+
     public virtual void Move(float x) => OnMovement(x, false);
     public virtual void Idle() => OnMovement(0, false);
 

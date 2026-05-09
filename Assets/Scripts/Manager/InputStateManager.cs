@@ -101,6 +101,7 @@ public class InputStateManager : MonoBehaviour
                 {
                     DialogueNextRequested?.Invoke();
                 }
+
                 else if (submitPressed)
                 {
                     DialogueSubmitRequested?.Invoke();

@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour
     // 입력으로 지정한 슬롯의 무기를 장착한다.
     public void ChangeWeapon(int weaponNum)
     {
-        if (weaponNum < 0 || weaponNum > PM.MaxWeaponCount) return;
+        if (weaponNum < 0 || weaponNum >= PM.MaxWeaponCount) return;
 
         WeaponInstance instance = PM.HasWeapons[weaponNum];
         if (instance == null) return;

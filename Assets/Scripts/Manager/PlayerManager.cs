@@ -56,7 +56,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(CurrentEquipId))
         {
-            WeaponInstance instance = hasWeapons.FirstOrDefault(w => w.Id == CurrentEquipId);
+            WeaponInstance instance = hasWeapons.FirstOrDefault(w => w != null && w.Id == CurrentEquipId);
             if (instance != null)
             {
                 GetWeapon(instance);
@@ -116,7 +116,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public bool UpdateWeapon(string id, int dur, int amount)
     {
-        int idx = hasWeapons.FindIndex(w => w.Id == id);
+        int idx = hasWeapons.FindIndex(w => w != null && w.Id == id);
         if (idx < 0) return false;
 
         var w = hasWeapons[idx];

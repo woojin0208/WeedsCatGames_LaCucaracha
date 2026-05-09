@@ -38,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
 
         // 직전에 상호작용한 자기 무기는 후보에서 제외한다.
         var filtered = hits
-            .Where(h => !(h.collider.TryGetComponent<WeaponBase>(out var we) && we.GetEntity() == playerBase)).ToArray();
+            .Where(h => !IsEquippedPlayerWeapon(h.collider)).ToArray();
 
         if (filtered.Length == 0)
         {
@@ -74,5 +74,12 @@ public class PlayerInteraction : MonoBehaviour
         currentInteractable = null;
         nearestInteractDistance = float.MaxValue;
         UIManager.Instance.CanInteraction(false);
+    }
+
+    private bool IsEquippedPlayerWeapon(Collider2D collider)
+    {
+        if (!collider.TryGetComponent<WeaponBase>(out var weapon)) return false;
+
+        return weapon.GetEntity() == playerBase || weapon.transform.IsChildOf(playerBase.transform);
     }
 }

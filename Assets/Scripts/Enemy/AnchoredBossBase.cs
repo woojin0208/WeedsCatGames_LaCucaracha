@@ -12,8 +12,10 @@ public class AnchoredBossBase : EntityBase
     private AnchoredBossController bossController;
     [SerializeField] private BossUI bossUI;
     [SerializeField] private BGMPlayer bgmPlayer;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         enemyMovement = GetComponent<EnemyMovement>();
         bossRenderer = GetComponentInChildren<AnchoredBossRenderer>();
         enemyAttack = GetComponentInChildren<EnemyAttack>();
