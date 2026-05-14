@@ -11,5 +11,8 @@ public class PauseInputState : IInputState
         this.keyBindingData = keyBindingData;
     }
 
-    public bool ResumePressed => Input.GetKeyDown(keyBindingData.GetPauseKey());
+    public bool ResumePressed => keyBindingData.GetPauseBinding().GetKeyDown();
+    public bool UpPressed => keyBindingData.GetPauseUpBinding().GetKeyDown();
+    public bool DownPressed => keyBindingData.GetPauseDownBinding().GetKeyDown();
+    public bool SubmitPressed => keyBindingData.GetPauseSubmitBinding().GetKeyDown();
 }

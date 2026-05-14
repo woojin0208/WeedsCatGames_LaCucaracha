@@ -47,14 +47,25 @@ public class InputStateManager : MonoBehaviour
 
     // Gameplay/Pause 상태에서 Pause 토글 요청을 발행한다.
     public event Action PauseToggleRequested;
-    // Dialogue 상태에서 다음 대사 진행 요청을 발행한다.
-    public event Action DialogueNextRequested;
-    // Dialogue 상태에서 선택 확정 요청을 발행한다.
-    public event Action DialogueSubmitRequested;
+
+    // Pause 상태에서 위 선택 이동 요청을 발행한다.
+    public event Action PauseUpPressedRequested;
+
+    // Pause 상태에서 아래 선택 이동 요청을 발행한다.
+    public event Action PauseDownPressedRequested;
+
+    // Pause 상태에서 선택 확정 요청을 발행한다.
+    public event Action PauseSubmitPressedRequested;
+
+    // Dialogue 상태에서 다음 대사 진행 및 선택 확정 요청을 발행한다.
+    public event Action DialogueConfirmRequested;
+
     // Dialogue 상태에서 위 선택 이동 요청을 발행한다.
     public event Action DialogueUpRequested;
+
     // Dialogue 상태에서 아래 선택 이동 요청을 발행한다.
     public event Action DialogueDownRequested;
+
     // CutScene 상태에서 스킵 요청을 발행한다.
     public event Action CutsceneSkipRequested;
 
@@ -85,27 +96,40 @@ public class InputStateManager : MonoBehaviour
                 break;
 
             case InputStateType.Pause:
-                if (PauseState != null && PauseState.ResumePressed)
+                if (PauseState == null) break;
+                else if (PauseState.ResumePressed)
                 {
                     PauseToggleRequested?.Invoke();
+                }
+
+                bool upPressed = PauseState.UpPressed;
+                bool downPressed = PauseState.DownPressed;
+                bool pauseSubmitPressed = PauseState.SubmitPressed;
+
+                if (upPressed)
+                {
+                    PauseUpPressedRequested?.Invoke();
+                }
+                if (downPressed)
+                {
+                    PauseDownPressedRequested?.Invoke();
+                }
+                if (pauseSubmitPressed)
+                {
+                    PauseSubmitPressedRequested?.Invoke();
                 }
                 break;
 
             case InputStateType.Dialogue:
                 if (DialogueState == null) break;
 
-                bool nextPressed = DialogueState.NextPressed;
-                bool submitPressed = DialogueState.SubmitPressed;
+                bool confirmPressed = DialogueState.NextPressed || DialogueState.SubmitPressed;
 
-                if (nextPressed)
+                if (confirmPressed)
                 {
-                    DialogueNextRequested?.Invoke();
+                    DialogueConfirmRequested?.Invoke();
                 }
 
-                else if (submitPressed)
-                {
-                    DialogueSubmitRequested?.Invoke();
-                }
 
                 if (DialogueState.UpPressed)
                 {

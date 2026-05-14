@@ -91,11 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01af5f83389e7cc4db980731d403aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectBar: {fileID: 5613662971135780283}
-  selectMark: {fileID: 7007685671932822462}
+  selectedMark: {fileID: 0}
+  selectedBar: {fileID: 0}
   menuText: {fileID: 2487161670372191723}
-  activeTextColor: {r: 0, g: 0, b: 0, a: 1}
-  inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
 --- !u!114 &7817185770652652981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,11 +1466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01af5f83389e7cc4db980731d403aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectBar: {fileID: 5951806099383419041}
-  selectMark: {fileID: 5776755089620523390}
+  selectedMark: {fileID: 0}
+  selectedBar: {fileID: 0}
   menuText: {fileID: 4707086726796424686}
-  activeTextColor: {r: 0, g: 0, b: 0, a: 1}
-  inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
 --- !u!114 &3624603332204046089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2029,11 +2025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01af5f83389e7cc4db980731d403aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectBar: {fileID: 4722057229773943584}
-  selectMark: {fileID: 7336255934985438167}
+  selectedMark: {fileID: 0}
+  selectedBar: {fileID: 0}
   menuText: {fileID: 6055371794084999625}
-  activeTextColor: {r: 0, g: 0, b: 0, a: 1}
-  inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
 --- !u!114 &8198629923683951753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2142,11 +2136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01af5f83389e7cc4db980731d403aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectBar: {fileID: 353278845312237160}
-  selectMark: {fileID: 1565342288496783901}
+  selectedMark: {fileID: 0}
+  selectedBar: {fileID: 0}
   menuText: {fileID: 626017503717179591}
-  activeTextColor: {r: 0, g: 0, b: 0, a: 1}
-  inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
 --- !u!114 &3289130726483269954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,7 +3030,6 @@ GameObject:
   - component: {fileID: 4762848693991206529}
   - component: {fileID: 3518683409970515137}
   - component: {fileID: 2487161670372191723}
-  - component: {fileID: 233574993063816149}
   m_Layer: 5
   m_Name: Resume_Text
   m_TagString: Untagged
@@ -3162,74 +3153,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &233574993063816149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4256174315546843955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 2487161670372191723}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5029424448633803590}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ClickContinue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7817185770652652981}
-        m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
-        m_MethodName: StartVFX
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &4383129352779285178
 GameObject:
   m_ObjectHideFlags: 0
@@ -3900,11 +3823,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01af5f83389e7cc4db980731d403aa8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectBar: {fileID: 5329446518948282220}
-  selectMark: {fileID: 4725421263023818151}
+  selectedMark: {fileID: 0}
+  selectedBar: {fileID: 0}
   menuText: {fileID: 4817263275889829327}
-  activeTextColor: {r: 0, g: 0, b: 0, a: 1}
-  inactiveTextColor: {r: 0.90588236, g: 1, b: 0.76862746, a: 1}
 --- !u!114 &1612930070409832670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8286,7 +8207,7 @@ RectTransform:
   m_GameObject: {fileID: 8690057556867865541}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6044917956310959171}
@@ -8303,7 +8224,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8565161752589855958
 Canvas:
   m_ObjectHideFlags: 0

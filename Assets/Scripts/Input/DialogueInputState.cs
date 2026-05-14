@@ -11,8 +11,8 @@ public class DialogueInputState : IInputState
         this.keyBindingData = keyBindingData;
     }
 
-    public bool NextPressed => Input.GetKeyDown(keyBindingData.GetDialogueNextKey());
-    public bool SubmitPressed => Input.GetKeyDown(keyBindingData.GetDialogueSubmitKey());
-    public bool UpPressed => Input.GetKeyDown(keyBindingData.GetDialogueUpKey()) || Input.GetKeyDown(KeyCode.UpArrow);
-    public bool DownPressed => Input.GetKeyDown(keyBindingData.GetDialogueDownKey()) || Input.GetKeyDown(KeyCode.DownArrow);
+    public bool NextPressed => keyBindingData.GetDialogueNextBinding().GetKeyDown();
+    public bool SubmitPressed => keyBindingData.GetDialogueSubmitBinding().GetKeyDown();
+    public bool UpPressed => keyBindingData.GetDialogueUpBinding().GetKeyDown();
+    public bool DownPressed => keyBindingData.GetDialogueDownBinding().GetKeyDown();
 }

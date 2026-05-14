@@ -55,33 +55,32 @@ public class DialogueManager : MonoBehaviour
         InputStateManager manager = InputStateManager.Instance;
         if (manager == null) return;
 
-        manager.DialogueNextRequested -= HandleDialogueNextRequested;
-        manager.DialogueSubmitRequested -= HandleDialogueSubmitRequested;
+        manager.DialogueConfirmRequested -= HandleDialogueConfirmRequested;
         manager.DialogueUpRequested -= HandleDialogueUpRequested;
         manager.DialogueDownRequested -= HandleDialogueDownRequested;
 
         if (!isSubscribe) return;
 
-        manager.DialogueNextRequested += HandleDialogueNextRequested;
-        manager.DialogueSubmitRequested += HandleDialogueSubmitRequested;
+        manager.DialogueConfirmRequested += HandleDialogueConfirmRequested;
         manager.DialogueUpRequested += HandleDialogueUpRequested;
         manager.DialogueDownRequested += HandleDialogueDownRequested;
     }
 
-    private void HandleDialogueNextRequested()
+    private void HandleDialogueConfirmRequested()
     {
-        if (!waitingForLine) return;
+        if (waitingForLine)
+        {
+            waitingForLine = false;
+            ShowNextLine();
+            return;
+        }
 
-        waitingForLine = false;
-        ShowNextLine();
-    }
-
-    private void HandleDialogueSubmitRequested()
-    {
-        if (!waitingForOption) return;
-
-        waitingForOption = false;
-        SelectOption(pendingOptionIndex);
+        if (waitingForOption)
+        {
+            waitingForOption = false;
+            SelectOption(pendingOptionIndex);
+            return;
+        }
     }
 
     private void HandleDialogueUpRequested()

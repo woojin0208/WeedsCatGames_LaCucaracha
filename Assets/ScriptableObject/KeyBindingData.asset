@@ -13,21 +13,63 @@ MonoBehaviour:
   m_Name: KeyBindingData
   m_EditorClassIdentifier: 
   gameplay:
-    attack: 323
-    jump: 32
-    dash: 304
-    up: 119
-    down: 115
-    left: 97
-    right: 100
-    throwKey: 324
-    interaction: 101
+    attack:
+      primary: 323
+      secondary: 0
+    jump:
+      primary: 32
+      secondary: 0
+    dash:
+      primary: 304
+      secondary: 303
+    up:
+      primary: 119
+      secondary: 273
+    down:
+      primary: 115
+      secondary: 274
+    left:
+      primary: 97
+      secondary: 276
+    right:
+      primary: 100
+      secondary: 275
+    throwKey:
+      primary: 324
+      secondary: 0
+    interaction:
+      primary: 101
+      secondary: 0
+    pause:
+      primary: 27
+      secondary: 0
   pause:
-    pause: 27
+    pause:
+      primary: 27
+      secondary: 0
+    up:
+      primary: 119
+      secondary: 273
+    down:
+      primary: 115
+      secondary: 274
+    submit:
+      primary: 32
+      secondary: 13
   dialogue:
-    next: 32
-    submit: 13
-    up: 119
-    down: 115
+    next:
+      primary: 32
+      secondary: 13
+    submit:
+      primary: 13
+      secondary: 32
+    up:
+      primary: 119
+      secondary: 273
+    down:
+      primary: 115
+      secondary: 274
   cutscene:
-    skip: 32
+    skip:
+      primary: 27
+      secondary: 32

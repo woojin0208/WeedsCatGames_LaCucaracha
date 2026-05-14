@@ -21,15 +21,15 @@ public class GameplayInputState : IInputState
 
     public float Horizontal =>
         IsBlockedThisFrame ? 0f :
-        Input.GetKey(keyBindingData.GetGameplayKey(KeyType.Left)) ? -1f :
-        Input.GetKey(keyBindingData.GetGameplayKey(KeyType.Right)) ? 1f : 0f;
+        keyBindingData.GetGameplayBinding(KeyType.Left).GetKey() ? -1f :
+        keyBindingData.GetGameplayBinding(KeyType.Right).GetKey() ? 1f : 0f;
 
-    public bool JumpPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Jump));
-    public bool DashPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Dash));
-    public bool AttackPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Attack));
-    public bool InteractPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Interaction));
-    public bool ThrowPressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetGameplayKey(KeyType.Throw));
-    public bool PausePressed => !IsBlockedThisFrame && Input.GetKeyDown(keyBindingData.GetPauseKey());
+    public bool JumpPressed => !IsBlockedThisFrame && keyBindingData.GetGameplayBinding(KeyType.Jump).GetKeyDown();
+    public bool DashPressed => !IsBlockedThisFrame && keyBindingData.GetGameplayBinding(KeyType.Dash).GetKeyDown();
+    public bool AttackPressed => !IsBlockedThisFrame && keyBindingData.GetGameplayBinding(KeyType.Attack).GetKeyDown();
+    public bool InteractPressed => !IsBlockedThisFrame && keyBindingData.GetGameplayBinding(KeyType.Interaction).GetKeyDown();
+    public bool ThrowPressed => !IsBlockedThisFrame && keyBindingData.GetGameplayBinding(KeyType.Throw).GetKeyDown();
+    public bool PausePressed => !IsBlockedThisFrame && keyBindingData.GetPauseBinding().GetKeyDown();
 
     public int GetSelectWeaponNumber()
     {

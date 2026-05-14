@@ -16,19 +16,60 @@ public enum KeyType
 }
 
 [Serializable]
+public class KeyBinding
+{
+    [SerializeField] private KeyCode primary = KeyCode.None;
+    [SerializeField] private KeyCode secondary = KeyCode.None;
+
+    public KeyCode Primary => primary;
+    public KeyCode Secondary => secondary;
+
+    public bool GetKey()
+    {
+        return IsKey(primary) || IsKey(secondary);
+    }
+
+    public bool GetKeyDown()
+    {
+        return IsKeyDown(primary) || IsKeyDown(secondary);
+    }
+
+    public void SetPrimary(KeyCode keyCode)
+    {
+        primary = keyCode;
+    }
+
+    public void SetSecondary(KeyCode keyCode)
+    {
+        secondary = keyCode;
+    }
+
+    private bool IsKey(KeyCode keyCode)
+    {
+        return keyCode != KeyCode.None && Input.GetKey(keyCode);
+    }
+
+    private bool IsKeyDown(KeyCode keyCode)
+    {
+        return keyCode != KeyCode.None && Input.GetKeyDown(keyCode);
+    }
+}
+
+[Serializable]
 public class GameplayKeyBinding
 {
-    [SerializeField] private KeyCode attack = KeyCode.Mouse0;
-    [SerializeField] private KeyCode jump = KeyCode.Space;
-    [SerializeField] private KeyCode dash = KeyCode.LeftShift;
-    [SerializeField] private KeyCode up = KeyCode.W;
-    [SerializeField] private KeyCode down = KeyCode.S;
-    [SerializeField] private KeyCode left = KeyCode.A;
-    [SerializeField] private KeyCode right = KeyCode.D;
-    [SerializeField] private KeyCode throwKey = KeyCode.E;
-    [SerializeField] private KeyCode interaction = KeyCode.Mouse1;
+    [SerializeField] private KeyBinding attack = new KeyBinding();
+    [SerializeField] private KeyBinding jump = new KeyBinding();
+    [SerializeField] private KeyBinding dash = new KeyBinding();
+    [SerializeField] private KeyBinding up = new KeyBinding();
+    [SerializeField] private KeyBinding down = new KeyBinding();
+    [SerializeField] private KeyBinding left = new KeyBinding();
+    [SerializeField] private KeyBinding right = new KeyBinding();
+    [SerializeField] private KeyBinding throwKey = new KeyBinding();
+    [SerializeField] private KeyBinding interaction = new KeyBinding();
+    [SerializeField] private KeyBinding pause = new KeyBinding();
 
-    public KeyCode GetKey(KeyType keyType)
+    public KeyBinding GetKey(KeyType keyType)
     {
         switch (keyType)
         {
@@ -41,7 +82,7 @@ public class GameplayKeyBinding
             case KeyType.Right: return right;
             case KeyType.Throw: return throwKey;
             case KeyType.Interaction: return interaction;
-            default: return KeyCode.None;
+            default: throw new ArgumentOutOfRangeException(nameof(keyType), keyType, "Invalid gameplay key type.");
         }
     }
 
@@ -49,15 +90,15 @@ public class GameplayKeyBinding
     {
         switch (keyType)
         {
-            case KeyType.Attack: attack = keyCode; break;
-            case KeyType.Jump: jump = keyCode; break;
-            case KeyType.Dash: dash = keyCode; break;
-            case KeyType.Up: up = keyCode; break;
-            case KeyType.Down: down = keyCode; break;
-            case KeyType.Left: left = keyCode; break;
-            case KeyType.Right: right = keyCode; break;
-            case KeyType.Throw: throwKey = keyCode; break;
-            case KeyType.Interaction: interaction = keyCode; break;
+            case KeyType.Attack: attack.SetPrimary(keyCode); break;
+            case KeyType.Jump: jump.SetPrimary(keyCode); break;
+            case KeyType.Dash: dash.SetPrimary(keyCode); break;
+            case KeyType.Up: up.SetPrimary(keyCode); break;
+            case KeyType.Down: down.SetPrimary(keyCode); break;
+            case KeyType.Left: left.SetPrimary(keyCode); break;
+            case KeyType.Right: right.SetPrimary(keyCode); break;
+            case KeyType.Throw: throwKey.SetPrimary(keyCode); break;
+            case KeyType.Interaction: interaction.SetPrimary(keyCode); break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(keyType), keyType, "Invalid gameplay key type.");
         }
@@ -67,31 +108,37 @@ public class GameplayKeyBinding
 [Serializable]
 public class PauseKeyBinding
 {
-    [SerializeField] private KeyCode pause = KeyCode.Escape;
+    [SerializeField] private KeyBinding pause = new KeyBinding();
+    [SerializeField] private KeyBinding up = new KeyBinding();
+    [SerializeField] private KeyBinding down = new KeyBinding();
+    [SerializeField] private KeyBinding submit = new KeyBinding();
+    public KeyBinding Pause => pause;
+    public KeyBinding Up => up;
+    public KeyBinding Down => down;
+    public KeyBinding Submit => submit;
 
-    public KeyCode Pause => pause;
 }
 
 [Serializable]
 public class DialogueKeyBinding
 {
-    [SerializeField] private KeyCode next = KeyCode.Space;
-    [SerializeField] private KeyCode submit = KeyCode.Return;
-    [SerializeField] private KeyCode up = KeyCode.W;
-    [SerializeField] private KeyCode down = KeyCode.S;
+    [SerializeField] private KeyBinding next = new KeyBinding();
+    [SerializeField] private KeyBinding submit = new KeyBinding();
+    [SerializeField] private KeyBinding up = new KeyBinding();
+    [SerializeField] private KeyBinding down = new KeyBinding();
 
-    public KeyCode Next => next;
-    public KeyCode Submit => submit;
-    public KeyCode Up => up;
-    public KeyCode Down => down;
+    public KeyBinding Next => next;
+    public KeyBinding Submit => submit;
+    public KeyBinding Up => up;
+    public KeyBinding Down => down;
 }
 
 [Serializable]
 public class CutsceneKeyBinding
 {
-    [SerializeField] private KeyCode skip = KeyCode.Space;
+    [SerializeField] private KeyBinding skip = new KeyBinding();
 
-    public KeyCode Skip => skip;
+    public KeyBinding Skip => skip;
 }
 
 [CreateAssetMenu(fileName = "KeyBindingData", menuName = "Game/KeyBindingData")]
@@ -102,17 +149,19 @@ public class KeyBindingData : ScriptableObject
     [SerializeField] private DialogueKeyBinding dialogue = new DialogueKeyBinding();
     [SerializeField] private CutsceneKeyBinding cutscene = new CutsceneKeyBinding();
 
-    public KeyCode GetGameplayKey(KeyType keyType) => gameplay.GetKey(keyType);
+    public KeyBinding GetGameplayBinding(KeyType keyType) => gameplay.GetKey(keyType);
 
     public void SetGameplayKey(KeyType keyType, KeyCode keyCode) => gameplay.SetKey(keyType, keyCode);
 
-    public KeyCode GetPauseKey() => pause.Pause;
+    public KeyBinding GetPauseBinding() => pause.Pause;
+    public KeyBinding GetPauseUpBinding() => pause.Up;
+    public KeyBinding GetPauseDownBinding() => pause.Down;
+    public KeyBinding GetPauseSubmitBinding() => pause.Submit;
 
-    public KeyCode GetDialogueNextKey() => dialogue.Next;
-    public KeyCode GetDialogueSubmitKey() => dialogue.Submit;
-    public KeyCode GetDialogueUpKey() => dialogue.Up;
-    public KeyCode GetDialogueDownKey() => dialogue.Down;
+    public KeyBinding GetDialogueNextBinding() => dialogue.Next;
+    public KeyBinding GetDialogueSubmitBinding() => dialogue.Submit;
+    public KeyBinding GetDialogueUpBinding() => dialogue.Up;
+    public KeyBinding GetDialogueDownBinding() => dialogue.Down;
 
-    public KeyCode GetCutsceneSkipKey() => cutscene.Skip;
+    public KeyBinding GetCutsceneSkipBinding() => cutscene.Skip;
 }
- 

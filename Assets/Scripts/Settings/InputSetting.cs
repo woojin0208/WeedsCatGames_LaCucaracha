@@ -26,7 +26,7 @@ public class InputSetting : MonoBehaviour
         int labelCount = Mathf.Min(changeKeyName.Length, (int)KeyType.KeyCount);
         for (int i = 0; i < labelCount; i++)
         {
-            changeKeyName[i].text = keyBindingData.GetGameplayKey((KeyType)i).ToString();
+            changeKeyName[i].text = keyBindingData.GetGameplayBinding((KeyType)i).Primary.ToString();
         }
     }
 
@@ -104,9 +104,9 @@ public class InputSetting : MonoBehaviour
             KeyType compareType = (KeyType)i;
             if (compareType == selectedType) continue;
 
-            if (keyBindingData.GetGameplayKey(compareType) != pressedKeyCode) continue;
+            if (keyBindingData.GetGameplayBinding(compareType).Primary != pressedKeyCode) continue;
 
-            KeyCode previousKey = keyBindingData.GetGameplayKey(selectedType);
+            KeyCode previousKey = keyBindingData.GetGameplayBinding(selectedType).Primary;
             keyBindingData.SetGameplayKey(selectedType, pressedKeyCode);
             keyBindingData.SetGameplayKey(compareType, previousKey);
 

@@ -11,5 +11,5 @@ public class CutsceneInputState : IInputState
         this.keyBindingData = keyBindingData;
     }
 
-    public bool SkipPressed => Input.GetKeyDown(keyBindingData.GetCutsceneSkipKey());
+    public bool SkipPressed => keyBindingData.GetCutsceneSkipBinding().GetKeyDown();
 }

@@ -132,6 +132,8 @@ public class UIManager : MonoBehaviour
     public void ClickRestart()
     {
         ClickSettingUI(pausePanel);
+        Time.timeScale = 1f;
+        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
         GameManager.Instance.TryLoadScene("Scene_Title");
     }
 
@@ -177,6 +179,10 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
+
 #if UNITY_EDITOR
         SceneManager.LoadScene("GameStart");
 #else

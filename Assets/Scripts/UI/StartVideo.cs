@@ -8,9 +8,6 @@ public class StartVideo : MonoBehaviour
 
     [SerializeField]
     private GameObject startImage;
-
-    [SerializeField]
-    private float timer = 1.5f;
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
@@ -18,15 +15,15 @@ public class StartVideo : MonoBehaviour
 
     private void Start()
     {
-        Invoke(nameof(StartImage), 0.2f);
-        Invoke(nameof(StartGame), 3f);
+        videoPlayer.prepareCompleted += OnPrepared;
+        videoPlayer.loopPointReached += OnVideoFinished;
     }
 
-    private void StartImage()
+    private void OnPrepared(VideoPlayer videoPlayer)
     {
         startImage.SetActive(false);
+        videoPlayer.Play();
     }
-    private void PlayVideo() => videoPlayer.Play();
 
-    private void StartGame() => GameManager.Instance.TryLoadScene("Tutorial");
+    private void OnVideoFinished(VideoPlayer _) => GameManager.Instance.TryLoadScene("Tutorial");
 }
