@@ -87,6 +87,7 @@ public class MenuNavigationController : MonoBehaviour
 
     private void MoveUp() => MoveSelection(-1);
     private void MoveDown() => MoveSelection(1);
+
     private void MoveSelection(int direction)
     {
         SelectIndex(currentIndex + direction);

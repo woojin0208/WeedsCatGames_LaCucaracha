@@ -583,6 +583,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1219,6 +1231,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 1
   nextArea: Stage8
   <NextSpawnPoint>k__BackingField: 1
+  audioSource: {fileID: 0}
 --- !u!1 &1057245087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,6 +1755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38dff402c225b2e4f8e962cc69435d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questData: {fileID: 11400000, guid: f938a79b725cfd446a578f9f1495982c, type: 2}
+  objectiveId: objective_required_item
   currentNPC: {fileID: 1128510282}
   requirments:
   - {fileID: 923370345631583069, guid: 526ee95df8580b445813777660fa202c, type: 3}
@@ -2206,6 +2221,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 2
   nextArea: Stage8
   <NextSpawnPoint>k__BackingField: 1
+  audioSource: {fileID: 0}
   <InteractivePos>k__BackingField: {fileID: 163543670}
   guardNPC: {fileID: 1128510282}
   guardNode: {fileID: 11400000, guid: ad0373d61c6daca49bd85c6c74a7c80f, type: 2}
@@ -2753,6 +2769,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 0
   nextArea: None
   <NextSpawnPoint>k__BackingField: -1
+  audioSource: {fileID: 0}
 --- !u!61 &1676353519
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -485,7 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29655f7c981ab93459c8c0e206110f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScore: 20
+  questData: {fileID: 11400000, guid: 00d71e7871a909349874f6ca7a4ea283, type: 2}
+  objectiveId: objective_donation_score
   requirments:
   - {fileID: 923370345631583069, guid: 526ee95df8580b445813777660fa202c, type: 3}
   - {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
@@ -705,6 +706,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
@@ -1013,6 +1026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38dff402c225b2e4f8e962cc69435d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questId: quest_item_requirment
+  objectiveId: objective_required_item
   currentNPC: {fileID: 363396004}
   requirments:
   - {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}

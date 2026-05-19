@@ -42,7 +42,7 @@ MonoBehaviour:
       secondary: 0
     pause:
       primary: 27
-      secondary: 0
+      secondary: 284
   pause:
     pause:
       primary: 27

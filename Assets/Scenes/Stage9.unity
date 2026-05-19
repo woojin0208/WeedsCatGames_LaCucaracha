@@ -820,18 +820,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 430163546}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetRepeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     onEnd:
       m_PersistentCalls:
         m_Calls: []
@@ -942,6 +930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b7ab715e329ec4c933e3240579c124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questData: {fileID: 11400000, guid: 2c228b783a5bc9146b5c990a7fc81665, type: 2}
+  objectiveId: objective_give_item
   targetItem: {fileID: 7906395599385600836, guid: dbde30d02fbd87648b3b2da2a8fa4aa6, type: 3}
   currentNPC: {fileID: 430163546}
   hasNextNode: 0
@@ -1152,6 +1142,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 1
   nextArea: Stage10
   <NextSpawnPoint>k__BackingField: 0
+  audioSource: {fileID: 0}
   <InteractivePos>k__BackingField: {fileID: 257281485}
 --- !u!61 &704802346
 BoxCollider2D:
@@ -1504,6 +1495,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: -1
   nextArea: Stage1
   <NextSpawnPoint>k__BackingField: 3
+  audioSource: {fileID: 0}
 --- !u!61 &850045000
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1952,6 +1944,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 0
   nextArea: None
   <NextSpawnPoint>k__BackingField: -1
+  audioSource: {fileID: 0}
 --- !u!61 &1247760734
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2997,6 +2990,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}

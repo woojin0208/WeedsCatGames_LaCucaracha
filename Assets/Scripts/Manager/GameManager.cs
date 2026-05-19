@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 
     private bool sceneLoading;
 
-    public int donationScore = 0;
     public bool Stage2CutScene = false;
 
     // 현재 씬에 진입할 때 사용할 입장 타입을 보관한다.
