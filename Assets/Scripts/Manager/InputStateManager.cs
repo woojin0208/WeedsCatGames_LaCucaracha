@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum InputStateType
 {
-    None,
     Gameplay,
     Pause,
     Dialogue,

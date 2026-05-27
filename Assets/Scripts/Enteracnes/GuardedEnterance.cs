@@ -25,7 +25,7 @@ public class GuardedEnterance : InteractableEnterance
         NPCStateManager stateManager = NPCStateManager.Instance;
         if (stateManager == null)
         {
-            Debug.LogWarning("[GuardEnterance] NPCStateManager 가 null 입니다.", this);
+            Debug.LogWarning("[GuardedEnterance] NPCStateManager 가 null 입니다.", this);
             return false;
         }
 
