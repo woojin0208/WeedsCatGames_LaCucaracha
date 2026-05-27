@@ -40,13 +40,13 @@ public class ItemRequirementChecker : MonoBehaviour
         }
         else
         {
-            FailRequirementQuest();
-            currentNPC.SetFailed();
+            HandleRequirementFailed(objective);
         }
 
         pm.RemoveWeapon(pm.CurrentEquipId, false);
         StartCoroutine(NextNodeWaitFrame());
     }
+
 
     private bool TryGetQuestObjective(out QuestObjectiveData objective)
     {
@@ -70,6 +70,19 @@ public class ItemRequirementChecker : MonoBehaviour
         return index != -1;
     }
 
+    private void HandleRequirementFailed(QuestObjectiveData objective)
+    {
+        if (objective.IsRetryAllowed)
+        {
+            InprogressRequirementQuest();
+            currentNPC.SetInProgress();
+            return;
+        }
+
+        FailRequirementQuest();
+        currentNPC.SetFailed();
+    }
+
     private void CompleteRequirementQuest()
     {
         QuestManager questManager = QuestManager.Instance;
@@ -81,6 +94,18 @@ public class ItemRequirementChecker : MonoBehaviour
 
         string questId = questData.QuestId;
         questManager.TryCompleteObjectiveAndState(questId, objectiveId, QuestState.Completed);
+    }
+
+    private void InprogressRequirementQuest()
+    {
+        QuestManager questManager =QuestManager.Instance;
+        if (questManager == null)
+        {
+            Debug.LogError("[itemRequirementChecker] QuestManager가 null 입니다.", this);
+            return;
+        }
+
+        questManager.TrySetState(questData.QuestId, QuestState.InProgress);
     }
 
     private void FailRequirementQuest()

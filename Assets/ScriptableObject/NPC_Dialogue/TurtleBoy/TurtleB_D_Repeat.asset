@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: TurtleB_D_Repeat
   m_EditorClassIdentifier: 
-  entityName: Turtle_Boy
-  texts:
+  <entityName>k__BackingField: Turtle_Boy
+  <texts>k__BackingField:
   - "\uB10C \uC88B\uC740 \uC0AC\uB78C\uC774\uAD6C\uB098"
-  options: []
+  <options>k__BackingField: []

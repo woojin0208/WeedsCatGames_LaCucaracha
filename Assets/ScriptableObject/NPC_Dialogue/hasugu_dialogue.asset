@@ -12,18 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: hasugu_dialogue
   m_EditorClassIdentifier: 
-  entityName: "\uB77C\uCFE0\uCE74\uB77C\uCC60"
-  texts:
+  <entityName>k__BackingField: "\uB77C\uCFE0\uCE74\uB77C\uCC60"
+  <texts>k__BackingField:
   - "\uC544\uC9C1 \uBBF8\uC644\uC131\uB41C \uBD80\uBD84\uC785\uB2C8\uB2E4."
   - "\uB9CC\uB4E4\uC5B4\uC9C4 \uBC30\uACBD\uC740 \uC6B0\uC120 \uB2E4\uC74C \uB2E8\uCD95\uD0A4\uB97C
     \uD1B5\uD574 \uD3B8\uD558\uAC8C \uC774\uB3D9 \uAC00\uB2A5\uD569\uB2C8\uB2E4"
   - "1,2,3,4,5,6,7 \uC22B\uC790\uD0A4"
-  options:
-  - label: 
-    nextNode: {fileID: 0}
-    onSelected:
-      m_PersistentCalls:
-        m_Calls:
+  <options>k__BackingField:
+  - <Label>k__BackingField: 
+    <nextNode>k__BackingField: {fileID: 0}
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: 
           m_MethodName: 

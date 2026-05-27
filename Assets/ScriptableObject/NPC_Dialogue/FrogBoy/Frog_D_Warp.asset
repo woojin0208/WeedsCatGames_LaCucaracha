@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Frog_D_Warp
   m_EditorClassIdentifier: 
-  entityName: "\uAC1C\uAD6C\uB9AC \uC18C\uB144"
-  texts:
+  <entityName>k__BackingField: "\uAC1C\uAD6C\uB9AC \uC18C\uB144"
+  <texts>k__BackingField:
   - "\uBA40\uB9AC\uB3C4 \uC788\uB124\r\n"
   - "\uB530\uB77C\uC640 \uC5BC\uB978!\r\n"
-  options: []
+  <options>k__BackingField: []

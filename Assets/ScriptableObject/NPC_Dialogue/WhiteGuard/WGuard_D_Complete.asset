@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: WGuard_D_Complete
   m_EditorClassIdentifier: 
-  entityName: White_Guard
-  texts:
+  <entityName>k__BackingField: White_Guard
+  <texts>k__BackingField:
   - "\uC74C... \uCDA9\uBD84\uD558\uAD70."
   - "\uB4E4\uC5B4\uAC00\uB3C4 \uC88B\uB2E4."
-  options: []
+  <options>k__BackingField: []

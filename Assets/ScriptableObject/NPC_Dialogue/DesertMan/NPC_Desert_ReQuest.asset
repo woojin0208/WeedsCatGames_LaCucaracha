@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: NPC_Desert_ReQuest
   m_EditorClassIdentifier: 
-  entityName: Desert_Man
-  texts:
+  <entityName>k__BackingField: Desert_Man
+  <texts>k__BackingField:
   - "\uD558\uD558\u2026! \uADF8\uB7FC \uADF8\uB807\uC9C0"
   - "\uC5B4\uB514\uAE4C\uC9C0 \uB9D0\uD588\uB354\uB77C?"
   - "\uC544\uC8FC \uC61B\uB0A0\uC5D0 \uC800 \uB108\uBA38\uC758 \uC704\uD5D8\uD55C
@@ -25,4 +25,4 @@ MonoBehaviour:
   - "\uB9E4\uCF64\uD55C \uC591\uB150\uC73C\uB85C \uBC84\uBB34\uB9B0 \uAC15\uACE0\uAE30\uB3C4
     \uC88B\uACA0\uB2E4"
   - "\uBB50\uB4E0\u2026"
-  options: []
+  <options>k__BackingField: []

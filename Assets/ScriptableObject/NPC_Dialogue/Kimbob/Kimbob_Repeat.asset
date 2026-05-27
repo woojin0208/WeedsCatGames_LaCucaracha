@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Kimbob_Repeat
   m_EditorClassIdentifier: 
-  entityName: Turtle_Boy
-  texts:
+  <entityName>k__BackingField: Turtle_Boy
+  <texts>k__BackingField:
   - "\uC774\uBBF8 \uBC1B\uC544 \uAC14\uC796\uC544 \uB0B4\uC77C \uC640~"
-  options: []
+  <options>k__BackingField: []

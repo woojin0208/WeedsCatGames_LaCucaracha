@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum InputStateType
 {
+    None,
     Gameplay,
     Pause,
     Dialogue,
@@ -40,6 +41,7 @@ public class InputStateManager : MonoBehaviour
     public DialogueInputState DialogueState { get; private set; }
     // CutScene 입력 상태 인스턴스다.
     public CutsceneInputState CutsceneState { get; private set; }
+
     // 현재 활성화된 입력 상태 타입이다.
     public InputStateType CurrentStateType { get; private set; } = InputStateType.Gameplay;
     // 현재 활성화된 입력 상태 인스턴스다.
@@ -69,6 +71,8 @@ public class InputStateManager : MonoBehaviour
     // CutScene 상태에서 스킵 요청을 발행한다.
     public event Action CutsceneSkipRequested;
 
+    private bool isInputLocked;
+
     private void Awake()
     {
         // 중복 매니저가 생성되면 새 오브젝트를 제거한다.
@@ -86,8 +90,13 @@ public class InputStateManager : MonoBehaviour
 
     private void Update()
     {
+        if (isInputLocked) return;
+
         switch (CurrentStateType)
         {
+            case InputStateType.None:
+                break;
+
             case InputStateType.Gameplay:
                 if (GameplayState != null && GameplayState.PausePressed)
                 {
@@ -208,4 +217,7 @@ public class InputStateManager : MonoBehaviour
     {
         return CurrentStateType == state;
     }
+
+    public void LockInput() => isInputLocked = true;
+    public void UnlockInput() => isInputLocked = false;
 }

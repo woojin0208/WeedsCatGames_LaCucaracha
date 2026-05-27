@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: NPC_Mouse_Dialogue 2
   m_EditorClassIdentifier: 
-  entityName: Mouse
-  texts:
+  <entityName>k__BackingField: Mouse
+  <texts>k__BackingField:
   - "\uADF8\uB798? \uBCF4\uACE0\uC2F6\uC5B4\uC9C0\uBA74 \uB2E4\uC2DC \uB9D0\uC744
     \uAC78\uB834"
-  options: []
+  <options>k__BackingField: []

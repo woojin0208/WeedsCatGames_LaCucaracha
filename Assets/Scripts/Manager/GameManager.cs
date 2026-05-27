@@ -37,16 +37,25 @@ public class GameManager : MonoBehaviour
     }
 
     // 씬 전환을 시작하고 입장 정보를 저장한다.
-    public void TryLoadScene(string sceneName, EnteranceType enterance = EnteranceType.Normal)
+    public bool TryLoadScene(string sceneName, EnteranceType enterance = EnteranceType.Normal)
     {
-        if (sceneLoading) return;
+        if (sceneLoading)
+        {
+            Debug.LogWarning($"[GameManager] 이미 Scene 전환 중입니다. scene: {sceneName}", this);
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            Debug.LogError("[GameManager] sceneName 이 비어 있습니다.", this);
+            return false;
+        }
 
         sceneLoading = true;
         CurrentEnterance = enterance;
 
-        if (UIManager.Instance.gameObject.activeSelf) UIManager.Instance.CloseScene();
-
         StartCoroutine(LoadScene(sceneName));
+        return true;
     }
 
     // 전역 게임 이벤트를 발행한다.
@@ -58,10 +67,39 @@ public class GameManager : MonoBehaviour
     // 씬 전환 연출 후 대상 씬을 로드한다.
     private IEnumerator LoadScene(string sceneName)
     {
-        UIManager.Instance.gameObject.SetActive(true);
+        Time.timeScale = 1f;
+
+        InputStateManager inputManager = InputStateManager.Instance;
+        inputManager?.LockInput();
+
+        UIManager uiManager= UIManager.Instance;
+        if (uiManager != null)
+        {
+            yield return uiManager.CloseSceneRoutine();
+        }
+
         SceneChangeAction?.Invoke();
-        yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(sceneName);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        if (operation == null)
+        {
+            Debug.LogError($"[GameManager] Scene Load 에 실패 했습니다. sceneName : {sceneName}", this);
+            inputManager?.UnlockInput();
+            sceneLoading = false;
+            yield break;
+        }
+
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
+
+        if (uiManager != null)
+        {
+            yield return uiManager.OpenSceneRoutine();
+        }
+
+        inputManager?.UnlockInput();
         sceneLoading = false;
     }
 

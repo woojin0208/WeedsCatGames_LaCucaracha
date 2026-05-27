@@ -94,6 +94,8 @@ MonoBehaviour:
   selectedMark: {fileID: 0}
   selectedBar: {fileID: 0}
   menuText: {fileID: 2487161670372191723}
+  defaultTextColor: {r: 0.9, g: 1, b: 0.77, a: 1}
+  selectedTextColor: {r: 0.14, g: 0.14, b: 0.14, a: 1}
 --- !u!114 &7817185770652652981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1469,6 +1471,8 @@ MonoBehaviour:
   selectedMark: {fileID: 0}
   selectedBar: {fileID: 0}
   menuText: {fileID: 4707086726796424686}
+  defaultTextColor: {r: 0.9, g: 1, b: 0.77, a: 1}
+  selectedTextColor: {r: 0.14, g: 0.14, b: 0.14, a: 1}
 --- !u!114 &3624603332204046089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2028,6 +2032,8 @@ MonoBehaviour:
   selectedMark: {fileID: 0}
   selectedBar: {fileID: 0}
   menuText: {fileID: 6055371794084999625}
+  defaultTextColor: {r: 0.9, g: 1, b: 0.77, a: 1}
+  selectedTextColor: {r: 0.14, g: 0.14, b: 0.14, a: 1}
 --- !u!114 &8198629923683951753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2139,6 +2145,8 @@ MonoBehaviour:
   selectedMark: {fileID: 0}
   selectedBar: {fileID: 0}
   menuText: {fileID: 626017503717179591}
+  defaultTextColor: {r: 0.9, g: 1, b: 0.77, a: 1}
+  selectedTextColor: {r: 0.14, g: 0.14, b: 0.14, a: 1}
 --- !u!114 &3289130726483269954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3826,6 +3834,8 @@ MonoBehaviour:
   selectedMark: {fileID: 0}
   selectedBar: {fileID: 0}
   menuText: {fileID: 4817263275889829327}
+  defaultTextColor: {r: 0.9, g: 1, b: 0.77, a: 1}
+  selectedTextColor: {r: 0.14, g: 0.14, b: 0.14, a: 1}
 --- !u!114 &1612930070409832670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5209,6 +5219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414d9d24ae5d6cd458c36af3da596a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadTime: 0.55
 --- !u!1 &6498228999263198546
 GameObject:
   m_ObjectHideFlags: 0
@@ -8303,7 +8314,7 @@ MonoBehaviour:
   pausePanel: {fileID: 3409968097432296416}
   settingPanel: {fileID: 2815250344253231372}
   controlSettingPanel: {fileID: 2815250344253231372}
-  loadPanel: {fileID: 6399062469505579880}
+  loadPanel: {fileID: 7780933918331416946}
   interactiveImage: {fileID: 6878265225889111674}
   minimap: {fileID: 7490169893663895082}
   dialogueUI: {fileID: 0}

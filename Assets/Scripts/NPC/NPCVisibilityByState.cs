@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-// NPC 상태에 따라 표시 여부를 전환한다.
+// NPCState에 따라 대상 NPC 오브젝트의 표시 여부를 결정한다.
 public class NPCVisibilityByState : MonoBehaviour
 {
     [SerializeField] private NPCDialogue targetNPC;
@@ -9,15 +9,33 @@ public class NPCVisibilityByState : MonoBehaviour
 
     private void Start()
     {
-        CheckVisibility(NPCStateManager.Instance.GetState(targetNPC.NPCId));
+        UpdateVisibility();
     }
 
-    private void CheckVisibility(NPCState state)
+    private void UpdateVisibility()
     {
-        bool isVisible = visibilityStates.Any(s => NPCStateManager.Instance.GetState(targetNPC.NPCId) == s);
+        if (targetNPC == null)
+        {
+            Debug.LogWarning("[NPCVisibilityByState] targetNPC가 설정되지 않았습니다.", this);
+            return;
+        }
 
-        if (isVisible) return;
+        if (visibilityStates == null || visibilityStates.Length == 0)
+        {
+            targetNPC.gameObject.SetActive(false);
+            return;
+        }
+        NPCStateManager npcStateManager = NPCStateManager.Instance;
+        if (npcStateManager == null)
+        {
+            Debug.LogWarning("[NPCVisibilityByState] NPCStateManager 가 null 입니다.");
+            return;
+        }
 
-        targetNPC.gameObject.SetActive(false);
+        NPCState currentState = npcStateManager.GetState(targetNPC.NPCId);
+
+        bool isVisible = visibilityStates.Any(state => state == currentState);
+
+        targetNPC.gameObject.SetActive(isVisible);
     }
 }

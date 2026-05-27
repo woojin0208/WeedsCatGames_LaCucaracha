@@ -1,32 +1,44 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // 현재 맵의 진입 지점 정보를 초기화한다.
 public class MapManager : MonoBehaviour
 {
     private Enterance[] enterances;
-    private int[] spawnPoints;
 
     private void Awake()
     {
-        PlayerManager playerManger = PlayerManager.Instance;
+        InitializeCurrentEnterance();
+    }
 
-        enterances = GetComponentsInChildren<Enterance>();
+    private void InitializeCurrentEnterance()
+    {
+        PlayerManager playerManager = PlayerManager.Instance;
+        if (playerManager == null)
+        {
+            Debug.LogWarning("[MapManager] Player 가 null 입니다.", this);
+            return;
+        }
 
-        // 현재 스폰 포인트와 일치하는 진입 지점을 찾는다.
+        enterances = GetComponentsInChildren<Enterance>(true);
+        if (enterances == null || enterances.Length == 0)
+        {
+            Debug.LogWarning($"[MapManager] Enterance 가 비어 있습니다. scene : {SceneManager.GetActiveScene().name}", this);
+            return;
+        }
+
         for (int i = 0; i < enterances.Length; i++)
         {
-            if (enterances[i].CurrentSpawnPoint == playerManger.CurrentSpawnPoint)
-            {
-                playerManger.CurrentEnterance = enterances[i];
+            Enterance enterance = enterances[i];
 
-                Debug.Log(enterances[i].transform.position + enterances[i].transform.gameObject.name);
-                break;
+            if (enterance.CurrentSpawnPoint == playerManager.CurrentSpawnPoint)
+            {
+                playerManager.CurrentEnterance = enterance;
+                return;
             }
         }
 
-        string MapName = SceneManager.GetActiveScene().name;
-        Debug.Log(MapName);
+        Debug.LogWarning($"[MapManager] CurrentSpawnPoint와 일치하는 Enterance가 없습니다. " +
+            $"scene: {SceneManager.GetActiveScene().name}, spawnPoint: {playerManager.CurrentSpawnPoint}", this);
     }
 }

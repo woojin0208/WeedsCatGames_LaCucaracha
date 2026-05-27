@@ -40,7 +40,7 @@ public class FirstViewCutScene : MonoBehaviour
         {
             InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
             vPlayer.gameObject.SetActive(false);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
         else
         {

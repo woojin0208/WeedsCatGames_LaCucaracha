@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,13 +14,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject controlSettingPanel;
-    [SerializeField] private GameObject loadPanel;
+    [SerializeField] private LoadPanel loadPanel;
     [SerializeField] private RectTransform interactiveImage;
     [SerializeField] private GameObject minimap;
     [SerializeField] private DialogueUI dialogueUI;
     [SerializeField] private GameObject quitImage;
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private WeaponDescriptionUI weaponDescriptionUI;
+
+    public bool IsSceneTransitioning  => loadPanel != null && loadPanel.IsShowing;
 
     public bool canViewVideo = false;
     private bool isPauseInputSubscribed;
@@ -37,7 +40,11 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        loadPanel.SetActive(false);
+        if (loadPanel != null)
+        {
+            loadPanel.HideImmediate();
+        }
+
         inventoryUI.SetActive(true);
     }
 
@@ -172,9 +179,38 @@ public class UIManager : MonoBehaviour
         InputStateManager.Instance?.ChangeState(InputStateType.Pause);
     }
 
+    public IEnumerator CloseSceneRoutine()
+    {
+        if (loadPanel == null)
+        {
+            Debug.LogWarning("[UIManager] LoadPanel 이 null 입니다.", this);
+            yield break;
+        }
+
+        yield return loadPanel.FadeIn();
+    }
+
+    public IEnumerator OpenSceneRoutine()
+    {
+        if (loadPanel == null)
+        {
+            Debug.LogWarning("[UIManager] LoadPanel 이 null 입니다.", this);
+            yield break;
+        }
+
+        yield return loadPanel.FadeOut();
+    }
+
+
     public void CloseScene()
     {
-        loadPanel.SetActive(true);
+        if (loadPanel == null)
+        {
+            Debug.LogWarning("[UIManager] LoadPanel 이 null 입니다.", this);
+            return;
+        }
+
+        loadPanel.ShowImmediate();
     }
 
     public void Restart()

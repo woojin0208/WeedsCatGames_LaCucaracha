@@ -233,8 +233,10 @@ ID 규칙:
 
 현재 상태:
 
-- Quest 시스템의 정의가 약하다.
-- NPC 상태, 대화 분기, 아이템 조건이 퀘스트 역할을 일부 대신하고 있다.
+- Quest 1차 리팩터링이 완료됐다.
+- `QuestData`, `QuestProgress`, `QuestManager`가 추가되어 정적 데이터와 런타임 진행 상태가 분리되기 시작했다.
+- `DonationBox`, `ItemRequirementChecker`, `ItemGiver`가 QuestData와 QuestManager 기반 흐름으로 연결됐다.
+- 기존 NPC 대화 분기는 아직 NPCState와 UnityEvent를 유지한다.
 
 목표:
 
@@ -249,10 +251,27 @@ ID 규칙:
 - `QuestConditionResolver`
 - `QuestActionExecutor`
 
+1차 완료 내용:
+
+- `QuestData` ScriptableObject로 퀘스트별 `questId`, 설명, objective 정보를 관리한다.
+- `QuestObjectiveData`로 `Counter`, `RequiredWeapon`, `Reward` 목적을 표현한다.
+- `QuestProgress`가 퀘스트 상태, 누적 카운터, 완료 objective를 보관한다.
+- `QuestManager`가 `questId` 기반 상태 변경과 objective 진행도 변경 API를 제공한다.
+- `GameManager.donationScore` 의존을 제거하고 기부 진행도를 QuestProgress counter로 이동했다.
+- 요구 무기와 보상 무기 정보를 QuestData로 이동했다.
+
+후속 과제:
+
+- `WeaponBase.name` 비교를 안정적인 `weaponId` 비교로 변경한다.
+- `QuestProgress` 저장용 DTO를 분리해 Easy Save 적용에 대비한다.
+- `QuestConditionResolver`, `QuestActionExecutor` 도입 여부를 Dialogue/NPC 리팩터링과 함께 결정한다.
+- NPCState와 QuestState의 경계를 더 명확히 분리한다.
+
 완료 기준:
 
-- 새 퀘스트 추가 시 C# 수정 없이 JSON 데이터 추가 중심으로 처리 가능하다.
-- 퀘스트 상태가 Dialogue, NPC, Entrance 조건에 사용 가능하다.
+- 새 퀘스트 추가 시 C# 수정 없이 ScriptableObject 데이터 추가 중심으로 처리 가능하다.
+- 퀘스트 상태가 Dialogue, NPC, Entrance 조건에 사용할 수 있는 형태로 관리된다.
+- JSON 전환은 Dialogue/NPC 데이터 구조가 안정된 뒤 검토한다.
 
 ### 9.4 Dialogue
 
@@ -478,3 +497,86 @@ ID 규칙:
 ## 14. AI 디버깅
 
 사용자의 요구, 허락 없이 스크립트를 업데이트 하지 않고, 코드 조각과 예시를 먼저 보여주고 허락을 받는다.
+
+## 15. NPC / Dialogue 리팩터링 적용 결과
+
+### 15.1 완료된 항목
+
+- `NPCDialogueData`를 추가하여 NPCState별 DialogueNodeData 매핑을 ScriptableObject로 분리했다.
+- `NpcDialogueResolver`를 추가하여 entry override와 상태별 대화 선택 책임을 분리했다.
+- `NPCDialogue`는 대화 시작, 상태 변경 래퍼, 씬 이벤트 연결 책임만 유지하도록 정리했다.
+- `DialogueManager`는 라인 진행, 옵션 선택, 노드 이벤트 호출 흐름을 안정화했다.
+- `DialogueUI`는 본문 표시와 옵션 UI 생성 책임으로 정리했다.
+- `MovementNPC`, `LoadCheckNPC`, `NPCVisibilityByState`, `TutorialNPC`의 null 방어와 책임 경계를 보강했다.
+- `DialogueNodeData`는 property 기반 직렬화 구조로 변경했고 기존 SO 데이터 40개를 이관했다.
+- `DialogueRouter`, `NPCDialoguePreset`, `NPCDialogueDefaultSet`은 미사용 잔재로 정리했다.
+
+### 15.2 현재 유지한 설계 결정
+
+- 전체 JSON 전환은 보류하고 ScriptableObject 기반 구조를 유지한다.
+- Scene 오브젝트 참조가 필요한 이벤트는 `NodeEvent`의 UnityEvent로 유지한다.
+- `entry`는 기본 대사가 아니라 1회성 시작 노드 override로 사용한다.
+- `TutorialNPC`는 표준 NPCDialogueData 흐름의 예외로 두되, `ValidateDialogueData()` override로 처리한다.
+
+### 15.3 추후 과제
+
+- `DialogueUI.OnEnable/OnDisable`의 `Time.timeScale` 제어를 GameFlow 또는 PauseController 계층으로 이동한다.
+- Scene 전환 직후 자동 대사는 LoadPanel 종료 또는 SceneTransition 상태를 기준으로 실행한다.
+- Player / Entrance 리팩터링 시 스폰 위치 Ground 보정과 물리 초기화 타이밍을 정리한다.
+- NodeEvent UnityEvent 구조를 장기적으로 Condition/Action Executor 구조로 대체할지 결정한다.
+- DialogueNodeData의 ID 체계와 JSON 전환 여부는 Save/Load 설계와 함께 재검토한다.
+## 16. NPC / Dialogue / Scene Transition 1차 안정화 완료 기록
+
+### 16.1 적용 범위
+
+- `NPCDialogueData` 기반 상태별 대화 매핑을 유지한다.
+- `DialogueNodeData`는 대사 본문과 선택지 데이터를 담당한다.
+- `NodeEvent`는 Scene 오브젝트 참조가 필요한 이벤트 연결만 담당한다.
+- `DialogueManager`는 대화 진행, 입력 상태 전환, 대화 중 `Time.timeScale` 제어를 담당한다.
+- `DialogueUI`는 텍스트/선택지 표시 책임만 담당한다.
+- `LoadPanel` 기반 Scene 전환 흐름을 정리하고, 전환 중 입력을 잠근다.
+- `Enterance` / `AutoEnterance`의 Scene 이동 성공 여부를 반환값으로 추적한다.
+
+### 16.2 완료된 개선 사항
+
+- `NPCDialogue`의 `entry`를 1회성 시작 노드 override로 명확히 분리했다.
+- `NpcDialogueResolver`는 `entry`가 있으면 상태별 대화보다 우선 사용한다.
+- `NPCDialogueData.ContainsNode()`를 추가해 `NodeEvent`가 현재 NPC 대화 데이터에 속한 노드인지 검증한다.
+- `NodeEvent` 검증 항목을 추가했다.
+  - 빈 Node
+  - 중복 Node
+  - DialogueData에 등록되지 않은 Node
+  - Options 개수와 OptionEvents 개수 불일치
+- `NPCDialogue`의 Animator `IsTalk` 파라미터는 존재 여부를 캐싱한 뒤 호출하도록 변경했다.
+- `DialogueUI`의 `Time.timeScale` 직접 제어를 제거하고 `DialogueManager`로 책임을 이동했다.
+- `DialogueManager.EndDialogue()`는 중복 종료를 방지하고, 씬 전환 중 입력 상태를 `Gameplay`으로 덮지 않도록 변경했다.
+- `LoadCheckNPC`는 LoadPanel 전환이 끝난 뒤 강제 이벤트를 실행한다.
+- `GameManager`는 Scene 전환 중 입력을 Lock/Unlock하고, LoadPanel FadeIn/Load/FadeOut 순서로 전환한다.
+- `Enterance.EnterArea()`와 `GameManager.TryLoadScene()`은 성공 여부를 반환한다.
+- `AutoEnterance`는 `OnTriggerStay2D`와 cooldown을 사용해 씬 진입 직후 트리거 내부에 있는 상황을 처리한다.
+- `AutoEnterance`는 실제 씬 전환 요청에 성공했을 때만 중복 진입 방지 플래그를 설정한다.
+- `DonationBox`는 무기 이름 비교 실패가 조용히 무시되지 않도록 방어 로그와 `WeaponDefinition` 기반 비교를 추가했다.
+
+### 16.3 확인된 문제와 해결
+
+- WhiteGuard 기부 이벤트가 실행되지 않던 문제는 코드 문제가 아니라 Stage10 `WhiteGuardNPC`의 `NodeEvent`가 `TurtleB_D_Inprogress`에 잘못 연결된 Inspector 오연결이었다.
+- `NPCDialogueData.ContainsNode()` 검증으로 같은 유형의 오연결을 런타임 Warning으로 확인할 수 있게 했다.
+- `AudioSource?.Play()` 호출로 일부 Enterance에서 씬 이동이 막히던 문제는 Unity Object null 처리와 AudioClip 누락 방어로 해결했다.
+- 씬 이동 직후 AutoEnterance가 재동작하지 않던 문제는 `OnTriggerEnter2D` 단독 의존을 제거하고, 씬 전환 성공 여부를 기준으로 잠금 플래그를 관리해 해결했다.
+
+### 16.4 현재 유지하는 설계 결정
+
+- 전체 JSON 전환은 보류하고 ScriptableObject 기반 구조를 유지한다.
+- Scene 오브젝트 참조가 필요한 이벤트는 당분간 `NodeEvent` + `UnityEvent`로 유지한다.
+- `OnEnd`는 "노드의 모든 텍스트 출력이 끝난 직후" 호출되는 이벤트로 정의한다.
+- `OnEnd`는 선택지가 있는 노드라면 선택지 표시 전에 호출된다.
+- 대화 중 게임 정지는 당분간 `Time.timeScale = 0` 정책을 유지하되, 제어 책임은 `DialogueManager`가 가진다.
+- `Enteracnes` 폴더명과 `Enterance` 클래스명은 Unity 참조 리스크 때문에 이번 단계에서는 유지한다.
+
+### 16.5 남은 과제
+
+- `NodeEvent` / `UnityEvent` 기반 이벤트 연결을 장기적으로 Condition/Action Executor 구조로 대체할지 검토한다.
+- Dialogue 전체 JSON 전환 여부는 Save/Load ID 설계와 함께 다시 결정한다.
+- Player / Entrance 리팩터링 시 SpawnPoint와 AutoEnterance Collider 배치 규칙을 문서화한다.
+- Animation 리팩터링 시 Animator 파라미터 문자열을 `AnimatorParams` 같은 전용 static class로 상수화/Hash화할지 검토한다.
+- 깨진 한글 주석/로그 인코딩은 별도 정리 작업으로 처리한다.

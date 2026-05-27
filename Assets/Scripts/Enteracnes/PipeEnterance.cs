@@ -5,18 +5,34 @@ using UnityEngine;
 public class PipeEnterance : InteractableEnterance
 {
     [field: SerializeField] public bool IsLeftStart { get; private set; }
-    [field : SerializeField] public float XOffset { get; private set; } = 0.25f;
+    [field: SerializeField] public float XOffset { get; private set; } = 0.25f;
+
     public override void Interactive(PlayerBase player)
     {
-        if (player.GetComponent<PlayerController>().TryPipeWarp(true, this))
-            StartCoroutine(PipeWarpCoroutine(player));
+        if (player == null)
+        {
+            Debug.LogWarning("[PipeEnterance] player 가 null 입니다.", this);
+            return;
+        }
+
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogWarning("[PipeEnterance] PlayerController 가 null 입니다.", this);
+            return;
+        }
+
+        if (playerController.TryPipeWarp(true, this))
+        {
+            StartCoroutine(PipeWarpCoroutine());
+        }
     }
 
-    private IEnumerator PipeWarpCoroutine(PlayerBase player)
+    private IEnumerator PipeWarpCoroutine()
     {
         yield return new WaitForSeconds(0.5f);
 
-        base.EnterArea(nextArea, EnteranceType.Pipe);
+        base.EnterArea(EnteranceType.Pipe);
     }
 
 }

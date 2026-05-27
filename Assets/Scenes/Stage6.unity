@@ -2147,15 +2147,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPosition: {fileID: 1928009718}
-  dialogueNodeData:
-  - {fileID: 11400000, guid: 4d7af253c48cf5a4f879296d9f1ab8b9, type: 2}
-  - {fileID: 11400000, guid: f0d6f08836a29bf45951febdeb0f7cd9, type: 2}
+  dialogueData: {fileID: 11400000, guid: 325c8e3f666e6814e85a585136c5876d, type: 2}
   nodeEvents:
-  - node: {fileID: 11400000, guid: 4d7af253c48cf5a4f879296d9f1ab8b9, type: 2}
-    onEnter:
+  - <Node>k__BackingField: {fileID: 11400000, guid: 4d7af253c48cf5a4f879296d9f1ab8b9, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1077872757}
@@ -2170,28 +2168,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: f0d6f08836a29bf45951febdeb0f7cd9, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1077872757}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetRepeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    optionEvents: []
-  optionEvents: []
+    <OptionEvents>k__BackingField: []
   <NPCId>k__BackingField: 1
   <InteractivePos>k__BackingField: {fileID: 398319644}
   entry: {fileID: 0}
@@ -2425,6 +2402,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}

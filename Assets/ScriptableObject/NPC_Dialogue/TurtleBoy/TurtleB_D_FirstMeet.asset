@@ -12,19 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: TurtleB_D_FirstMeet
   m_EditorClassIdentifier: 
-  entityName: Turtle_Boy
-  texts:
+  <entityName>k__BackingField: Turtle_Boy
+  <texts>k__BackingField:
   - "\uD639\uC2DC \uC5EC\uAE30 \uB4E4\uC5B4\uAC08\uAEBC\uC57C\u2026?"
   - "\uADF8\uB7FC \uB098 \uAC00\uC2DC \uD55C \uAC1C\uB9CC \uC8FC\uC6CC \uC8FC\uBA74
     \uC548\uB420\uAE4C?"
-  options:
-  - label: "\uADF8\uB798"
-    nextNode: {fileID: 11400000, guid: a3f2c9666517dd646988dd0e26ce98d6, type: 2}
-    onSelected:
-      m_PersistentCalls:
-        m_Calls: []
-  - label: "\uD798\uB4E4 \uAC83 \uAC19\uC740\uB370?"
-    nextNode: {fileID: 11400000, guid: fb942d08a4302e9478727a309fce2e97, type: 2}
-    onSelected:
-      m_PersistentCalls:
-        m_Calls: []
+  <options>k__BackingField:
+  - <Label>k__BackingField: "\uADF8\uB798"
+    <nextNode>k__BackingField: {fileID: 11400000, guid: a3f2c9666517dd646988dd0e26ce98d6, type: 2}
+  - <Label>k__BackingField: "\uD798\uB4E4 \uAC83 \uAC19\uC740\uB370?"
+    <nextNode>k__BackingField: {fileID: 11400000, guid: fb942d08a4302e9478727a309fce2e97, type: 2}

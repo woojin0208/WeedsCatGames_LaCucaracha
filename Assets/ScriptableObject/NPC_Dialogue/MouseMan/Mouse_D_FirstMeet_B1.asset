@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Mouse_D_FirstMeet_B1
   m_EditorClassIdentifier: 
-  entityName: "\uC950\uC800\uC528"
-  texts:
+  <entityName>k__BackingField: "\uC950\uC800\uC528"
+  <texts>k__BackingField:
   - "\uC5B4\uC5B4\u2026 \uD558\uC218\uAD6C\uB77C\uACE0 \uD558\uBA74 \uC54C\uAE4C?"
   - "\uB354\uB7FD\uACE0 \uCD95\uCD95\uD558\uACE0\u2026 \uBB50 \uADF8\uB7F0 \uACF3\uC774\uC9C0"
-  options: []
+  <options>k__BackingField: []

@@ -564,6 +564,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1201376788 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7780933918331416946, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+  m_PrefabInstance: {fileID: 7908040574742079341}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414d9d24ae5d6cd458c36af3da596a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1239267969 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3409968097432296416, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
@@ -604,7 +615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1317785869
 Transform:
   m_ObjectHideFlags: 0
@@ -627,7 +638,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317785868}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84ff774b4e82c47408b02654e9ebdffc, type: 3}
   m_Name: 
@@ -1352,6 +1363,10 @@ PrefabInstance:
       value: 0.9019608
       objectReference: {fileID: 0}
     - target: {fileID: 5029424448633803590, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: loadPanel
+      value: 
+      objectReference: {fileID: 1201376788}
+    - target: {fileID: 5029424448633803590, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 1376014138}
@@ -1514,6 +1529,14 @@ PrefabInstance:
     - target: {fileID: 6055371794084999625, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_fontColor.r
       value: 0.9019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399062469505579880, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_Name
+      value: LoadPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399062469505579880, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7007685671932822462, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_IsActive

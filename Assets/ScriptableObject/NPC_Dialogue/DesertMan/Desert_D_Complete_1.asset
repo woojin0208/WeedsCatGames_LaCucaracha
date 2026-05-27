@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Desert_D_Complete_1
   m_EditorClassIdentifier: 
-  entityName: Desert_Man
-  texts:
+  <entityName>k__BackingField: Desert_Man
+  <texts>k__BackingField:
   - "\uC608...?"
   - "\uC800\uB294 \uB2EC\uB77C\uACE0 \uD55C \uC801\uC774\u2026\r"
   - "\uD558\uD558\u2026! \uC774\uAC83\uB3C4 \uAC00\uC9DC\uAD6C\uB098.\r"
-  options: []
+  <options>k__BackingField: []

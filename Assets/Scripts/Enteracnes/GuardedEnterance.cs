@@ -6,28 +6,47 @@ public class GuardedEnterance : InteractableEnterance
     [SerializeField] private NPCDialogue guardNPC;
     [SerializeField] private DialogueNodeData guardNode;
 
-    protected override void EnterArea(string nextArea, EnteranceType enterance)
+    protected override bool EnterArea(EnteranceType enterance)
+    {
+        if (CanPassGuard())
+        {
+            return base.EnterArea(EnteranceType.Guard);
+        }
+
+        StartGuardDialogue();
+        return false;
+    }
+
+    private bool CanPassGuard()
+    {
+        if (guardNPC == null) return true;
+        if (!guardNPC.gameObject.activeInHierarchy) return true;
+
+        NPCStateManager stateManager = NPCStateManager.Instance;
+        if (stateManager == null)
+        {
+            Debug.LogWarning("[GuardEnterance] NPCStateManager 가 null 입니다.", this);
+            return false;
+        }
+
+        NPCState guardState = stateManager.GetState(guardNPC.NPCId);
+        return guardState == NPCState.Completed;
+    }
+
+    private void StartGuardDialogue()
     {
         if (guardNPC == null)
         {
-            base.EnterArea(nextArea, EnteranceType.Guard);
+            Debug.LogWarning("[GuardedEnterance] guardNPC 가 null 입니다.", this);
+            return;
         }
-        else if (!guardNPC.gameObject.activeInHierarchy || !guardNPC.gameObject.activeSelf)
+
+        if (guardNode != null)
         {
-            base.EnterArea(nextArea, EnteranceType.Guard);
+            guardNPC.StartDialogueWithNode(guardNode);
+            return;
         }
-        else
-        {
-            if ((int)NPCStateManager.Instance.GetState(guardNPC.NPCId) >= (int)NPCState.Completed) base.EnterArea(nextArea, EnteranceType.Guard);
-            else
-            {
-                if (guardNode != null)
-                    guardNPC.StartDialogueWithNode(guardNode);
-                else
-                {
-                    guardNPC.Interactive();
-                }
-            }
-        }
+
+        guardNPC.Interactive();
     }
 }

@@ -6,7 +6,13 @@ public class InteractableEnterance : Enterance, IInteractable
     [field: SerializeField] public Transform InteractivePos { get; set; }
     public virtual void Interactive(PlayerBase player)
     {
-        EnterArea(nextArea, EnteranceType.Interactable);
+        if (player == null)
+        {
+            Debug.LogWarning("[InteractableEnterance] player 가 null 입니다.", this);
+            return;
+        }
+
+        EnterArea(EnteranceType.Interactable);
     }
 
 }

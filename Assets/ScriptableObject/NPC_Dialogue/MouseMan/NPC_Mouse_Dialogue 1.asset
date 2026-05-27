@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: NPC_Mouse_Dialogue 1
   m_EditorClassIdentifier: 
-  entityName: "\uC950\uC800\uC528"
-  texts:
+  <entityName>k__BackingField: "\uC950\uC800\uC528"
+  <texts>k__BackingField:
   - "\uADF8\uB798 \uC798 \uAC00\uAC70\uB77C"
-  options: []
+  <options>k__BackingField: []

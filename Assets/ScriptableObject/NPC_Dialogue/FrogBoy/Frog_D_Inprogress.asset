@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Frog_D_Inprogress
   m_EditorClassIdentifier: 
-  entityName: "\uAC1C\uAD6C\uB9AC \uC18C\uB144"
-  texts:
+  <entityName>k__BackingField: "\uAC1C\uAD6C\uB9AC \uC18C\uB144"
+  <texts>k__BackingField:
   - "\uB610 \uBB50! \uB9D0 \uAC78\uC9C0 \uB9C8\r"
-  options: []
+  <options>k__BackingField: []

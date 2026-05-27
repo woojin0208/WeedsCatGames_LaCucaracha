@@ -25,5 +25,8 @@ public class StartVideo : MonoBehaviour
         videoPlayer.Play();
     }
 
-    private void OnVideoFinished(VideoPlayer _) => GameManager.Instance.TryLoadScene("Tutorial");
+    private void OnVideoFinished(VideoPlayer _)
+    {
+        GameManager.Instance.TryLoadScene("Tutorial");
+    }
 }

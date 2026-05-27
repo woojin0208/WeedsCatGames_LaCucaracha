@@ -14,6 +14,7 @@ public class QuestObjectiveData
     [field: SerializeField] public string ObjectiveId { get; private set; }
     [field: SerializeField] public QuestObjectiveType ObjectiveType { get; private set; }
     [field: SerializeField] public int TargetValue { get; private set; } = 1;
+    [field: SerializeField] public bool IsRetryAllowed { get; private set; } = true;
     [field: SerializeField] public WeaponBase[] RequiredWeapons { get; private set; }
     [field: SerializeField] public WeaponBase RewardWeapon { get; private set; }
 }

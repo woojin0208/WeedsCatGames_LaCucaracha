@@ -183,8 +183,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 87223471}
     - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
+      propertyPath: dialogueData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f7f9e02b3534e041ba6768b7a37afa7, type: 2}
+    - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
       propertyPath: nodeEvents.Array.size
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
       propertyPath: dialogueNodeData.Array.size
@@ -222,6 +226,26 @@ PrefabInstance:
       propertyPath: <InteractivePos>k__BackingField
       value: 
       objectReference: {fileID: 581800223}
+    - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
+      propertyPath: nodeEvents.Array.data[0].<Node>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c3ab798e2a8f7f3438cf945badad11f9, type: 2}
+    - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
+      propertyPath: nodeEvents.Array.data[1].<Node>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 0a256940da8b55847839c44ac794513d, type: 2}
+    - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
+      propertyPath: nodeEvents.Array.data[2].<Node>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: b86de30e55069f3488c3f2eb2d1e5903, type: 2}
+    - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
+      propertyPath: nodeEvents.Array.data[3].<Node>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: e699b36bcbb334041bb66205e068b073, type: 2}
+    - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
+      propertyPath: nodeEvents.Array.data[4].<Node>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c3ab798e2a8f7f3438cf945badad11f9, type: 2}
     - target: {fileID: 8585701053637324422, guid: d3d416fa3e792f4498dafabbdcd6aa08, type: 3}
       propertyPath: nodeEvents.Array.data[0].onEnd.m_PersistentCalls.m_Calls.Array.size
       value: 0
@@ -1026,11 +1050,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38dff402c225b2e4f8e962cc69435d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questId: quest_item_requirment
-  objectiveId: objective_required_item
+  questData: {fileID: 11400000, guid: b5d0e96773f606f4483a9452a9caf180, type: 2}
+  objectiveId: objective_required_item_turtleboy_beethorn
   currentNPC: {fileID: 363396004}
-  requirments:
-  - {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
 --- !u!61 &363396003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1089,18 +1111,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPosition: {fileID: 1845201771}
-  dialogueNodeData:
-  - {fileID: 11400000, guid: 82fd9a3fc8acb4e46b8aeea15bade4c8, type: 2}
-  - {fileID: 11400000, guid: 13b0d1637a23a5d4da36211cd6d37257, type: 2}
-  - {fileID: 11400000, guid: 9fdddb33634598d4e9a0519994e95d86, type: 2}
-  - {fileID: 11400000, guid: 2c14a4fd82b02ae40bb316bf87533418, type: 2}
-  - {fileID: 11400000, guid: 79ec4b42021b5894c8999ffee8438241, type: 2}
+  dialogueData: {fileID: 11400000, guid: 22229f7883fbceb4084efafda8edef35, type: 2}
   nodeEvents:
-  - node: {fileID: 11400000, guid: 82fd9a3fc8acb4e46b8aeea15bade4c8, type: 2}
-    onEnter:
+  - <Node>k__BackingField: {fileID: 11400000, guid: 82fd9a3fc8acb4e46b8aeea15bade4c8, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 363396004}
@@ -1115,12 +1132,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 9fdddb33634598d4e9a0519994e95d86, type: 2}
-    onEnter:
+    <OptionEvents>k__BackingField: []
+  - <Node>k__BackingField: {fileID: 11400000, guid: 9fdddb33634598d4e9a0519994e95d86, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 363396002}
@@ -1135,68 +1152,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 79ec4b42021b5894c8999ffee8438241, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 363396004}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetRepeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 13b0d1637a23a5d4da36211cd6d37257, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 363396004}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetRepeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 2c14a4fd82b02ae40bb316bf87533418, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 363396004}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetInProgress
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    optionEvents: []
-  optionEvents: []
+    <OptionEvents>k__BackingField: []
   <NPCId>k__BackingField: 3
   <InteractivePos>k__BackingField: {fileID: 777290511}
   entry: {fileID: 0}
@@ -3621,15 +3577,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPosition: {fileID: 1231817365}
-  dialogueNodeData:
-  - {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
-  - {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
-  - {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
-  - {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
-  - {fileID: 11400000, guid: b5a9f6507a61f3449b31ca14dfd83fc4, type: 2}
+  dialogueData: {fileID: 11400000, guid: 717e5eb7621440d4cb187e3d69d37662, type: 2}
   nodeEvents:
-  - node: {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
-    onEnter:
+  - <Node>k__BackingField: {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
+    <OnEnter>k__BackingField:
+      m_PersistentCalls:
+        m_Calls: []
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1729136643}
@@ -3644,32 +3598,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 154596284}
-          m_TargetAssemblyTypeName: VFXPlayer, Assembly-CSharp
-          m_MethodName: StartVFX
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onEnd:
+    <OptionEvents>k__BackingField: []
+  - <Node>k__BackingField: {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    optionEvents: []
-  - node: {fileID: 11400000, guid: b5a9f6507a61f3449b31ca14dfd83fc4, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
-    onEnter:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 154596281}
@@ -3684,51 +3618,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 154596281}
-          m_TargetAssemblyTypeName: DonationBox, Assembly-CSharp
-          m_MethodName: DonationItem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    optionEvents: []
-  - node: {fileID: 11400000, guid: b5a9f6507a61f3449b31ca14dfd83fc4, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 154596281}
-          m_TargetAssemblyTypeName: DonationBox, Assembly-CSharp
-          m_MethodName: DonationItem
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    onEnd:
-      m_PersistentCalls:
-        m_Calls: []
-    optionEvents: []
-  optionEvents: []
+    <OptionEvents>k__BackingField: []
   <NPCId>k__BackingField: 4
   <InteractivePos>k__BackingField: {fileID: 1865522533}
   entry: {fileID: 0}

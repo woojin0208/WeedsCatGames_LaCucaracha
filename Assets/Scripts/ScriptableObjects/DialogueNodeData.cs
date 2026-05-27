@@ -1,52 +1,49 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-// 대화 노드가 제공해야 하는 읽기 전용 데이터를 정의한다.
+// 대화 노드가 제공해야 하는 읽기 전용 데이터 규약이다.
 public interface IDialogueNode
 {
     public IReadOnlyList<string> Texts { get; }
     public IReadOnlyList<IDialogueOption> Options { get; }
 }
 
-// 대화 선택지가 제공해야 하는 읽기 전용 데이터를 정의한다.
+// 대화 선택지가 제공해야 하는 읽기 전용 데이터 규약이다.
 public interface IDialogueOption
-{ 
+{
     public string Label { get; }
     public IDialogueNode Next { get; }
 }
 
-// 대사 본문과 선택지 정보를 저장하는 대화 노드 에셋이다.
-[CreateAssetMenu(fileName = "DialogueNodeData", menuName = "Game/DialogueNodeData")]
+// 대화 본문과 선택지 연결 정보를 저장하는 ScriptableObject다.
+[CreateAssetMenu(fileName = "DialogueNodeData_", menuName = "Game/Dialogue/Dialogue Node Data")]
 public class DialogueNodeData : ScriptableObject, IDialogueNode
 {
-    public string entityName;
+    [field: SerializeField] public string entityName { get; private set; }
 
-    [TextArea]
-    public string[] texts;
-    public DialogueOption[] options;
+    [field: SerializeField, TextArea] public string[] texts { get; private set; }
+    [field: SerializeField] public DialogueOption[] options { get; private set; }
 
     public IReadOnlyList<string> Texts => texts;
     public IReadOnlyList<IDialogueOption> Options => options;
 
     public DialogueNodeData CloneRuntime()
     {
-        var clone = Instantiate(this);
-        clone.texts = (string[])texts.Clone(); // 런타임에서 원본 에셋을 직접 수정하지 않도록 배열을 복사한다.
-        clone.options = (DialogueOption[])options.Clone();
+        DialogueNodeData clone = Instantiate(this);
+
+        clone.texts = Texts != null ? (string[])texts.Clone() : null;
+        clone.options = Options != null ? (DialogueOption[])options.Clone() : null;
+
         return clone;
     }
 }
 
-[System.Serializable]
-
 // 대화 선택지 데이터를 정의한다.
+[System.Serializable]
 public class DialogueOption : IDialogueOption
 {
-    public string label;
-    public DialogueNodeData nextNode;
-    public UnityEvent onSelected;
-    public string Label => label;
+    [field: SerializeField] public string Label { get; private set; }
+    [field: SerializeField] public DialogueNodeData nextNode { get; private set; }
+
     public IDialogueNode Next => nextNode;
-    public void Invoke() => onSelected?.Invoke();
 }

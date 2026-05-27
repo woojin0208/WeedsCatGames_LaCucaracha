@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Kimbob_FirstMeet
   m_EditorClassIdentifier: 
-  entityName: Kimbob
-  texts:
+  <entityName>k__BackingField: Kimbob
+  <texts>k__BackingField:
   - "\uC624\uB298\uC740 \uD2B9\uC2DD\uC774\uC57C \uC0BC\uAC01\uAE40\uBC25!"
-  options: []
+  <options>k__BackingField: []

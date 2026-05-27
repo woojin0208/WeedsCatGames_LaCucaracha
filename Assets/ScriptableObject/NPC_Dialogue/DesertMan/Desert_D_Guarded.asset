@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Desert_D_Guarded
   m_EditorClassIdentifier: 
-  entityName: Desert_Man
-  texts:
+  <entityName>k__BackingField: Desert_Man
+  <texts>k__BackingField:
   - "\u2026\uC7A0\uAE50"
   - "\uB3CC\uC544\uAC00\uC138\uC694"
-  options: []
+  <options>k__BackingField: []

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: TurtleB_D_FirstMeet 1
   m_EditorClassIdentifier: 
-  entityName: Turtle_Boy
-  texts:
+  <entityName>k__BackingField: Turtle_Boy
+  <texts>k__BackingField:
   - "\uC88B\uC544!\t"
   - "\uADF8\uB7FC \uC548\uC5D0 \uB3D9\uBB3C\uC758 \uC815\uBCF4\uB97C \uC904\uAED8!"
   - "\uBC8C\uC774\uB77C\uACE0 \uD558\uB294 \uB3D9\uBB3C\uC778\uB370"
@@ -22,4 +22,4 @@ MonoBehaviour:
   - "\uBC8C\uC9D1 \uC870\uAC01\uC774 \uC788\uB294\uB370 \uADF8\uAC78 \uB358\uC9C0\uBA74
     \uB290\uB824\uC9C0\uB2C8\uAE4C \uCC38\uACE0\uD574!"
   - "\uB108\uAC00 \uBD99\uC5B4\uBC84\uB9AC\uC9C0 \uC54A\uAC8C \uC870\uC2EC\uD558\uACE0\u2026!"
-  options: []
+  <options>k__BackingField: []

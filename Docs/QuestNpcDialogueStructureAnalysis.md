@@ -810,3 +810,239 @@ Boss 상태 저장 전체 구현
 ```
 
 이 항목들은 Quest 핵심 구조가 안정된 뒤 진행한다.
+
+## 12. Quest 1차 리팩터링 적용 결과
+
+이 섹션은 Quest 1차 리팩터링 완료 후 실제 반영된 구조와 남은 과제를 기록한다.
+
+### 12.1 적용된 구조
+
+1차 리팩터링에서는 JSON 전환을 보류하고, Unity Object 참조와 인스펙터 검증이 필요한 데이터를 ScriptableObject로 분리했다.
+
+적용된 핵심 구조:
+
+```text
+QuestData
+- questId
+- title
+- description
+- objectives
+
+QuestObjectiveData
+- objectiveId
+- objectiveType
+- targetValue
+- requiredWeapons
+- rewardWeapon
+
+QuestProgress
+- questId
+- state
+- objective counter
+- completed objective ids
+
+QuestManager
+- questId 기반 진행 상태 조회
+- counter objective 갱신
+- objective 완료 처리
+- QuestState 변경
+- 보상 수령 상태 기록
+```
+
+### 12.2 적용된 퀘스트 흐름
+
+| 대상 | 적용 결과 | 비고 |
+| --- | --- | --- |
+| `DonationBox` | `GameManager.donationScore` 제거, `QuestManager` counter로 누적 진행도 관리 | `QuestData`의 `Counter` objective와 `TargetValue` 사용 |
+| `ItemRequirementChecker` | 요구 무기 정보를 `QuestData`의 `RequiredWeapons`로 이동 | 성공/실패 결과는 `QuestState`와 기존 `NPCState`에 함께 반영 |
+| `ItemGiver` | 지급 무기를 `QuestData`의 `RewardWeapon`으로 이동 | 인벤토리 여유가 있을 때만 `Rewarded` 처리 |
+
+### 12.3 유지한 호환 구조
+
+기존 Dialogue/NPC 흐름을 깨지 않기 위해 아래 구조는 유지했다.
+
+```text
+NPCStateManager
+NPCDialogue.SetCompleted()
+NPCDialogue.SetFailed()
+NPCDialogue.SetRepeat()
+DialogueNodeData
+NodeEvent / UnityEvent
+WaitForEndOfFrame 이후 NPCDialogue.Interactive() 재호출
+```
+
+즉, QuestState는 새 런타임 진행 상태로 추가했지만 기존 NPC 대화 분기는 아직 NPCState를 기준으로 동작한다. 이 구조는 Dialogue/NPC 리팩터링에서 단계적으로 분리한다.
+
+### 12.4 이번 단계에서 해결된 문제
+
+- 기부 진행도가 `GameManager` 전역 필드에 저장되던 문제를 제거했다.
+- 퀘스트별 정적 데이터가 개별 MonoBehaviour 필드에 흩어져 있던 문제를 `QuestData`로 일부 이동했다.
+- `questId`, `objectiveId` 기반으로 Save/Load에 연결 가능한 기본 형태를 마련했다.
+- 보상 지급, 요구 무기 검사, 기부 누적을 모두 `QuestManager`의 진행 상태 변경 API와 연결했다.
+- 기능별 하위 Quest 클래스를 만들지 않고, 데이터와 진행 상태 조합으로 확장하는 방향을 검증했다.
+
+### 12.5 남은 과제
+
+아래 항목은 1차 리팩터링 범위에서 제외하고 후속 작업으로 둔다.
+
+```text
+Weapon name 비교를 weaponId 비교로 변경
+QuestProgress SaveData DTO 분리
+QuestState 변경 이벤트 발행
+QuestConditionResolver / QuestActionExecutor 도입
+NPCState와 QuestState의 완전 분리
+Dialogue 선택 결과를 QuestAction으로 연결
+UnityEvent 중복 호출 정리
+Dialogue JSON 전환
+```
+
+### 12.6 다음 리팩터링 방향
+
+Quest 1차 구조가 적용되었으므로 다음 단계는 Dialogue/NPC 책임 분리다.
+
+우선 검토 대상:
+
+```text
+NPCDialogue
+DialogueManager
+NodeEvent
+NPCStateManager
+DialogueNodeData
+```
+
+중점:
+
+- NPCState가 대화 분기와 퀘스트 상태를 동시에 표현하는 문제 정리
+- DialogueManager가 대화 진행과 이벤트 실행을 함께 담당하는 문제 정리
+- NodeEvent / UnityEvent가 QuestAction 역할을 일부 대체하는 문제 정리
+- QuestData와 Dialogue 분기를 직접 연결할지, 중간 Resolver를 둘지 결정
+
+## 13. NPC / Dialogue 1차 리팩터링 적용 결과
+
+이 섹션은 NPC / Dialogue 리팩터링 완료 후 실제 반영된 구조를 기록한다.
+
+### 13.1 적용된 구조
+
+```text
+NPCDialogueData
+- NPCId
+- FallbackNode
+- NPCStateDialogue[]
+
+NPCDialogue
+- NPCId 검증
+- NPCState 기반 시작 DialogueNodeData 선택
+- NodeEvent 기반 씬 UnityEvent 연결
+- entry 1회성 override 처리
+
+NpcDialogueResolver
+- entry 우선 처리
+- NPCStateManager 기반 상태 조회
+- NPCDialogueData에서 상태별 노드 조회
+
+DialogueManager
+- 대화 라인 진행
+- 옵션 이동/선택 처리
+- 현재 노드 기준 OptionEvents 갱신
+- OnEnter / OnEnd 호출 흐름 유지
+
+DialogueUI
+- 본문 표시
+- 옵션 버튼 생성
+- 선택지 하이라이트 처리
+```
+
+### 13.2 데이터 분리 결과
+
+- 상태별 대화 매핑은 `NPCDialogueData` ScriptableObject로 이동했다.
+- 씬 오브젝트 참조가 필요한 이벤트는 `NPCDialogue.NodeEvent`에 남겼다.
+- Project 영역의 SO가 Scene 오브젝트를 직접 참조하지 않도록 분리했다.
+- `DialogueNodeData`는 auto-property 직렬화 구조로 변경했고, 기존 에셋 값은 backing field 형태로 이관했다.
+- 기존 `DialogueOption.onSelected`는 사용하지 않으므로 제거했다.
+
+### 13.3 정리된 잔재
+
+다음 스크립트는 새 구조에서 사용되지 않아 삭제 대상으로 정리했다.
+
+```text
+DialogueRouter
+NPCDialoguePreset
+NPCDialogueDefaultSet
+```
+
+삭제 전 참조 검색 기준으로 씬, 프리팹, 에셋에서 실사용 참조가 확인되지 않았다.
+
+### 13.4 보류된 과제
+
+```text
+DialogueUI의 Time.timeScale 직접 제어 분리
+LoadPanel / SceneTransition 상태와 자동 대화 타이밍 정리
+Player / Entrance 스폰 위치 Ground 보정
+Dialogue 전체 JSON 전환 여부 결정
+UnityEvent 기반 NodeEvent를 Action/Condition 구조로 대체할지 결정
+```
+
+### 13.5 테스트 결과
+
+- 상태별 NPC 대화 매핑 테스트 완료
+- 옵션 선택 및 다음 노드 이동 테스트 완료
+- MovementNPC 이동 이벤트 테스트 완료
+- DialogueNodeData SO 필드 이관 후 Inspector 데이터 확인 완료
+- 기존 DialogueNodeData 값 백업 문서 생성 완료: `Docs/DialogueNodeDataBackup_2026-05-25.md`
+## 14. NPC / Dialogue / Scene Transition 1차 안정화 결과
+
+### 14.1 구조 변경 요약
+
+- `NPCDialogueData`는 NPC 상태별 시작 대화 노드 매핑을 담당한다.
+- `NpcDialogueResolver`는 `entry` override와 NPC 상태를 기준으로 시작 노드를 결정한다.
+- `NPCDialogue`는 NPCId 검증, 상태 변경 helper, `NodeEvent` 호출 연결을 담당한다.
+- `DialogueManager`는 대화 라인 진행, 선택지 입력, 현재 노드 이벤트 호출 순서를 담당한다.
+- `DialogueUI`는 텍스트와 선택지 표시만 담당한다.
+- `NodeEvent`는 Scene 오브젝트 참조가 필요한 이벤트만 연결한다.
+
+### 14.2 검증 로직 추가
+
+- `NPCDialogueData.ContainsNode()`로 `NodeEvent`에 연결된 노드가 현재 NPC 대화 데이터에 속하는지 확인한다.
+- `NPCDialogue.BuildEventMap()`에서 다음 항목을 검증한다.
+  - 빈 Node
+  - 중복 Node
+  - 현재 `NPCDialogueData`에 등록되지 않은 Node
+  - Options 개수와 OptionEvents 개수 불일치
+- WhiteGuard 기부 실패처럼 다른 NPC의 DialogueNodeData가 잘못 연결된 문제를 런타임 Warning으로 확인할 수 있다.
+
+### 14.3 DialogueManager 정리
+
+- 대화 시작 시 `InputStateType.Dialogue`로 전환한다.
+- 대화 중 `Time.timeScale = 0` 처리는 `DialogueManager`가 담당한다.
+- `DialogueUI`의 `OnEnable` / `OnDisable` timeScale 제어는 제거했다.
+- `EndDialogue()`는 중복 호출을 방어한다.
+- 씬 전환 중 대화가 닫힐 경우 입력 상태를 `Gameplay`으로 강제로 덮지 않는다.
+- `OnEnd`는 "현재 노드의 모든 텍스트 출력이 끝난 직후" 호출되는 이벤트로 정의한다.
+- 선택지가 있는 노드에서는 `OnEnd`가 선택지 표시 전에 호출된다.
+
+### 14.4 Scene Transition / Entrance 정리
+
+- `LoadPanel`은 FadeIn/FadeOut을 명시적으로 수행한다.
+- `GameManager`는 FadeIn, Scene Load, FadeOut 순서로 씬 전환을 처리한다.
+- 씬 전환 중에는 `InputStateManager.LockInput()`으로 입력 처리를 막는다.
+- `LoadCheckNPC`는 LoadPanel이 끝난 뒤 강제 이벤트를 실행한다.
+- `Enterance.EnterArea()`와 `GameManager.TryLoadScene()`은 성공 여부를 반환한다.
+- `AutoEnterance`는 `OnTriggerStay2D`와 cooldown으로 스폰 직후 트리거 내부에 있는 상황을 처리한다.
+- AutoEnterance 중복 진입 방지 플래그는 실제 씬 전환 요청이 성공했을 때만 설정한다.
+
+### 14.5 테스트 결과
+
+- 상태별 NPC 대화 매핑 테스트 완료.
+- 선택지 대화와 다음 노드 이동 테스트 완료.
+- WhiteGuard / DonationBox 기부 흐름 테스트 완료.
+- LoadPanel 씬 전환과 전환 중 입력 차단 테스트 완료.
+- AutoEnterance 씬 이동 직후 재진입 테스트 완료.
+- MovementNPC 도착 판정 및 도착 후 비활성화 테스트 완료.
+
+### 14.6 남은 과제
+
+- `NodeEvent` / `UnityEvent` 구조를 장기적으로 Condition/Action Executor로 대체할지 검토한다.
+- Dialogue JSON 전환 여부는 Save/Load ID 설계와 함께 다시 판단한다.
+- Player / Entrance 리팩터링 시 SpawnPoint와 AutoEnterance Collider 배치 규칙을 문서화한다.
+- Animation 리팩터링 시 Animator 파라미터를 전용 static class로 상수화/Hash화할지 검토한다.
+- 깨진 한글 주석/로그 인코딩은 별도 정리 작업으로 처리한다.

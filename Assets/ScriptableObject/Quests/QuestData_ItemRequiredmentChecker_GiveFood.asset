@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c680734b1a8d3b4d9d5bc8e85201e61, type: 3}
-  m_Name: QuestData_ItemRequiredmentChecker
+  m_Name: QuestData_ItemRequiredmentChecker_GiveFood
   m_EditorClassIdentifier: 
-  <QuestId>k__BackingField: quest_item_requirment
+  <QuestId>k__BackingField: quest_item_requirment_dsertman_givefood
   <Title>k__BackingField: 
   <Description>k__BackingField: "NPC\uAC00 \uC694\uAD6C\uD558\uB294 \uD2B9\uC815
     \uBB34\uAE30\uB97C \uC7A5\uCC29\uD55C \uC0C1\uD0DC\uB85C \uB300\uD654\uB97C \uC9C4\uD589\uD558\uB294
@@ -21,9 +21,10 @@ MonoBehaviour:
     \uC2E4\uD328 \uC0C1\uD0DC\uB97C \uAE30\uB85D\uD558\uACE0, \uACB0\uACFC\uC5D0
     \uB530\uB77C NPC \uB300\uD654 \uC0C1\uD0DC\uB97C \uC804\uD658\uD55C\uB2E4."
   <Objectives>k__BackingField:
-  - <ObjectiveId>k__BackingField: objective_required_item
+  - <ObjectiveId>k__BackingField: objective_required_item_desertman_givefood
     <ObjectiveType>k__BackingField: 1
     <TargetValue>k__BackingField: 0
+    <IsRetryAllowed>k__BackingField: 1
     <RequiredWeapons>k__BackingField:
     - {fileID: 923370345631583069, guid: 526ee95df8580b445813777660fa202c, type: 3}
     - {fileID: 5745544890441051874, guid: 1889b07ee3dd77a499a39974ddba7946, type: 3}

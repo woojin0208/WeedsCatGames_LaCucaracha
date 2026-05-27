@@ -160,7 +160,6 @@ public class PlayerManager : MonoBehaviour
     public void SetCurrentScene(string sceneName, int spawnPoint)
     {
         CurrentSpawnPoint = spawnPoint;
-        Debug.Log("Player Manager 에 저장 " + CurrentEnterance);
         CurrentSceneName = sceneName;
     }
 

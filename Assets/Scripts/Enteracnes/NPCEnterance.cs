@@ -5,7 +5,6 @@ public class NPCEnterance : Enterance
 {
     public void WarpScene()
     {
-        Debug.Log("Warp 시도 !!!!!!!!!!!!!");
-        EnterArea(nextArea, EnteranceType.NPC);
+        EnterArea(EnteranceType.NPC);
     }
 }

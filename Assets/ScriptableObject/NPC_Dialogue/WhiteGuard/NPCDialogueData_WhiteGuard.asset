@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52794953d711f1c4b9b4ea053578914e, type: 3}
+  m_Name: NPCDialogueData_WhiteGuard
+  m_EditorClassIdentifier: 
+  <NpcId>k__BackingField: 4
+  <FallbackNode>k__BackingField: {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
+  <StateDialogues>k__BackingField:
+  - <State>k__BackingField: 0
+    <Node>k__BackingField: {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
+  - <State>k__BackingField: 1
+    <Node>k__BackingField: {fileID: 11400000, guid: 1530a6eb1b29cf54484442d4c5f75a15, type: 2}
+  - <State>k__BackingField: 2
+    <Node>k__BackingField: {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
+  - <State>k__BackingField: 3
+    <Node>k__BackingField: {fileID: 11400000, guid: 1530a6eb1b29cf54484442d4c5f75a15, type: 2}
+  - <State>k__BackingField: 4
+    <Node>k__BackingField: {fileID: 11400000, guid: b5a9f6507a61f3449b31ca14dfd83fc4, type: 2}

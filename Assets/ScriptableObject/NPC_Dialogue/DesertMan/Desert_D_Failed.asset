@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
   m_Name: Desert_D_Failed
   m_EditorClassIdentifier: 
-  entityName: Desert_Man
-  texts:
+  <entityName>k__BackingField: Desert_Man
+  <texts>k__BackingField:
   - ...
-  options: []
+  <options>k__BackingField: []

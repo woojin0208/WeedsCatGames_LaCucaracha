@@ -1570,18 +1570,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPosition: {fileID: 1750144705}
-  dialogueNodeData:
-  - {fileID: 11400000, guid: 1f111ff31f082f940a7d43c01a2e72ea, type: 2}
-  - {fileID: 11400000, guid: 2090d0b3427507145bb641e0bce86203, type: 2}
-  - {fileID: 11400000, guid: 7e248521b094aa6488cce025b3772bf8, type: 2}
-  - {fileID: 11400000, guid: 076b027a02f5b6147910030ed70b33f3, type: 2}
-  - {fileID: 11400000, guid: b50ac57248759eb4bb8879dbf5d99e1d, type: 2}
+  dialogueData: {fileID: 11400000, guid: 71e374172896df94e8091c27529f4d8b, type: 2}
   nodeEvents:
-  - node: {fileID: 11400000, guid: 1f111ff31f082f940a7d43c01a2e72ea, type: 2}
-    onEnter:
+  - <Node>k__BackingField: {fileID: 11400000, guid: 1f111ff31f082f940a7d43c01a2e72ea, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1128510282}
@@ -1596,32 +1591,14 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 2090d0b3427507145bb641e0bce86203, type: 2}
-    onEnter:
+    <OptionEvents>k__BackingField:
+    - m_PersistentCalls:
+        m_Calls: []
+  - <Node>k__BackingField: {fileID: 11400000, guid: 7e248521b094aa6488cce025b3772bf8, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1128510282}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetRepeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: 7e248521b094aa6488cce025b3772bf8, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1128510284}
@@ -1636,16 +1613,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    optionEvents: []
-  - node: {fileID: 11400000, guid: b50ac57248759eb4bb8879dbf5d99e1d, type: 2}
-    onEnter:
+    <OptionEvents>k__BackingField: []
+  - <Node>k__BackingField: {fileID: 11400000, guid: b50ac57248759eb4bb8879dbf5d99e1d, type: 2}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
-        m_Calls: []
-    optionEvents:
-    - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1128510282}
           m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
@@ -1659,41 +1633,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1128510282}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetRepeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - node: {fileID: 11400000, guid: 076b027a02f5b6147910030ed70b33f3, type: 2}
-    onEnter:
-      m_PersistentCalls:
-        m_Calls: []
-    onEnd:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1128510282}
-          m_TargetAssemblyTypeName: NPCDialogue, Assembly-CSharp
-          m_MethodName: SetInProgress
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    optionEvents: []
-  optionEvents: []
+    <OptionEvents>k__BackingField: []
   <NPCId>k__BackingField: 2
   <InteractivePos>k__BackingField: {fileID: 1100395479}
   entry: {fileID: 0}
@@ -1756,13 +1696,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questData: {fileID: 11400000, guid: f938a79b725cfd446a578f9f1495982c, type: 2}
-  objectiveId: objective_required_item
+  objectiveId: objective_required_item_desertman_givefood
   currentNPC: {fileID: 1128510282}
-  requirments:
-  - {fileID: 923370345631583069, guid: 526ee95df8580b445813777660fa202c, type: 3}
-  - {fileID: 5745544890441051874, guid: 1889b07ee3dd77a499a39974ddba7946, type: 3}
-  - {fileID: 7985188071814182186, guid: 1ba86d82297f1274ab3915ef66a5e0fc, type: 3}
-  - {fileID: 7906395599385600836, guid: dbde30d02fbd87648b3b2da2a8fa4aa6, type: 3}
 --- !u!95 &1128510285
 Animator:
   serializedVersion: 5

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1fac84511dd6654d8809769940674e5, type: 3}
-  m_Name: Mouse_D_Repeat
+  m_Name: MouseMan_D_Repeat
   m_EditorClassIdentifier: 
-  entityName: "\uC950\uC800\uC528"
-  texts:
+  <entityName>k__BackingField: "\uC950\uC800\uC528"
+  <texts>k__BackingField:
   - "\uC9C0\uAE08\uC740 \uD53C\uACE4\uD558\uB2C8 \uB098\uC911\uC5D0\u2026"
-  options: []
+  <options>k__BackingField: []

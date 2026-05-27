@@ -4016,6 +4016,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -8307,7 +8319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1977060441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8363,9 +8375,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38dff402c225b2e4f8e962cc69435d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questData: {fileID: 0}
+  objectiveId: objective_required_item
   currentNPC: {fileID: 1977060445}
-  requirments:
-  - {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
 --- !u!61 &1977060444
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8424,18 +8436,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPosition: {fileID: 478870804}
-  dialogueNodeData:
-  - {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
+  dialogueData: {fileID: 0}
   nodeEvents:
-  - node: {fileID: 11400000, guid: 4715192eb50a56c4cb7b3a44bd8843a9, type: 2}
-    onEnter:
+  - <Node>k__BackingField: {fileID: 0}
+    <OnEnter>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    onEnd:
+    <OnEnd>k__BackingField:
       m_PersistentCalls:
         m_Calls: []
-    optionEvents: []
-  optionEvents: []
+    <OptionEvents>k__BackingField: []
   <NPCId>k__BackingField: 4
   <InteractivePos>k__BackingField: {fileID: 0}
   entry: {fileID: 0}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c680734b1a8d3b4d9d5bc8e85201e61, type: 3}
+  m_Name: QuestData_ItemRequiredmentChecker_BeeThorn
+  m_EditorClassIdentifier: 
+  <QuestId>k__BackingField: quest_item_requirment_turtleboy_beethorn
+  <Title>k__BackingField: 
+  <Description>k__BackingField: "NPC\uAC00 \uC694\uAD6C\uD558\uB294 \uD2B9\uC815
+    \uBB34\uAE30\uB97C \uC7A5\uCC29\uD55C \uC0C1\uD0DC\uB85C \uB300\uD654\uB97C \uC9C4\uD589\uD558\uB294
+    \uC804\uB2EC\uD615 \uD018\uC2A4\uD2B8.\r\n\uC694\uAD6C \uBB34\uAE30\uC640 \uD604\uC7AC
+    \uC7A5\uCC29 \uBB34\uAE30\uB97C \uBE44\uAD50\uD558\uC5EC \uC131\uACF5 \uB610\uB294
+    \uC2E4\uD328 \uC0C1\uD0DC\uB97C \uAE30\uB85D\uD558\uACE0, \uACB0\uACFC\uC5D0
+    \uB530\uB77C NPC \uB300\uD654 \uC0C1\uD0DC\uB97C \uC804\uD658\uD55C\uB2E4."
+  <Objectives>k__BackingField:
+  - <ObjectiveId>k__BackingField: objective_required_item_turtleboy_beethorn
+    <ObjectiveType>k__BackingField: 1
+    <TargetValue>k__BackingField: 0
+    <IsRetryAllowed>k__BackingField: 1
+    <RequiredWeapons>k__BackingField:
+    - {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
+    <RewardWeapon>k__BackingField: {fileID: 0}
