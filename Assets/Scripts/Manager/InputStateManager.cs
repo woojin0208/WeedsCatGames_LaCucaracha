@@ -93,9 +93,6 @@ public class InputStateManager : MonoBehaviour
 
         switch (CurrentStateType)
         {
-            case InputStateType.None:
-                break;
-
             case InputStateType.Gameplay:
                 if (GameplayState != null && GameplayState.PausePressed)
                 {

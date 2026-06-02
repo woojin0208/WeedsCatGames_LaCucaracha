@@ -28,7 +28,7 @@ public class ItemGiver : MonoBehaviour
             return;
         }
 
-        WeaponInstance? addedWeapon = pm.AddWeapon(targetItem.name, targetItem.Durability);
+        WeaponInstance addedWeapon = pm.AddWeapon(targetItem);
         if (addedWeapon == null)
         {
             Debug.LogWarning("[ItemGiver] 인벤토리에 빈 슬롯이 없습니다.", this);

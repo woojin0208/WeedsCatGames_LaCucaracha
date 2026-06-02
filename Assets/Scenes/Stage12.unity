@@ -2520,6 +2520,7 @@ MonoBehaviour:
   nextArea: Stage11
   <NextSpawnPoint>k__BackingField: 1
   audioSource: {fileID: 0}
+  enterCooldown: 0.2
 --- !u!61 &469979979
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4902,7 +4903,7 @@ GameObject:
   - component: {fileID: 998740995}
   m_Layer: 0
   m_Name: Map_Boundary (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5032,7 +5033,7 @@ GameObject:
   - component: {fileID: 1135293472}
   m_Layer: 0
   m_Name: Map_Boundary (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7353,7 +7354,7 @@ GameObject:
   - component: {fileID: 1804694956}
   m_Layer: 0
   m_Name: Map_Boundary (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9034,7 +9035,7 @@ GameObject:
   - component: {fileID: 2018709228}
   m_Layer: 0
   m_Name: Map_Boundary
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

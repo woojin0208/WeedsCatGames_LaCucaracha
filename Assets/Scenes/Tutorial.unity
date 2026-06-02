@@ -970,7 +970,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!114 &380837305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3069,7 +3069,7 @@ GameObject:
   - component: {fileID: 713063115}
   m_Layer: 0
   m_Name: Map_Boundary (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3204,7 +3204,7 @@ GameObject:
   - component: {fileID: 772696243}
   m_Layer: 0
   m_Name: Map_Boundary (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4134,7 +4134,7 @@ GameObject:
   - component: {fileID: 1047408544}
   m_Layer: 0
   m_Name: Map_Boundary (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6359,6 +6359,10 @@ PrefabInstance:
       propertyPath: durability
       value: 99
       objectReference: {fileID: 0}
+    - target: {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
+      propertyPath: <Durability>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6295374429177347361, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.223
@@ -6778,9 +6782,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textPosition: {fileID: 818160289}
-  dialogueNodeData: []
+  dialogueData: {fileID: 0}
   nodeEvents: []
-  optionEvents: []
   <NPCId>k__BackingField: 7
   <InteractivePos>k__BackingField: {fileID: 0}
   entry: {fileID: 0}
@@ -7104,7 +7107,7 @@ GameObject:
   - component: {fileID: 1699458577}
   m_Layer: 0
   m_Name: Map_Boundary
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7547,6 +7550,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}

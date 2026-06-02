@@ -172,6 +172,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 0
   nextArea: None
   <NextSpawnPoint>k__BackingField: -1
+  audioSource: {fileID: 0}
 --- !u!61 &3270543
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1727,6 +1728,7 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: 1
   nextArea: None
   <NextSpawnPoint>k__BackingField: -1
+  audioSource: {fileID: 0}
 --- !u!61 &554765845
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2582,6 +2584,8 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: -1
   nextArea: Stage7
   <NextSpawnPoint>k__BackingField: 1
+  audioSource: {fileID: 0}
+  enterCooldown: 0.2
 --- !u!1 &712655420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,6 +2861,8 @@ MonoBehaviour:
   <CurrentSpawnPoint>k__BackingField: -1
   nextArea: Stage10
   <NextSpawnPoint>k__BackingField: 2
+  audioSource: {fileID: 0}
+  enterCooldown: 0.2
 --- !u!61 &779157521
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3057,6 +3063,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
+      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759099608726528971, guid: 45af95c0c86ace44baf1fd6e2ac6300b, type: 3}
@@ -3583,7 +3601,7 @@ GameObject:
   - component: {fileID: 998740995}
   m_Layer: 0
   m_Name: Map_Boundary (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4161,7 +4179,7 @@ GameObject:
   - component: {fileID: 1135293472}
   m_Layer: 0
   m_Name: Map_Boundary (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5019,7 +5037,7 @@ GameObject:
   - component: {fileID: 1804694956}
   m_Layer: 0
   m_Name: Map_Boundary (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5310,7 +5328,7 @@ GameObject:
   - component: {fileID: 2018709228}
   m_Layer: 0
   m_Name: Map_Boundary
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

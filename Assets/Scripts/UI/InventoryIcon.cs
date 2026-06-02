@@ -4,28 +4,20 @@ using UnityEngine.EventSystems;
 // 인벤토리 슬롯 아이콘 표시를 담당한다.
 public class InventoryIcon : MonoBehaviour
 {
-
-    private WeaponBase weaponBase;
-    public string InstanceID { get; set; }
-    private int durability;
-    public void SetWeapon(WeaponBase weaponBase, int durability)
+    private string instanceId;
+    
+    public void SetWeapon(WeaponBase weaponBase, string instanceId, int durability)
     {
-        this.weaponBase = weaponBase;
-        InstanceID = weaponBase.InstanceId;
-        this.durability = durability;
+        this.instanceId = instanceId;
     }
+
     public void OnSelect()
     {
-        Debug.Log(weaponBase.name + durability);
-        PlayerManager.Instance.GetWeapon(new WeaponInstance(weaponBase.gameObject.name, durability));
+        if (string.IsNullOrWhiteSpace(instanceId)) return;
 
-        Debug.Log($"{weaponBase} On Select.");
+        PlayerManager.Instance?.SelectWeapon(instanceId);
     }
 
-    public void PutItem()
-    {
-
-    }
     private void OnDisable()
     {
         Destroy(gameObject);    
@@ -33,7 +25,8 @@ public class InventoryIcon : MonoBehaviour
 
     public void OnPointerClick(BaseEventData eventData)
     {
-        var pointerData = (PointerEventData)eventData;
+        PointerEventData pointerData = eventData as PointerEventData;
+        if (pointerData == null) return;
 
         if (pointerData.button == PointerEventData.InputButton.Left) OnSelect();
     }

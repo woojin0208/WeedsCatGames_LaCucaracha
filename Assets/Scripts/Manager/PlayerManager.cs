@@ -38,12 +38,18 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        WeaponData.ResetOptainWeapons();
-    }
+        if (WeaponData == null)
+        {
+            Debug.LogError("[PlayerManager] WeaponData 가 null 입니다.", this);
+            return;
+        }
 
+        WeaponData.ResetObtainedWeapons();
+    }
 
     public void Init(PlayerController playerController)
     {
@@ -56,14 +62,18 @@ public class PlayerManager : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(CurrentEquipId))
         {
-            WeaponInstance instance = hasWeapons.FirstOrDefault(w => w != null && w.Id == CurrentEquipId);
-            if (instance != null)
-            {
-                GetWeapon(instance);
-                return;
-            }
-            else return;
+            WeaponInstance instance = hasWeapons.FirstOrDefault(
+                w => w != null && w.Id == CurrentEquipId);
+
+            if (instance == null) return;
+            
+            GetWeapon(instance);
         }
+    }
+
+    public bool HasEmptyWeaponSlot()
+    {
+        return hasWeapons.Any(w => w == null);
     }
 
     /// <summary>
@@ -77,44 +87,77 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// 저장된 무기 정보를 기반으로 무기 프리팹을 생성하고 장착한다.
     /// </summary>
-    public void GetWeapon(WeaponInstance instance)
+    public bool GetWeapon(WeaponInstance instance)
     {
-        var prefab = WeaponData.GetCurrentWeaponData(instance.WeaponName);
-        var wb = Instantiate(prefab.gameObject).GetComponent<WeaponBase>();
-
-        wb.BindInstance(instance.Id);
-        Debug.Log($"{wb} 의 id : {instance.Id}");
-        playerController.GetWeapon(wb);
-        
-        if (WeaponData.TryRegisterWeapon(wb))
+        if (instance == null)
         {
-            UIManager.Instance.ShowWeaponDescription(wb);
+            Debug.LogWarning("[PlayerManager] WeaponInstance 가 null 입니다.", this);
+            return false;
         }
+
+        if (WeaponData == null)
+        {
+            Debug.LogError("[PlayerManager] WeaponData 가 null 입니다.", this);
+            return false;
+        }
+
+        if (!WeaponData.TryGetWeaponPrefab(instance.WeaponId, out WeaponBase prefab)) return false;
+
+        ClearEquippedWeaponObject();
+
+        WeaponBase weapon = Instantiate(prefab.gameObject).GetComponent<WeaponBase>();
+        if (weapon == null)
+        {
+            Debug.LogError($"[PlayerManager] WeaponBase 를 찾을 수 없습니다." +
+                $"weaponId: {instance.WeaponId}");
+            return false;
+        }
+
+        weapon.BindInstance(instance.Id);
+        playerController.GetWeapon(weapon);
+
+        if (WeaponData.TryRegisterWeapon(weapon))
+        {
+            UIManager.Instance?.ShowWeaponDescription(weapon);
+        }
+
+        return true;
     }
 
     /// <summary>
     /// 빈 슬롯에 새 무기를 추가하고 UI를 갱신한다.
     /// </summary>
-    public WeaponInstance? AddWeapon(string weaponName, int dur)
+    public WeaponInstance AddWeapon(WeaponBase weapon)
     {
-        if (weaponName.Contains("(Clone)")) weaponName = weaponName.Substring(0, weaponName.Length - 7);
+        if (weapon == null || weapon.WeaponDefinition == null)
+        {
+            Debug.LogWarning("[PlayerManager] 추가할 무기 정보가 없습니다.", this);
+            return null;
+        }
+
+        string weaponId = weapon.WeaponDefinition.WeaponId;
+        if (string.IsNullOrWhiteSpace(weaponId))
+        {
+            Debug.LogWarning("[PlayerManager] WeaponId 가 비어 있습니다.", this);
+            return null;
+        }
 
         int idx = hasWeapons.FindIndex(w => w == null);
         if (idx == -1) return null;
 
-        var inst = new WeaponInstance(weaponName, dur);
-        hasWeapons[idx] = inst;
+        WeaponInstance instance = new WeaponInstance(weaponId, weapon.Durability);
+        hasWeapons[idx] = instance;
 
         OnChangedWeapon?.Invoke(idx);
 
         playerInventory.ChangeWeapon(idx);
-        return inst;
+        return instance;
     }
 
     /// <summary>
     /// 무기 내구도 변경 사항을 저장된 목록과 UI에 반영한다.
     /// </summary>
-    public bool UpdateWeapon(string id, int dur, int amount)
+    public bool UpdateWeapon(string id, int amount)
     {
         int idx = hasWeapons.FindIndex(w => w != null && w.Id == id);
         if (idx < 0) return false;
@@ -145,17 +188,32 @@ public class PlayerManager : MonoBehaviour
         if (idx < 0) return false;
 
         hasWeapons[idx] = null;
-
         OnChangedWeapon?.Invoke(idx);
 
-        CurrentWeapon = null;
-        CurrentEquipId = null;
+        bool isEquippedWeapon = string.Equals(CurrentEquipId, id);
+        if (isEquippedWeapon)
+        {
+            CurrentWeapon = null;
+            CurrentEquipId = null;
 
-        if (!isThrow) playerController.RemoveWeapon();
+            if (!isThrow) playerController.RemoveWeapon();
+        }
+
         return true;
-
     }
 
+    private void ClearEquippedWeaponObject()
+    {
+        if (playerInventory == null) return;
+
+        WeaponBase[] beforeWeapons = playerInventory.GetComponentsInChildren<WeaponBase>(true);
+        for (int i = 0; i < beforeWeapons.Length; i++)
+        {
+            if (beforeWeapons[i] == null) continue;
+
+            Destroy(beforeWeapons[i].gameObject);
+        }
+    }
 
     public void SetCurrentScene(string sceneName, int spawnPoint)
     {
@@ -163,15 +221,15 @@ public class PlayerManager : MonoBehaviour
         CurrentSceneName = sceneName;
     }
 
-    
-
     public void SelectWeapon(string id)
     {
-        if (string.IsNullOrEmpty(id)) return;
+        if (string.IsNullOrWhiteSpace(id)) return;
+
         int idx = hasWeapons.FindIndex(w => w != null && string.Equals(w.Id, id));
         if (idx < 0) return;
-        Debug.Log("Select Weapon 성공");
-        GetWeapon(hasWeapons[idx]);
+        
+        if (!GetWeapon(hasWeapons[idx])) return;
+        
         CurrentEquipId = id;
         OnChangedWeapon?.Invoke(idx);
     }

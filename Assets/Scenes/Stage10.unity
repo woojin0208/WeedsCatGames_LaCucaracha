@@ -853,6 +853,7 @@ MonoBehaviour:
   nextArea: Stage13
   <NextSpawnPoint>k__BackingField: 0
   audioSource: {fileID: 0}
+  enterCooldown: 0.2
 --- !u!61 &306066292
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1787,7 +1788,7 @@ GameObject:
   - component: {fileID: 519970794}
   m_Layer: 0
   m_Name: Map_Boundary (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2281,7 +2282,7 @@ GameObject:
   - component: {fileID: 801165610}
   m_Layer: 0
   m_Name: Map_Boundary
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2881,7 +2882,7 @@ GameObject:
   - component: {fileID: 1477555744}
   m_Layer: 0
   m_Name: Map_Boundary (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3011,7 +3012,7 @@ GameObject:
   - component: {fileID: 1618494865}
   m_Layer: 0
   m_Name: Map_Boundary (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3602,9 +3603,6 @@ MonoBehaviour:
   - <Node>k__BackingField: {fileID: 11400000, guid: 56232fdb6bc1fe44ebe10c15b0c44b93, type: 2}
     <OnEnter>k__BackingField:
       m_PersistentCalls:
-        m_Calls: []
-    <OnEnd>k__BackingField:
-      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 154596281}
           m_TargetAssemblyTypeName: DonationBox, Assembly-CSharp
@@ -3618,6 +3616,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    <OnEnd>k__BackingField:
+      m_PersistentCalls:
+        m_Calls: []
     <OptionEvents>k__BackingField: []
   <NPCId>k__BackingField: 4
   <InteractivePos>k__BackingField: {fileID: 1865522533}

@@ -187,7 +187,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3339403454915485123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 997d6a8ba71c89c44a1af753f7f95b9a, type: 3}
+  m_Script: {fileID: 11500000, guid: b918a9cb050ea57409b13c725a3ffd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <WeaponDefinition>k__BackingField: {fileID: 11400000, guid: a54567ccef63be24d8121ff5a63e630a, type: 2}

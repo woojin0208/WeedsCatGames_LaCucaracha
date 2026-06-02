@@ -370,6 +370,11 @@ ID 규칙:
 - 무기 추가 시 불필요한 하위 클래스를 만들지 않는다.
 - 투척, 내구도, 효과 발동 흐름이 읽기 쉬운 단위로 분리된다.
 
+추가 개선 예정:
+
+- 무기 획득 시 `WeaponDescriptionUI`에 Damage와 Durability도 함께 표시한다.
+- 표시 데이터는 `WeaponDefinition`과 `WeaponBase`의 역할을 분리해 UI가 런타임 구조에 과하게 의존하지 않도록 정리한다.
+
 ### 9.8 Enemy / Boss
 
 현재 상태:
@@ -580,3 +585,61 @@ ID 규칙:
 - Player / Entrance 리팩터링 시 SpawnPoint와 AutoEnterance Collider 배치 규칙을 문서화한다.
 - Animation 리팩터링 시 Animator 파라미터 문자열을 `AnimatorParams` 같은 전용 static class로 상수화/Hash화할지 검토한다.
 - 깨진 한글 주석/로그 인코딩은 별도 정리 작업으로 처리한다.
+
+## 17. Weapon 1차 리팩터링 완료 기록
+
+### 17.1 적용 범위
+
+- 무기 정적 데이터는 `WeaponDefinition`으로 관리한다.
+- 인벤토리 저장 대상은 `WeaponInstance`로 관리한다.
+- `WeaponInstance.Id`는 개별 무기 인스턴스 식별자, `WeaponInstance.WeaponId`는 무기 종류 식별자로 사용한다.
+- `WeaponData`는 `WeaponId` 기반 프리팹 조회와 획득 무기 ID 기록을 담당한다.
+- `PlayerManager`는 보유 무기 목록, 현재 장착 ID, 무기 획득/장착/제거 흐름을 담당한다.
+- `WeaponBase`는 월드 상호작용, 장착 위치 유지, 투척, 충돌, 내구도 감소, 파괴 효과 호출을 담당한다.
+
+### 17.2 완료된 개선 사항
+
+- `WeaponDefinition`에 안정적인 `WeaponId`를 추가했다.
+- `WeaponInstance`를 Save/Load 대비 런타임 저장 데이터로 분리했다.
+- 보유 무기 목록과 현재 장착 무기는 오브젝트 이름이 아니라 ID 기반으로 추적한다.
+- `WeaponData.TryGetWeaponPrefab()`을 통해 `WeaponId`로 무기 프리팹을 조회한다.
+- `InventoryUI`와 `InventoryIcon`은 무기 오브젝트 직접 참조 대신 인스턴스 ID 기반 선택 흐름을 사용한다.
+- `SmallWeapon`, `LargeWeapon`, 테스트용 `Sword` 잔재를 제거했다.
+- 삭제된 `SmallWeapon` / `LargeWeapon` 스크립트를 참조하던 무기 Prefab을 `WeaponBase`로 복구했다.
+- `WeaponBase`의 `OnThrow()` 흐름을 분리해 부모 해제, 투척 속도 적용, 충돌 전환, 인벤토리 제거 책임을 읽기 쉬운 단위로 정리했다.
+- 인벤토리 4칸이 가득 찬 상태에서는 `WeaponBase.Interactive()`가 무기 상태를 변경하지 않고 즉시 종료한다.
+- `Physics2D.IgnoreLayerCollision(6, 8, ...)` 하드코딩을 `GameLayers` 기반 참조로 변경했다.
+- `Enemy`, `Ground`, `Wall` Tag 문자열을 `GameTags`로 이동해 공용 상수 기준을 만들었다.
+- `Map_Boundary` 계열 오브젝트와 자식 오브젝트에 `Wall` Tag를 적용해 투척 무기가 경계 밖으로 빠지는 문제를 완화했다.
+
+### 17.3 확인된 문제와 해결
+
+- 무기 Prefab이 삭제된 `SmallWeapon` / `LargeWeapon` 스크립트를 참조해 Interactive UI와 줍기가 동작하지 않던 문제는 Prefab 스크립트 참조를 `WeaponBase`로 복구해 해결했다.
+- 인벤토리가 꽉 찬 상태에서 무기 획득 시 월드 무기가 원점으로 이동하고 상호작용 불가 상태가 되던 문제는 빈 슬롯 선검사로 해결했다.
+- `Map_Boundary`에 `Ground` Layer를 넣으면 플레이어 착지 판정에 영향을 줄 수 있어, Layer 변경 대신 `Wall` Tag만 적용하는 방향으로 정리했다.
+
+### 17.4 현재 유지하는 설계 결정
+
+- 무기별 하위 클래스는 현재 단계에서 만들지 않는다.
+- `EffectableWeapon`은 실제 파괴 효과 연동이 있어 유지한다.
+- 무기 장착 오브젝트는 사용 빈도가 낮으므로 Object Pooling을 적용하지 않고 `Instantiate` / `Destroy` 흐름을 유지한다.
+- `GameTags`, `GameLayers`는 우선 Weapon에서만 적용하고, 전체 시스템 치환은 후속 리팩터링 때 진행한다.
+- `Ground` Layer는 플레이어 착지 판정에 사용되므로 Map Boundary에는 적용하지 않는다.
+
+### 17.5 테스트 완료 항목
+
+- 월드 무기 근처에서 Interactive UI가 표시된다.
+- 무기 획득 시 인벤토리에 등록되고 장착된다.
+- 인벤토리 슬롯 선택과 선택 UI 갱신이 정상 동작한다.
+- 장착 무기 투척 후 인벤토리에서 제거된다.
+- 던진 무기를 다시 주울 수 있다.
+- 인벤토리 4칸이 가득 찬 상태에서 추가 획득이 막힌다.
+- Map Boundary에 닿은 투척 무기가 `Wall` 충돌로 처리된다.
+
+### 17.6 남은 과제
+
+- `WeaponDescriptionUI`에 Damage와 Durability 표시를 추가한다.
+- `IWeaponable` 인터페이스가 현재 구조에서 실질적인 가치가 있는지 재검토한다.
+- `PlayerManager.UpdateWeapon()`의 미사용 파라미터와 호출 여부를 정리한다.
+- `GameTags`, `GameLayers`를 Enemy, Entrance, Player 감지 코드에 단계적으로 적용한다.
+- Weapon 파괴, 내구도, Effect 연동 책임을 더 분리할지 Effect 리팩터링 때 재검토한다.

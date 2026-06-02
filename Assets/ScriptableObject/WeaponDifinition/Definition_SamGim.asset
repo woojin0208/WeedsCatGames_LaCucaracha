@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f2971ff1b71d3418b9db00944312a6, type: 3}
   m_Name: Definition_SamGim
   m_EditorClassIdentifier: 
+  <WeaponId>k__BackingField: weapon_samgim
   <WeaponIcon>k__BackingField: {fileID: 21300000, guid: f9319b384997533409e83a3f66390cb4, type: 3}
   <WeaponName>k__BackingField: "\uC0BC\uAC01\uAE40\uBC25"
   <WeaponDescript>k__BackingField: "\uB9DB\uC788\uC5B4\uBCF4\uC774\uB294 \uC74C\uC2DD\uC774\uB2E4."

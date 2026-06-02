@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f2971ff1b71d3418b9db00944312a6, type: 3}
   m_Name: Definition_Bee_Hivel
   m_EditorClassIdentifier: 
+  <WeaponId>k__BackingField: weapon_bee_hivel
   <WeaponIcon>k__BackingField: {fileID: 21300000, guid: a6892f634ce53124d9083540853ee5f8, type: 3}
   <WeaponName>k__BackingField: "\uBC8C\uC9D1"
   <WeaponDescript>k__BackingField: "\uC5B4\uB5A4 \uB3D9\uBB3C\uC758 \uD754\uC801\uC774\uB2E4.\n\uB358\uC838\uC11C

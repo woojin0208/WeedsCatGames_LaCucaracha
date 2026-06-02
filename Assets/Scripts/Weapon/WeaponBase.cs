@@ -1,8 +1,11 @@
 using UnityEngine;
 
-// 무기의 공통 동작과 상태를 정의한다.
+// 무기의 공통 상호작용, 장착, 투척, 내구도 처리를 담당한다.
 public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
 {
+    private const int DurabilityUseAmount = 1;
+    private const float EnemyThrowDamageMultiplier = 2f;
+
     [field: SerializeField] public WeaponDefinition WeaponDefinition { get; private set; }
 
     [Header("Weapon Stats")]
@@ -13,25 +16,19 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     [field: SerializeField] public Sprite WeaponSprite { get; private set; }
     [field: SerializeField] public Transform InteractivePos { get; set; }
 
-    [SerializeField] Vector2 weaponPosition;
+    [SerializeField] private Vector2 weaponPosition;
 
-    private PlayerController playerController;
-    private PlayerInventory inventory;
-    private WeaponRenderer weaponRenderer;
-    [SerializeField]
-    private EntityBase entityBase;
+    [Header("Runtime References")]
+    [SerializeField] private EntityBase entityBase;
+    [SerializeField] private Collider2D trigger2D;
+    [SerializeField] private Collider2D collider2D;
 
-    private Rigidbody2D rigidbody2D;
-    [SerializeField]
-    private Collider2D trigger2D;
-    [SerializeField]
-    private Collider2D collider2D;
-    private Vector2 throwPosition = Vector2.zero;
-
-    private bool onAttack = false;
-    private bool onThrow = false;
     [field: SerializeField] public string InstanceId { get; private set; }
 
+    private Rigidbody2D rigidbody2D;
+    private WeaponRenderer weaponRenderer;
+
+    private bool isThrown;
     private bool isLeftThrow;
 
     private void Awake()
@@ -44,147 +41,241 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     {
         if (transform.parent != null)
         {
-            playerController = GetComponentInParent<PlayerController>();
             entityBase = GetComponentInParent<EntityBase>();
             GetWeapon();
         }
         else
         {
-            trigger2D.enabled = true;
+            EnableWorldInteraction();
         }
 
-        Physics2D.IgnoreLayerCollision(6, 8, true);
-
-        if (gameObject.name.Contains("(Clone)"))
-            gameObject.name = gameObject.name.Replace("(Clone)", "").Trim();
+        SetPlayerWeaponCollisionIgnored(true);
+        RemoveCloneNameSuffix();
     }
 
     private void Update()
     {
-        if (entityBase != null)
-        {
-            if (!onThrow)
-            {
-                transform.localPosition = weaponPosition;
-                rigidbody2D.velocity = Vector2.zero;
-            }
-        }
-    }
+        if (entityBase == null || isThrown) return;
 
-    public void BindInstance(string id) => InstanceId = id;
-
-    public virtual void GetWeapon()
-    {
         transform.localPosition = weaponPosition;
-    }
 
-    // 월드에서 사라질 때 무기 오브젝트를 비활성화한다.
-    public virtual void PutWeapon()
-    {
-        gameObject.SetActive(false);
-    }
-
-    // 공격 시 무기별 동작을 실행한다.
-    public virtual void OnAttack()
-    {
-    }
-
-    // 무기 소유자가 던지기를 실행했을 때 물리 이동을 시작한다.
-    public virtual void OnThrow(Vector2 throwPosition)
-    {
-        if (entityBase == null) entityBase = GetComponentInParent<EntityBase>();
-
-        transform.parent = null;
-        this.throwPosition = throwPosition;
-
-        onThrow = true;
-        rigidbody2D.gravityScale = 0;
-        entityBase = null;
-        Vector2 direction = (throwPosition - (Vector2)transform.position).normalized;
-
-        rigidbody2D.velocity = direction * throwSpeed;
-
-        isLeftThrow = rigidbody2D.velocity.x > 0 ? false : true;
-        PlayerManager.Instance.SetWeapon(null);
-
-        trigger2D.enabled = true;
-        collider2D.enabled = false;
-        Physics2D.IgnoreLayerCollision(6, 8, false);
-
-        // 투척 직후 인벤토리 목록에서도 해당 무기를 제거한다.
-        PlayerManager.Instance.RemoveWeapon(InstanceId);
-    }
-
-    // 플레이어가 월드 무기와 상호작용했을 때 인벤토리에 추가한다.
-    public virtual void Interactive(PlayerBase player)
-    {
-        if (entityBase == null)
+        if (rigidbody2D != null)
         {
-            entityBase = player;
-            playerController = player.GetComponent<PlayerController>();
-            inventory = playerController.GetComponentInChildren<PlayerInventory>();
-        }
-
-        var pm = PlayerManager.Instance;
-
-        // 먼저 인벤토리 데이터에 등록한 뒤 월드 오브젝트를 숨긴다.
-        var inst = pm.AddWeapon(gameObject.name, Durability);
-        if (inst == null) return;
-
-        gameObject.SetActive(false);
-    }
-
-    private bool CheckDurability()
-    {
-        int useDurCount = 1;
-        Durability -= useDurCount;
-
-        return Durability <= 0 ? true : false;
-    }
-
-    private void DestructionWeapon(EffectTargetKind target)
-    {
-        PlayerManager.Instance.SetWeapon(null);
-
-        if (TryGetComponent<EffectableWeapon>(out var effectable))
-        {
-            effectable.OnDestruction(target, isLeftThrow);
-        }
-        rigidbody2D.velocity = Vector2.zero;
-
-        weaponRenderer.OnDestruction();
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!onThrow) return;
-
-        if (collision.CompareTag("Enemy"))
-        {
-            EntityBase entity = collision.GetComponent<EntityBase>();
-            if (entity != null) entity.TakeDamage(weaponDamage * 2);
-            onThrow = false;
-            if (CheckDurability()) DestructionWeapon(EffectTargetKind.Enemy);
             rigidbody2D.velocity = Vector2.zero;
         }
-        else if (collision.CompareTag("Ground"))
-        {
-            if (CheckDurability()) DestructionWeapon(EffectTargetKind.Ground);
-        }
-        else if (collision.CompareTag("Wall"))
-        {
-            if (CheckDurability()) DestructionWeapon(EffectTargetKind.Wall);
-        }
+    }
 
-        onThrow = false;
-        Physics2D.IgnoreLayerCollision(6, 8, true);
-        rigidbody2D.velocity = Vector2.zero;
-        rigidbody2D.gravityScale = 1f;
-        Debug.Log(collision.gameObject.name);
-        collider2D.enabled = true;
+    public void BindInstance(string id)
+    {
+        InstanceId = id;
     }
 
     public EntityBase GetEntity()
     {
         return entityBase;
+    }
+
+    public void GetWeapon()
+    {
+        transform.localPosition = weaponPosition;
+    }
+
+    public void PutWeapon()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void OnAttack()
+    {
+        // 현재 프로젝트에서는 직접 공격 로직이 없다.
+        // 추후 근접 무기 공격을 구현할 경우 여기서 처리한다.
+    }
+
+    public void OnThrow(Vector2 targetPosition)
+    {
+        if (rigidbody2D == null) return;
+
+        if (entityBase == null)
+        {
+            entityBase = GetComponentInParent<EntityBase>();
+        }
+
+        DetachFromOwner();
+        ApplyThrowVelocity(targetPosition);
+        EnableThrowCollision();
+        RemoveFromInventory();
+    }
+
+    public void Interactive(PlayerBase player)
+    {
+        PlayerManager playerManager = PlayerManager.Instance;
+        if (playerManager == null) return;
+
+        // 변경점: 인벤토리가 가득 찼다면 무기 상태를 바꾸지 않고 종료한다.
+        if (!playerManager.HasEmptyWeaponSlot())
+        {
+            Debug.LogWarning("[WeaponBase] 인벤토리가 가득 차 무기를 획득할 수 없습니다.", this);
+            return;
+        }
+
+        WeaponInstance instance = playerManager.AddWeapon(this);
+        if (instance == null) return;
+
+        entityBase = player;
+        gameObject.SetActive(false);
+    }
+
+    private void DetachFromOwner()
+    {
+        transform.parent = null;
+        entityBase = null;
+        isThrown = true;
+
+        PlayerManager.Instance?.SetWeapon(null);
+    }
+
+    private void ApplyThrowVelocity(Vector2 targetPosition)
+    {
+        rigidbody2D.gravityScale = 0f;
+
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        rigidbody2D.velocity = direction * throwSpeed;
+
+        isLeftThrow = rigidbody2D.velocity.x <= 0f;
+    }
+
+    private void EnableThrowCollision()
+    {
+        if (trigger2D != null) trigger2D.enabled = true;
+        if (collider2D != null) collider2D.enabled = false;
+
+        SetPlayerWeaponCollisionIgnored(false);
+    }
+
+    private void EnableWorldInteraction()
+    {
+        if (trigger2D != null) trigger2D.enabled = true;
+    }
+
+    private void RemoveFromInventory()
+    {
+        if (string.IsNullOrWhiteSpace(InstanceId)) return;
+
+        PlayerManager.Instance?.RemoveWeapon(InstanceId);
+    }
+
+    private bool UseDurability()
+    {
+        Durability -= DurabilityUseAmount;
+        return Durability <= 0;
+    }
+
+    private void DestroyWeapon(EffectTargetKind target)
+    {
+        PlayerManager.Instance?.SetWeapon(null);
+
+        if (TryGetComponent<EffectableWeapon>(out EffectableWeapon effectable))
+        {
+            effectable.OnDestruction(target, isLeftThrow);
+        }
+
+        if (rigidbody2D != null)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+        }
+
+        if (weaponRenderer != null)
+        {
+            weaponRenderer.OnDestruction();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isThrown) return;
+
+        if (collision.CompareTag(GameTags.Enemy))
+        {
+            HitEnemy(collision);
+            return;
+        }
+
+        if (collision.CompareTag(GameTags.Ground))
+        {
+            HitSurface(EffectTargetKind.Ground);
+            return;
+        }
+
+        if (collision.CompareTag(GameTags.Wall))
+        {
+            HitSurface(EffectTargetKind.Wall);
+        }
+    }
+
+    private void HitEnemy(Collider2D collision)
+    {
+        EntityBase entity = collision.GetComponent<EntityBase>();
+        if (entity != null)
+        {
+            entity.TakeDamage(weaponDamage * EnemyThrowDamageMultiplier);
+        }
+
+        if (UseDurability())
+        {
+            DestroyWeapon(EffectTargetKind.Enemy);
+        }
+
+        StopThrow();
+    }
+
+    private void HitSurface(EffectTargetKind target)
+    {
+        if (UseDurability())
+        {
+            DestroyWeapon(target);
+        }
+
+        StopThrow();
+    }
+
+    private void StopThrow()
+    {
+        isThrown = false;
+
+        SetPlayerWeaponCollisionIgnored(true);
+
+        if (rigidbody2D != null)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.gravityScale = 1f;
+        }
+
+        if (collider2D != null)
+        {
+            collider2D.enabled = true;
+        }
+    }
+
+    private void SetPlayerWeaponCollisionIgnored(bool isIgnored)
+    {
+        int playerLayer = GameLayers.PlayerIndex;
+        int weaponLayer = GameLayers.WeaponIndex;
+
+        if (playerLayer < 0 || weaponLayer < 0)
+        {
+            Debug.LogWarning("[WeaponBase] Player 또는 Weapon Layer를 찾을 수 없습니다.", this);
+            return;
+        }
+
+        Physics2D.IgnoreLayerCollision(playerLayer, weaponLayer, isIgnored);
+    }
+
+    private void RemoveCloneNameSuffix()
+    {
+        const string cloneSuffix = "(Clone)";
+
+        if (!gameObject.name.Contains(cloneSuffix)) return;
+
+        gameObject.name = gameObject.name.Replace(cloneSuffix, string.Empty).Trim();
     }
 }

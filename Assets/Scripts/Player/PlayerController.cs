@@ -110,7 +110,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
             {
                 if (Input.JumpPressed && Move.RemainingJumps > 0)
                 {
-                    Debug.Log("점프!!!!!!!!!!!!!!!!!!");
                     ChangeState(new PlayerJumpState());
                     return true;
                 }
@@ -134,12 +133,11 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
         currentWeapon = weapon;
 
-        Debug.Log($"CurrentWeapon == {currentWeapon}, pm.CW == {PlayerManager.Instance.CurrentWeapon}, pm.CI = {PlayerManager.Instance.CurrentEquipId}");
         weapon.gameObject.transform.parent = playerInventory.transform;
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localScale = transform.localScale;
-
     }
+
     public void TryThrow(Vector2 throwPosition)
     {
         if (!canThrow)
@@ -158,8 +156,12 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
     public void RemoveWeapon()
     {
-        currentWeapon.gameObject.SetActive(false);
+        if (currentWeapon == null) return;
+
+        Destroy(currentWeapon.gameObject);
+        currentWeapon = null;
     }
+
     private IEnumerator DelayedThrow(Vector2 throwPosition, float elapsedTime = 0)
     {
         yield return new WaitForSeconds(elapsedTime);
@@ -186,12 +188,10 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
                 {
                     StopCoroutine(playerBase.slowCoroutine);
                 }
-
                 playerBase.slowCoroutine = StartCoroutine(playerBase.OnSlowEffect(effectData.duration, effectData.rate));
                 break;
             case EffectKind.Damage:
                 break;
-
         }
     }
 
@@ -216,7 +216,6 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
 
         }
     }
-
 
     public void OnLadder(Vector2 startPosition, Vector2 endPosition)
     {
@@ -243,7 +242,7 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
                 transform.position = targetPos;
                 return true;
             }
-            
+
         }
 
         return false;

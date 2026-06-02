@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -34,7 +33,6 @@ public class InventoryUI : MonoBehaviour
         if (PM == null) PM = PlayerManager.Instance;
 
         if (PM != null) PM.OnChangedWeapon += HandleChangeWeapon;
-        if (GameManager.Instance != null) GameManager.Instance.SceneChangeAction += HandleChangeScene;
 
         StartCoroutine(RefreshInventoryNextFrame());
     }
@@ -42,7 +40,6 @@ public class InventoryUI : MonoBehaviour
     private void OnDisable()
     {
         if (PM != null) PM.OnChangedWeapon -= HandleChangeWeapon;
-        if (GameManager.Instance != null) GameManager.Instance.SceneChangeAction -= HandleChangeScene;
     }
 
     private void EnsureSlots()
@@ -74,6 +71,7 @@ public class InventoryUI : MonoBehaviour
     private void RefreshInventory()
     {
         EnsureSlots();
+
         if (!slotsReady || PM == null || PM.HasWeapons.Count < 1) return;
 
         for (int i = 0; i < currentSlots.Length; i++)
@@ -81,10 +79,16 @@ public class InventoryUI : MonoBehaviour
             UpdateSlot(i);
         }
 
-        if (PM.CurrentWeapon == null) return;
+        if (PM.CurrentWeapon == null)
+        {
+            ClearSelection();
+            return;
+        }
 
-        List<WeaponInstance> hasWeapons = PM.HasWeapons.ToList();
-        int idx = hasWeapons.FindIndex(w => w != null && w.Id == PM.CurrentWeapon.InstanceId);
+        int idx = PM.HasWeapons.
+            ToList().
+            FindIndex(w => w != null && w.Id == PM.CurrentWeapon.InstanceId);
+        
         if (idx < 0) return;
 
         SelectWeapon(idx);
@@ -122,15 +126,41 @@ public class InventoryUI : MonoBehaviour
     private void HandleChangeWeapon(int weaponNum)
     {
         EnsureSlots();
-        if (PM == null || currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length) return;
+        if (PM == null || currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length)
+            return;
 
         UpdateSlot(weaponNum);
+
+        if (weaponNum >= PM.HasWeapons.Count || PM.HasWeapons[weaponNum] == null)
+        {
+            RefreshInventory();
+            return;
+        }
+
         SelectWeapon(weaponNum);
     }
 
+    private void ClearSelection()
+    {
+        if (currentSlots == null) return;
+
+        foreach (Transform currentSlot in currentSlots)
+        {
+            if (currentSlot == null) continue;
+
+            Image slotImage = currentSlot.GetComponent<Image>();
+            if (slotImage != null) slotImage.sprite = inventorySprite;
+        }
+
+        if (selectWeaponIcon != null)
+        {
+            selectWeaponIcon.gameObject.SetActive(false);
+        }
+    }
     private void UpdateSlot(int weaponNum)
     {
-        if (PM == null || currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length) return;
+        if (PM == null || currentSlots == null || weaponNum < 0 || weaponNum >= currentSlots.Length)
+            return;
         if (weaponNum >= PM.HasWeapons.Count) return;
         if (weaponData == null) { Debug.LogWarning("weaponData is null"); return; }
 
@@ -146,10 +176,8 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        var prefab = weaponData.GetCurrentWeaponData(inst.WeaponName);
-        if (prefab == null)
+        if (!weaponData.TryGetWeaponPrefab(inst.WeaponId, out WeaponBase prefab))
         {
-            Debug.LogWarning($"WeaponData not found for '{inst.WeaponName}'");
             if (childIcon != null) Destroy(childIcon.gameObject);
             return;
         }
@@ -175,10 +203,6 @@ public class InventoryUI : MonoBehaviour
         }
 
         img.sprite = sprite;
-        childIcon.SetWeapon(prefab, inst.Durability);
-    }
-
-    private void HandleChangeScene()
-    {
+        childIcon.SetWeapon(prefab, inst.Id, inst.Durability);
     }
 }

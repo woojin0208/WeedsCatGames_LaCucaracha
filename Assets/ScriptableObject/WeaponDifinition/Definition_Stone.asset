@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f2971ff1b71d3418b9db00944312a6, type: 3}
   m_Name: Definition_Stone
   m_EditorClassIdentifier: 
+  <WeaponId>k__BackingField: weapon_stone
   <WeaponIcon>k__BackingField: {fileID: 21300000, guid: 8c48f5cd91897ce44968b017e0b5730c, type: 3}
   <WeaponName>k__BackingField: "\uB3CC"
   <WeaponDescript>k__BackingField: "\uB545\uC5D0 \uB110\uB824\uC788\uB294 \uB3CC\uC774\uB2E4."
