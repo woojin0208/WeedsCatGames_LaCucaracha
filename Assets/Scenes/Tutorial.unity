@@ -6361,7 +6361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059030590341673466, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
       propertyPath: <Durability>k__BackingField
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6295374429177347361, guid: 6ac02dc664f49de4dba7c9771cd5668f, type: 3}
       propertyPath: m_LocalPosition.x

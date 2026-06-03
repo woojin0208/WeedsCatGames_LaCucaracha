@@ -113,7 +113,7 @@ public class PlayerManager : MonoBehaviour
             return false;
         }
 
-        weapon.BindInstance(instance.Id);
+        weapon.BindInstance(instance.Id, instance.Durability);
         playerController.GetWeapon(weapon);
 
         if (WeaponData.TryRegisterWeapon(weapon))

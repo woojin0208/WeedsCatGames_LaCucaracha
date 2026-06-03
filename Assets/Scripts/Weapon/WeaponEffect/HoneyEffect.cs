@@ -1,38 +1,46 @@
 using UnityEngine;
 
 // 꿀 효과 동작을 처리한다.
-public class HoneyEffect : WeaponEffectBase
+public class HoneyEffect : MonoBehaviour, IWeaponEffect
 {
-    private bool isEnemyTarget = false;
-
-    private void Update()
+    public void InitializeFromWeaponHit(WeaponEffectContext context)
     {
-        if (!isEnemyTarget) return;
+        transform.position = context.HitPosition;
 
-        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
-
-        if (rayHit.collider != null)
+        switch (context.Target)
         {
-            float targetY = rayHit.point.y;
+            case EffectTargetKind.Wall:
+                ApplyWallRotation(context.ThrowDirection);
+                break;
 
-            transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
+            case EffectTargetKind.Enemy:
+                SnapToGround();
+                transform.rotation = Quaternion.identity;
+                break;
+
+            case EffectTargetKind.Ground:
+                transform.rotation = Quaternion.identity;
+                break;
         }
     }
-    public override void Initialize(EffectTargetKind target)
+
+    private void ApplyWallRotation(Vector2 throwDirection)
     {
-        base.Initialize(target);
-        Debug.Log(target);
-        if (target == EffectTargetKind.Wall)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 90);
-        }
-        else if (target == EffectTargetKind.Enemy)
-        {
-            isEnemyTarget = true;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (target == EffectTargetKind.Ground)
-        {
-        }
+        float zRotation = throwDirection.x < 0f ? -90f : 90f;
+        transform.rotation = Quaternion.Euler(0f, 0f, zRotation);
+    }
+
+    private void SnapToGround()
+    {
+        RaycastHit2D rayHit = Physics2D.Raycast(
+            transform.position,
+            Vector2.down,
+            Mathf.Infinity,
+            LayerMask.GetMask(GameLayers.Ground)
+            );
+
+        if (rayHit.collider == null) return;
+
+        transform.position = new Vector3(transform.position.x, rayHit.point.y, transform.position.z);
     }
 }

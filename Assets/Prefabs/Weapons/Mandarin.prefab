@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 3066201222036199658}
   - component: {fileID: 7985188071814182186}
   - component: {fileID: 3875608330381566501}
-  - component: {fileID: 8860453361923444722}
   - component: {fileID: 2310198837227259572}
   - component: {fileID: 8246640425610678565}
   - component: {fileID: -2523546171749138995}
@@ -165,7 +164,7 @@ MonoBehaviour:
   <WeaponDefinition>k__BackingField: {fileID: 11400000, guid: 7ffe8f970f6db5c4e9ebd8cadd6735af, type: 2}
   weaponDamage: 2
   throwSpeed: 8
-  <Durability>k__BackingField: 1
+  <Durability>k__BackingField: 2
   <WeaponSprite>k__BackingField: {fileID: 21300000, guid: 7c9e79697f31aa34c871d645bb2b863a, type: 3}
   <InteractivePos>k__BackingField: {fileID: 5569906039075669425}
   weaponPosition: {x: 0.12, y: -0.02}
@@ -218,27 +217,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.13, y: 0.13}
   m_EdgeRadius: 0
---- !u!95 &8860453361923444722
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9138202059999787241}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 64515d8d25c23504e831ea0c365a4773, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2310198837227259572
 MonoBehaviour:
   m_ObjectHideFlags: 0

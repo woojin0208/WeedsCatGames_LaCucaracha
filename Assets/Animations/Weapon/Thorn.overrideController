@@ -9,5 +9,5 @@ AnimatorOverrideController:
   m_Name: Thorn
   m_Controller: {fileID: 9100000, guid: 97910c12e5594bb48abea41a35f71e13, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 40069d86152cd9e42a526a94e93d533e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d536804db7c3c5040970213d0ca79967, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: d536804db7c3c5040970213d0ca79967, type: 2}

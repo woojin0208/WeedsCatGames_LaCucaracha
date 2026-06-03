@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // 무기의 공통 상호작용, 장착, 투척, 내구도 처리를 담당한다.
-public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
+public class WeaponBase : MonoBehaviour, IInteractable
 {
     private const int DurabilityUseAmount = 1;
     private const float EnemyThrowDamageMultiplier = 2f;
@@ -11,6 +11,8 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     [Header("Weapon Stats")]
     [SerializeField] private float weaponDamage;
     [SerializeField] private float throwSpeed;
+
+    public float Damage => weaponDamage;
 
     [field: SerializeField] public int Durability { get; private set; } = 1;
     [field: SerializeField] public Sprite WeaponSprite { get; private set; }
@@ -29,7 +31,8 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     private WeaponRenderer weaponRenderer;
 
     private bool isThrown;
-    private bool isLeftThrow;
+    private Vector2 throwDirection;
+    private bool isDestroyed;
 
     private void Awake()
     {
@@ -65,9 +68,10 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
         }
     }
 
-    public void BindInstance(string id)
+    public void BindInstance(string id, int durability)
     {
         InstanceId = id;
+        Durability = durability;
     }
 
     public EntityBase GetEntity()
@@ -78,17 +82,6 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     public void GetWeapon()
     {
         transform.localPosition = weaponPosition;
-    }
-
-    public void PutWeapon()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void OnAttack()
-    {
-        // 현재 프로젝트에서는 직접 공격 로직이 없다.
-        // 추후 근접 무기 공격을 구현할 경우 여기서 처리한다.
     }
 
     public void OnThrow(Vector2 targetPosition)
@@ -138,10 +131,8 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
     {
         rigidbody2D.gravityScale = 0f;
 
-        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-        rigidbody2D.velocity = direction * throwSpeed;
-
-        isLeftThrow = rigidbody2D.velocity.x <= 0f;
+        throwDirection = (targetPosition - (Vector2)transform.position).normalized;
+        rigidbody2D.velocity = throwDirection * throwSpeed;
     }
 
     private void EnableThrowCollision()
@@ -172,16 +163,27 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
 
     private void DestroyWeapon(EffectTargetKind target)
     {
-        PlayerManager.Instance?.SetWeapon(null);
+        if (isDestroyed) return;
 
-        if (TryGetComponent<EffectableWeapon>(out EffectableWeapon effectable))
-        {
-            effectable.OnDestruction(target, isLeftThrow);
-        }
+        isDestroyed = true;
+        isThrown = false;
+
+        PlayerManager.Instance?.SetWeapon(null);
+        SetPlayerWeaponCollisionIgnored(true);
+        if (trigger2D != null) trigger2D.enabled = false;
+        if (collider2D != null) collider2D.enabled = false;
 
         if (rigidbody2D != null)
         {
             rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.angularVelocity = 0f;
+            rigidbody2D.gravityScale = 0f;
+        }
+
+        if (TryGetComponent<EffectableWeapon>(out EffectableWeapon effectable))
+        {
+            var context = new WeaponEffectContext(target, throwDirection, transform.position);
+            effectable.OnDestruction(context);
         }
 
         if (weaponRenderer != null)
@@ -223,6 +225,7 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
         if (UseDurability())
         {
             DestroyWeapon(EffectTargetKind.Enemy);
+            return;
         }
 
         StopThrow();
@@ -233,6 +236,7 @@ public class WeaponBase : MonoBehaviour, IWeaponable, IInteractable
         if (UseDurability())
         {
             DestroyWeapon(target);
+            return;
         }
 
         StopThrow();

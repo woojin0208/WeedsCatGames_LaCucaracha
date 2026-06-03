@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <WeaponDefinition>k__BackingField: {fileID: 11400000, guid: ed3d4c7e96d3fea4e91c142771a4a51e, type: 2}
-  weaponDamage: 2
+  weaponDamage: 4
   throwSpeed: 8
-  <Durability>k__BackingField: 1
+  <Durability>k__BackingField: 3
   <WeaponSprite>k__BackingField: {fileID: 21300000, guid: bbd3779421e00d941986be60f07ab7d6, type: 3}
   <InteractivePos>k__BackingField: {fileID: 6049777461602901571}
   weaponPosition: {x: 0.24, y: -0.05}
