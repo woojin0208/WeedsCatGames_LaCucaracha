@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// 꿀 효과 동작을 처리한다.
+// 꿀 효과의 생성 위치와 방향을 충돌 대상에 맞게 보정한다.
 public class HoneyEffect : MonoBehaviour, IWeaponEffect
 {
     public void InitializeFromWeaponHit(WeaponEffectContext context)
@@ -37,7 +37,7 @@ public class HoneyEffect : MonoBehaviour, IWeaponEffect
             Vector2.down,
             Mathf.Infinity,
             LayerMask.GetMask(GameLayers.Ground)
-            );
+        );
 
         if (rayHit.collider == null) return;
 

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// ?몃깽?좊━ UI ?쒖떆? ?좏깮 ?곹깭瑜?愿由ы븳??
+// 인벤토리 UI 표시와 선택 상태를 관리한다.
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private Transform weaponIconParent;
@@ -122,7 +122,7 @@ public class InventoryUI : MonoBehaviour
         selectWeaponIcon.gameObject.SetActive(select);
     }
 
-    // 臾닿린 紐⑸줉 蹂寃??ы빆???몃깽?좊━ UI??諛섏쁺?쒕떎.
+    // 무기 목록 변경 사항을 인벤토리 UI에 반영한다.
     private void HandleChangeWeapon(int weaponNum)
     {
         EnsureSlots();

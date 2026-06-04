@@ -14,27 +14,45 @@ public class EnemyDropItem : MonoBehaviour
     {
         enemyBase = GetComponent<EnemyBase>();
 
+        if (enemyBase == null)
+        {
+            Debug.LogWarning("[EnemyDropItem] EnemyBase 가 null 입니다.", this);
+            return;
+        }
+
         enemyBase.OnDiedAction += TryDropItem;
     }
 
     private void TryDropItem()
     {
-        Debug.Log("Try Drop");
-        bool isDrop = Random.Range(0f, 1f) <= dropProbability;
-
-        int idx = isDrop ? Random.Range(0, items.Length) : -1;
-
-        Debug.Log($"isDrop = {isDrop} \n idx = {idx} {items[idx].name}");
-
-        if (idx >= 0)
+        if (items == null || items.Length == 0)
         {
-            GameObject itemClone = Instantiate(items[idx]);
-            itemClone.transform.position = transform.position;
-            itemClone.transform.SetParent(null);
+            Debug.LogWarning("[EnemyDropItem] 드랍 아이템 목록이 비어 있습니다.", this);
+            return;
         }
+
+        bool isDrop = Random.Range(0f, 1f) <= dropProbability;
+        if (!isDrop) return;
+
+        int index = Random.Range(0, items.Length);
+        GameObject itemPrefab = items[index];
+
+        if (itemPrefab == null)
+        {
+            Debug.LogWarning($"[EnemyDropItem] DropItem 이 null 입닏다. index : {index}", this);
+            return;
+        }
+
+        GameObject itemClone = Instantiate(itemPrefab);
+        itemClone.transform.position = transform.position;
+        itemClone.transform.SetParent(null);
     }
 
     private void OnDisable()
     {
+        if (enemyBase != null)
+        {
+            enemyBase.OnDiedAction -= TryDropItem;
+        }
     }
 }

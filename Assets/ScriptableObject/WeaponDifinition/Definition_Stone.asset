@@ -15,4 +15,5 @@ MonoBehaviour:
   <WeaponId>k__BackingField: weapon_stone
   <WeaponIcon>k__BackingField: {fileID: 21300000, guid: 8c48f5cd91897ce44968b017e0b5730c, type: 3}
   <WeaponName>k__BackingField: "\uB3CC"
-  <WeaponDescript>k__BackingField: "\uB545\uC5D0 \uB110\uB824\uC788\uB294 \uB3CC\uC774\uB2E4."
+  <WeaponDescript>k__BackingField: "\uB545\uC5D0 \uB110\uB824\uC788\uB294 \uB3CC\uC774\uB2E4.\n\uB9DE\uC73C\uBA74
+    \uAE30\uC808\uD558\uAC8C \uB41C\uB2E4."

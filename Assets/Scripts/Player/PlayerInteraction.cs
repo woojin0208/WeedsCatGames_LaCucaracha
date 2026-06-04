@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -23,8 +22,12 @@ public class PlayerInteraction : MonoBehaviour
         Vector2 origin = transform.position;
         float radius = 0.3f;
         Vector2 dir = Vector2.zero;
-        int layerMask = LayerMask.GetMask("Weapon", "Enterance", "Interactive", "NPC");
-
+        int layerMask = LayerMask.GetMask(
+            GameLayers.WeaponWorld,
+            GameLayers.Enterance,
+            GameLayers.Interactive,
+            GameLayers.NPC
+        );
         // 범위 안의 상호작용 후보를 모두 수집한다.
         RaycastHit2D[] natural_hits = Physics2D.CircleCastAll(origin, radius, dir, 0, layerMask);
         if (natural_hits == null || natural_hits.Length == 0)

@@ -11,7 +11,8 @@ public class EnemyAttackState : IEnemyState
         enemyController.Anim.EndAttack = false;
         enemyController.Anim.OnAttackEvent += enemyController.Anim.EndAttackAnim;
 
-        int attackNum = Random.Range(1, enemyController.AttackIndex + 1);
+        int maxAttackIndex = Mathf.Max(1, enemyController.AttackIndex);
+        int attackNum = Random.Range(1, maxAttackIndex + 1);
 
         enemyController.Move.Idle(0);
         enemyController.Anim.Attack(attackNum);
@@ -28,6 +29,8 @@ public class EnemyAttackState : IEnemyState
 
     public void ExitState(EnemyController enemyController)
     {
+        enemyController.Anim.OnAttackEvent -= enemyController.Anim.EndAttackAnim;
+
         enemyController.Anim.Attack(0);
         enemyController.CurrentAttackTime = Time.time;
     }

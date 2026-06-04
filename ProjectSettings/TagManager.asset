@@ -23,9 +23,9 @@ TagManager:
   - Enterance
   - PlayerInteractive
   - WeaponEffect
-  - 
-  - 
-  - 
+  - WeaponWorld
+  - WeaponProjectile
+  - NPC
   - 
   - 
   - 

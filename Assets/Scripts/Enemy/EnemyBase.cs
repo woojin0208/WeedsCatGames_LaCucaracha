@@ -28,10 +28,32 @@ public class EnemyBase : EntityBase
 
     private void Initialize()
     {
-        enemyMovement.Init(stats.GetStat(StatType.MoveSpeed).DefaultValue + stats.GetStat(StatType.MoveSpeed).BonusValue);
-        if (enemyAttack != null) enemyAttack.Init(stats.GetStat(StatType.AttackDamage).DefaultValue + stats.GetStat(StatType.AttackDamage).BonusValue);
-        enemyController.Init(stats.GetStat(StatType.AttackSpeed).DefaultValue + stats.GetStat(StatType.AttackSpeed).BonusValue);
+        if (stats == null)
+        {
+            Debug.LogWarning("[EnemyBase] Stats 가 null 입니다.", this);
+            return;
+        }
+
+        Stat moveSpeed = stats.GetStat(StatType.MoveSpeed);
+        Stat attackDamage = stats.GetStat(StatType.AttackDamage);
+        Stat attackSpeed = stats.GetStat(StatType.AttackSpeed);
+
+        if (enemyMovement != null && moveSpeed != null)
+        {
+            enemyMovement.Init(moveSpeed.Value);
+        }
+
+        if (enemyAttack != null && attackDamage != null)
+        {
+            enemyAttack.Init(attackDamage.Value);
+        }
+
+        if (enemyController != null && attackSpeed != null)
+        {
+            enemyController.Init(attackSpeed.Value);
+        }
     }
+
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);

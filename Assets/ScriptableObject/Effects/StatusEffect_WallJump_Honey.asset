@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f276f4af478f6b84085c518230d237d6, type: 3}
-  m_Name: SlowEffect
+  m_Name: StatusEffect_WallJump_Honey
   m_EditorClassIdentifier: 
-  kind: 1
-  target: 01000000
-  duration: 5
-  rate: 70
+  kind: 3
+  target: 00000000
+  duration: 0.020035475
+  rate: 0

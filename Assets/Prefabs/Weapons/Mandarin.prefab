@@ -164,6 +164,8 @@ MonoBehaviour:
   <WeaponDefinition>k__BackingField: {fileID: 11400000, guid: 7ffe8f970f6db5c4e9ebd8cadd6735af, type: 2}
   weaponDamage: 2
   throwSpeed: 8
+  hitEffects:
+  - {fileID: 11400000, guid: dea3bffa6006f4047858b8042268e70f, type: 2}
   <Durability>k__BackingField: 2
   <WeaponSprite>k__BackingField: {fileID: 21300000, guid: 7c9e79697f31aa34c871d645bb2b863a, type: 3}
   <InteractivePos>k__BackingField: {fileID: 5569906039075669425}

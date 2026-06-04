@@ -4,97 +4,136 @@ using UnityEngine;
 // 상태 이상 효과의 적용, 유지, 해제를 처리한다.
 public class EffectBase : MonoBehaviour
 {
+    private const float WallCheckRadius = 0.1f;
+
     public StatusEffectData[] Effects;
 
-    [SerializeField]
-    private float destroyDuration;
+    private readonly HashSet<IStatusEffectHandler> effectHandlers = new();
 
-    private float durationTime;
-
-    private List<IStatusEffectHandler> effectHandlers = new List<IStatusEffectHandler>();
+    private StatusEffectData[] runtimeEffects;
+    private float remainingDuration;
 
     private void Awake()
     {
-        durationTime = Effects[0].duration;
-        destroyDuration = Effects[0].duration;
+        if (Effects == null || Effects.Length == 0 || Effects[0] == null)
+        {
+            Debug.LogWarning("[EffectBase] Effects가 비어 있습니다.", this);
+            enabled = false;
+            return;
+        }
+
+        runtimeEffects = CreateRuntimeEffects();
+        remainingDuration = runtimeEffects[0].duration;
     }
 
     private void Start()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.1f);
-
-        foreach (StatusEffectData e in Effects) e.effect = this;
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Wall"))
-            {
-                float xDir = transform.position.x > hit.transform.position.x ? -1 : 1;
-                Debug.LogAssertion($"Effect Pos = {transform.position.x} / Wall Pos = {hit.transform.position.x}");
-                foreach (StatusEffectData e in Effects) e.xDir = xDir;
-            }
-        }
+        ApplyNearbyWallContext();
     }
 
     private void Update()
     {
-        destroyDuration -= Time.deltaTime;
+        remainingDuration -= Time.deltaTime;
 
-        if (destroyDuration <= 0) Destroy(this.gameObject);
+        if (remainingDuration <= 0) Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
-        {
-            effectHandlers.Add(handler);
-
-            ApplyEffect(handler);
-        }
+        TryApplyTo(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
-        {
-            if (!effectHandlers.Contains(handler))
-            {
-                effectHandlers.Add(handler);
-                ApplyEffect(handler);
-            }
-        }
+        TryApplyTo(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IStatusEffectHandler>(out var handler))
-        {
-            IgnoreEffect(handler);
+        if (!collision.TryGetComponent<IStatusEffectHandler>(out IStatusEffectHandler handler)) return;
+        if (!effectHandlers.Remove(handler)) return;
 
-            effectHandlers.Remove(handler);
-        }
+        IgnoreEffect(handler);
     }
 
     private void OnDisable()
     {
-        foreach (var e in Effects)
-            foreach (var eh in effectHandlers) eh.IgnoreEffect(e);
+        foreach (IStatusEffectHandler handler in effectHandlers) IgnoreEffect(handler);
 
         effectHandlers.Clear();
     }
-    private void ApplyEffect(IStatusEffectHandler handler)
+
+    private StatusEffectData[] CreateRuntimeEffects()
     {
-        foreach (var e in Effects)
+        StatusEffectData[] clones = new StatusEffectData[Effects.Length];
+
+        for (int i = 0; i < Effects.Length; i++)
         {
-            e.duration = destroyDuration;
-            handler.ApplyEffect(e);
-            Effects[0].duration = durationTime;
+            if (Effects[i] == null) continue;
+
+            StatusEffectData clone = Instantiate(Effects[i]);
+            clone.effect = this;
+            clones[i] = clone;
         }
 
+        return clones;
+    }
+
+    private void TryApplyTo(Collider2D collision)
+    {
+        if (!collision.TryGetComponent<IStatusEffectHandler>(out IStatusEffectHandler handler)) return;
+        if (!effectHandlers.Add(handler)) return;
+
+        ApplyEffect(handler);
+    }
+
+    private void ApplyEffect(IStatusEffectHandler handler)
+    {
+        foreach (StatusEffectData effect in runtimeEffects)
+        {
+            if (effect == null) continue;
+
+            effect.duration = remainingDuration;
+            handler.ApplyEffect(effect);
+        }
     }
 
     public void IgnoreEffect(IStatusEffectHandler handler)
     {
-        foreach (var e in Effects) handler.IgnoreEffect(e);
+        foreach (StatusEffectData effect in runtimeEffects)
+        {
+            if (effect == null) continue;
+
+            handler.IgnoreEffect(effect);
+        }
+    }
+
+    private void ApplyNearbyWallContext()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, WallCheckRadius);
+        Collider2D nearestWall = null;
+        float nearestDistance = float.MaxValue;
+
+        foreach (Collider2D hit in hits)
+        {
+            if (!hit.CompareTag(GameTags.Wall)) continue;
+
+            float distance = Vector2.Distance(transform.position, hit.transform.position);
+            if (distance >= nearestDistance) continue;
+
+            nearestDistance = distance;
+            nearestWall = hit;
+        }
+
+        if (nearestWall == null) return;
+
+        float xDirection = transform.position.x > nearestWall.transform.position.x ? -1f : 1f;
+
+        foreach (StatusEffectData effect in runtimeEffects)
+        {
+            if (effect == null) continue;
+
+            effect.xDir = xDirection;
+        }
     }
 }

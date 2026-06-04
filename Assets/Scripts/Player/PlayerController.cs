@@ -202,7 +202,8 @@ public class PlayerController : StateMachine<PlayerController>, IStatusEffectHan
         switch (effectData.kind)
         {
             case EffectKind.WallJump:
-                ChangeState(new PlayerFallState());
+                if (currentState is PlayerWallClingState)
+                    ChangeState(new PlayerFallState());
                 break;
             case EffectKind.Slow:
                 if (playerBase.slowCoroutine != null)

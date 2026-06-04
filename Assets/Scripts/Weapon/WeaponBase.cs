@@ -11,7 +11,7 @@ public class WeaponBase : MonoBehaviour, IInteractable
     [Header("Weapon Stats")]
     [SerializeField] private float weaponDamage;
     [SerializeField] private float throwSpeed;
-
+    [SerializeField] private StatusEffectData[] hitEffects;
     public float Damage => weaponDamage;
 
     [field: SerializeField] public int Durability { get; private set; } = 1;
@@ -34,6 +34,8 @@ public class WeaponBase : MonoBehaviour, IInteractable
     private Vector2 throwDirection;
     private bool isDestroyed;
 
+    private const float ThrowGravityScale = 0f;
+    private const float WorldGravityScale = 1f;
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -46,13 +48,13 @@ public class WeaponBase : MonoBehaviour, IInteractable
         {
             entityBase = GetComponentInParent<EntityBase>();
             GetWeapon();
+            EnableHeldCollision();
         }
         else
         {
-            EnableWorldInteraction();
+            EnableWorldCollision();
         }
 
-        SetPlayerWeaponCollisionIgnored(true);
         RemoveCloneNameSuffix();
     }
 
@@ -82,6 +84,7 @@ public class WeaponBase : MonoBehaviour, IInteractable
     public void GetWeapon()
     {
         transform.localPosition = weaponPosition;
+        EnableHeldCollision();
     }
 
     public void OnThrow(Vector2 targetPosition)
@@ -94,8 +97,8 @@ public class WeaponBase : MonoBehaviour, IInteractable
         }
 
         DetachFromOwner();
-        ApplyThrowVelocity(targetPosition);
         EnableThrowCollision();
+        ApplyThrowVelocity(targetPosition);
         RemoveFromInventory();
     }
 
@@ -135,17 +138,42 @@ public class WeaponBase : MonoBehaviour, IInteractable
         rigidbody2D.velocity = throwDirection * throwSpeed;
     }
 
+    private void EnableWorldCollision()
+    {
+        SetLayer(GameLayers.WeaponWorldIndex);
+
+        if (trigger2D != null) trigger2D.enabled = true;
+        if (collider2D != null) collider2D.enabled = true;
+
+        SetRigidbodyWorldDynamic();
+    }
+
+    private void EnableHeldCollision()
+    {
+        SetLayer(GameLayers.WeaponWorldIndex);
+
+        if (trigger2D != null) trigger2D.enabled = false;
+        if (collider2D != null) collider2D.enabled = false;
+
+        SetRigidbodyKinematic();
+    }
+
     private void EnableThrowCollision()
     {
+        SetLayer(GameLayers.WeaponProjectileIndex);
+
         if (trigger2D != null) trigger2D.enabled = true;
         if (collider2D != null) collider2D.enabled = false;
 
-        SetPlayerWeaponCollisionIgnored(false);
+        SetRigidbodyThrowDynamic();
     }
 
-    private void EnableWorldInteraction()
+    private void DisableAllCollision()
     {
-        if (trigger2D != null) trigger2D.enabled = true;
+        if (trigger2D != null) trigger2D.enabled = false;
+        if (collider2D != null) collider2D.enabled = false;
+
+        SetRigidbodyKinematic();
     }
 
     private void RemoveFromInventory()
@@ -169,9 +197,8 @@ public class WeaponBase : MonoBehaviour, IInteractable
         isThrown = false;
 
         PlayerManager.Instance?.SetWeapon(null);
-        SetPlayerWeaponCollisionIgnored(true);
-        if (trigger2D != null) trigger2D.enabled = false;
-        if (collider2D != null) collider2D.enabled = false;
+
+        DisableAllCollision();
 
         if (rigidbody2D != null)
         {
@@ -222,6 +249,8 @@ public class WeaponBase : MonoBehaviour, IInteractable
             entity.TakeDamage(weaponDamage * EnemyThrowDamageMultiplier);
         }
 
+        ApplyHitEffects(collision);
+
         if (UseDurability())
         {
             DestroyWeapon(EffectTargetKind.Enemy);
@@ -229,6 +258,19 @@ public class WeaponBase : MonoBehaviour, IInteractable
         }
 
         StopThrow();
+    }
+
+    private void ApplyHitEffects(Collider2D collision)
+    {
+        if (hitEffects == null || hitEffects.Length == 0) return;
+        if (!collision.TryGetComponent<IStatusEffectHandler>(out IStatusEffectHandler handler)) return;
+
+        foreach (StatusEffectData effect in hitEffects)
+        {
+            if (effect == null) continue;
+
+            handler.ApplyEffect(effect);
+        }
     }
 
     private void HitSurface(EffectTargetKind target)
@@ -246,34 +288,49 @@ public class WeaponBase : MonoBehaviour, IInteractable
     {
         isThrown = false;
 
-        SetPlayerWeaponCollisionIgnored(true);
-
         if (rigidbody2D != null)
         {
             rigidbody2D.velocity = Vector2.zero;
-            rigidbody2D.gravityScale = 1f;
+            rigidbody2D.angularVelocity = 0f;
         }
 
-        if (collider2D != null)
-        {
-            collider2D.enabled = true;
-        }
+        EnableWorldCollision();
     }
 
-    private void SetPlayerWeaponCollisionIgnored(bool isIgnored)
+    private void SetRigidbodyThrowDynamic()
     {
-        int playerLayer = GameLayers.PlayerIndex;
-        int weaponLayer = GameLayers.WeaponIndex;
+        if (rigidbody2D == null) return;
 
-        if (playerLayer < 0 || weaponLayer < 0)
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        rigidbody2D.gravityScale = ThrowGravityScale;
+    }
+
+    private void SetRigidbodyWorldDynamic()
+    {
+        if (rigidbody2D == null) return;
+
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        rigidbody2D.gravityScale = WorldGravityScale;
+    }
+    private void SetRigidbodyKinematic()
+    {
+        if (rigidbody2D == null) return;
+
+        rigidbody2D.velocity = Vector2.zero;
+        rigidbody2D.angularVelocity = 0f;
+        rigidbody2D.gravityScale = 0f;
+        rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+    }
+    private void SetLayer(int layer)
+    {
+        if (layer < 0)
         {
-            Debug.LogWarning("[WeaponBase] Player 또는 Weapon Layer를 찾을 수 없습니다.", this);
+            Debug.LogWarning("[WeaponBase] Weapon Layer 를 찾을 수 없습니다.", this);
             return;
         }
 
-        Physics2D.IgnoreLayerCollision(playerLayer, weaponLayer, isIgnored);
+        gameObject.layer = layer;
     }
-
     private void RemoveCloneNameSuffix()
     {
         const string cloneSuffix = "(Clone)";

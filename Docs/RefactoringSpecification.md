@@ -643,3 +643,12 @@ ID 규칙:
 - `PlayerManager.UpdateWeapon()`의 미사용 파라미터와 호출 여부를 정리한다.
 - `GameTags`, `GameLayers`를 Enemy, Entrance, Player 감지 코드에 단계적으로 적용한다.
 - Weapon 파괴, 내구도, Effect 연동 책임을 더 분리할지 Effect 리팩터링 때 재검토한다.
+
+## 18. Effect 1차 정리 메모
+
+- `EffectBase`는 범위형 상태 이상 효과의 적용, 유지, 해제를 담당한다.
+- `StatusEffectData`는 정적 설정값으로 유지하고, 런타임 값은 복제본에서만 변경한다.
+- `EffectableWeapon`은 무기 파괴 시 효과 프리팹 생성만 담당하고, 효과별 초기화는 `IWeaponEffect`로 분리한다.
+- Boss는 의도적으로 `IStatusEffectHandler`를 구현하지 않으므로 Honey Slow, Smoke Blind 같은 상태 이상 효과를 받지 않는다.
+- `EnemyStatusEffectData`, `EffectableEnvironment`, `EffectableWall`은 현재 사용처가 없어 삭제 후보로 정리했다.
+- `PlayerWallClingState` 종료 시 현재는 애니메이션 전환 부자연스러움 때문에 `IdleState`로 이동한다. Animation 리팩터링 시 `WallCling -> Fall` 전환 조건과 애니메이션을 재검토한다.

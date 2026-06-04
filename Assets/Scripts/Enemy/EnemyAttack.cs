@@ -4,18 +4,11 @@ using UnityEngine;
 // 적 공격 판정과 패턴 프리팹 생성을 처리한다.
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private EnemyAttackType[] attackTypes;
 
     [SerializeField] private GameObject areaAttackPrefab;
     [SerializeField] private GameObject projectileAttackPrefab;
     [SerializeField] private float attackRangeX = 1.0f;
     [SerializeField] private float attackRangeY = 0.5f;
-
-    [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private Vector2 boxSize = new Vector2(3.736842f, 1.6f);
-    [SerializeField] private Vector2 boxOffset = new Vector2(0f, -0.69f);
-
-    private EnemyRenderer enemyRenderer;
     private EnemyBase enemyBase;
 
     private float attackDamage = 10;
@@ -23,11 +16,6 @@ public class EnemyAttack : MonoBehaviour
     private void Awake()
     {
         enemyBase = GetComponentInParent<EnemyBase>();
-        enemyRenderer = transform.parent.GetComponentInChildren<EnemyRenderer>();
-    }
-
-    private void Start()
-    {
     }
 
     public void Init(float attackDamage)
@@ -43,7 +31,12 @@ public class EnemyAttack : MonoBehaviour
             Vector2 dir = enemyBase.transform.localScale.x > 0 ? Vector2.left : Vector2.right;
             Vector2 origin = (Vector2)transform.position + dir * (attackRangeX * 0.5f);
 
-            Collider2D[] hits = Physics2D.OverlapBoxAll(origin, new Vector2(attackRangeX, attackRangeY), 0f, LayerMask.GetMask("Player"));
+            Collider2D[] hits = Physics2D.OverlapBoxAll(
+                origin,
+                new Vector2(attackRangeX, attackRangeY),
+                0f,
+                LayerMask.GetMask(GameLayers.Player)
+            );
 
             // 근접 공격 범위 안의 플레이어에게 피해를 준다.
             foreach (var hit in hits)
@@ -83,14 +76,10 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        float totalDamage = attackDamage;
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("attack to player");
-            collision.TryGetComponent<PlayerBase>(out var player);
+        if (!collision.CompareTag(GameTags.Player)) return;
+        if (!collision.TryGetComponent<PlayerBase>(out PlayerBase player)) return;
 
-            player.TakeDamage(totalDamage);
-        }
+        player.TakeDamage(attackDamage);
     }
 }
 

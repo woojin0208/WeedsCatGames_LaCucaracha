@@ -27,7 +27,6 @@ public class Stat
         minValue = newStat.minValue;
         defaultValue = newStat.defaultValue;
         bonusValue = newStat.bonusValue;
-
     }
 
     public StatType StatType => statType;
@@ -42,13 +41,19 @@ public class Stat
         {
             float prev = Value;
             defaultValue = Mathf.Clamp(value, minValue, maxValue);
+            TryInvokeValueChangedEvent(prev, Value);
         }
     }
 
     public float BonusValue
     {
         get => bonusValue;
-        set => bonusValue = Mathf.Clamp(value, -defaultValue + 1, maxValue);
+        set
+        {
+            float prev = Value;
+            bonusValue = Mathf.Clamp(value, minValue - defaultValue, maxValue - defaultValue);
+            TryInvokeValueChangedEvent(prev, Value);
+        }
     }
 
     private void TryInvokeValueChangedEvent(float prev, float current)

@@ -15,6 +15,12 @@ public class EnemyChaseState : IEnemyState
     }
     public void EnterState(EnemyController enemyController)
     {
+        if (targetPosition == null)
+        {
+            enemyController.ChangeState(new EnemyIdleState());
+            return;
+        }
+
         chaseDirection = targetPosition.position.x - enemyController.transform.position.x > 0 ? 1 : -1;
         enemyController.Move.Move(chaseDirection);
         enemyController.Anim.Walk(chaseDirection);
@@ -22,8 +28,15 @@ public class EnemyChaseState : IEnemyState
 
     public void UpdateState(EnemyController enemyController)
     {
+        if (targetPosition == null)
+        {
+            enemyController.ChangeState(new EnemyIdleState());
+            return;
+        }
+
         chaseDirection = targetPosition.position.x - enemyController.transform.position.x > 0 ? 1 : -1;
         enemyController.Anim.Walk(chaseDirection);
+   
         if (!enemyController.CheckGroundAhead())
         {
             enemyController.Move.Move(0);
@@ -36,7 +49,7 @@ public class EnemyChaseState : IEnemyState
         }
 
         float distance = Vector2.Distance(enemyController.transform.position, targetPosition.position);
-        Debug.Log($"{enemyController.name}, {distance}");
+
         if (distance >= enemyController.MaxChaseDistance)
         {
             enemyController.ChangeState(new EnemyIdleState());

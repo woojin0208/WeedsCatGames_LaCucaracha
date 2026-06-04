@@ -24,7 +24,6 @@ public class EnemyHitState : IEnemyState
 
     private void HandleEndHitAnim()
     {
-        controller.Anim.EndHitEvent -= HandleEndHitAnim;
         controller.ChangeState(new EnemyIdleState());
     }
 }

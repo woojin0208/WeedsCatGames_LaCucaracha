@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// 효과를 적용할 수 있는 무기 동작을 처리한다.
+// 효과를 발생시키는 무기의 파괴 동작을 처리한다.
 public class EffectableWeapon : MonoBehaviour
 {
     [SerializeField] private GameObject effectPrefab;
@@ -13,7 +13,7 @@ public class EffectableWeapon : MonoBehaviour
 
         if (effectPrefab == null)
         {
-            Debug.LogWarning("[EffectableWeapon] effectPrefab 이 null 입니다.", this);
+            Debug.LogWarning("[EffectableWeapon] effectPrefab이 비어 있습니다.", this);
             return;
         }
 
