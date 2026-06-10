@@ -7,6 +7,7 @@ public class BossIntroCutsceneController : MonoBehaviour
     private UIManager uiManager;
 
     [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private BGMPlayer bgmPlayer;
     
     [SerializeField] private AnchoredBossController bossController;
     [SerializeField] private BossUI bossUI;
@@ -19,6 +20,9 @@ public class BossIntroCutsceneController : MonoBehaviour
     private void Awake()
     {
         uiManager = UIManager.Instance;
+
+        if (bgmPlayer == null)
+            bgmPlayer = FindObjectOfType<BGMPlayer>();
     }
 
     private void OnEnable()
@@ -79,7 +83,7 @@ public class BossIntroCutsceneController : MonoBehaviour
     }
     private void OnVideoEnd(VideoPlayer vp)
     {
-        FinishCutscene();
+        FinishCutscene(false);
     }
 
     private void MovePlayerToStartPoint()
@@ -98,14 +102,19 @@ public class BossIntroCutsceneController : MonoBehaviour
     private void HandleCutsceneSkipRequested()
     {
         if (!gameObject.activeInHierarchy) return;
-        FinishCutscene();
+        FinishCutscene(true);
     }
 
-    private void FinishCutscene()
+    private void FinishCutscene(bool shouldChangeBGM)
     {
         if (isFinished) return;
 
         isFinished = true;
+
+        if (shouldChangeBGM)
+        {
+            bgmPlayer?.StartBGM(0);
+        }
 
         InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
 

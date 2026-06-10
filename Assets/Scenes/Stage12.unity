@@ -4429,6 +4429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 991856611}
+  bgmPlayer: {fileID: 0}
   bossController: {fileID: 621587627}
   bossUI: {fileID: 629354764}
   player: {fileID: 1203487902}
@@ -5237,6 +5238,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1348904515, guid: 57faa3e15a1993c4098483f951c20de3, type: 3}
+    - target: {fileID: 927164150178537085, guid: 8db847516d670c84cbcd5c1d3889f194, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d77db2048f06abc4e83f22b72bfe3491, type: 2}
     - target: {fileID: 2282200726173374874, guid: 8db847516d670c84cbcd5c1d3889f194, type: 3}
       propertyPath: m_IsActive
       value: 1

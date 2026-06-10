@@ -3,8 +3,6 @@ using UnityEngine;
 // 고정형 보스의 머리와 몸통 애니메이션을 동기화한다.
 public class AnchoredBossRenderer : AnimationBase
 {
-    private const string AttackNum = "AttackNum";
-    private const string IsDie = "IsDie";
     private const float AttackResetDelay = 1.01f;
     private const int IdleAttackNum = 0;
 
@@ -38,10 +36,8 @@ public class AnchoredBossRenderer : AnimationBase
     // 공격 번호를 머리와 몸통 애니메이터에 동시에 전달한다.
     public override void AttackAnim(int attackNum)
     {
-        base.AttackAnim(attackNum);
-
-        headAnimator?.SetInteger(AttackNum, attackNum);
-        bodyAnimator?.SetInteger(AttackNum, attackNum);
+        headAnimator?.SetInteger(AnimatorParams.AttackNum, attackNum);
+        bodyAnimator?.SetInteger(AnimatorParams.AttackNum, attackNum);
 
         CancelInvoke(nameof(AttackEnd));
         Invoke(nameof(AttackEnd), AttackResetDelay);
@@ -49,17 +45,15 @@ public class AnchoredBossRenderer : AnimationBase
 
     private void AttackEnd()
     {
-        headAnimator?.SetInteger(AttackNum, IdleAttackNum);
-        bodyAnimator?.SetInteger(AttackNum, IdleAttackNum);
+        headAnimator?.SetInteger(AnimatorParams.AttackNum, IdleAttackNum);
+        bodyAnimator?.SetInteger(AnimatorParams.AttackNum, IdleAttackNum);
     }
 
     public override void DieAnim()
     {
-        base.DieAnim();
-
         CancelInvoke(nameof(AttackEnd));
 
-        headAnimator?.SetBool(IsDie, true);
-        bodyAnimator?.SetBool(IsDie, true);
+        headAnimator?.SetBool(AnimatorParams.IsDie, true);
+        bodyAnimator?.SetBool(AnimatorParams.IsDie, true);
     }
 }

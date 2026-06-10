@@ -26,8 +26,16 @@ public class BGMPlayer : MonoBehaviour
 
     private void StartBGM(VideoPlayer vp)
     {
+        StartBGM(0);
+    }
+
+    public void StartBGM(int bgmIndex = 0)
+    {
         canBGM = true;
-        ChangeBGM(0);
+        _wasPlaying = false;
+        count = bgmIndex;
+
+        ChangeBGM(bgmIndex);
     }
     private void Update()
     {
