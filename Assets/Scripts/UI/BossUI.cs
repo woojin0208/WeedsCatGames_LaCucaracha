@@ -1,76 +1,146 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 보스 체력 UI를 표시한다.
+// 보스 체력 UI와 전투 종료 화면 전환을 처리한다.
 public class BossUI : MonoBehaviour
 {
+    private const float BossNameFadeDuration = 1f;
+    private const float EndGameDelay = 2f;
+    private const float RestartDelay = 4f;
+
     [SerializeField] private TextMeshProUGUI bossName;
     [SerializeField] private GameObject hp;
     [SerializeField] private Image hpSlider;
 
     [SerializeField] private AnchoredBossBase boss;
 
-    [SerializeField] private Image BlackScreen;
-    [SerializeField] private Image EndScreen;
+    [SerializeField] private Image blackScreen;
+    [SerializeField] private Image endScreen;
+
+    private Coroutine bossNameCoroutine;
+    private Coroutine endSequenceCoroutine;
+    private bool isBattleEnded;
 
     public void StartBossBattle()
     {
-        StartCoroutine(HideBossName());
-    }
-
-    private IEnumerator HideBossName()
-    {
-        float timer = 1f;
-
-        Color targetColor = bossName.color;
-
-        while (timer <= 0)
+        if (bossNameCoroutine != null)
         {
-            targetColor.a = timer;
-            timer -= Time.deltaTime;
-
-            bossName.color = targetColor;
-
-            yield return null;
+            StopCoroutine(bossNameCoroutine);
         }
 
-        bossName.gameObject.SetActive(false);
+        isBattleEnded = false;
 
-        ViewHPSlider();
-    }
+        if (bossName != null)
+        {
+            bossName.gameObject.SetActive(true);
+            SetBossNameAlpha(1f);
+        }
 
-    private void ViewHPSlider()
-    {
-        hp.gameObject.SetActive(true);
+        if (hp != null)
+        {
+            hp.SetActive(false);
+        }
 
-        hpSlider.fillAmount = boss.stats.HPStat.DefaultValue / boss.stats.HPStat.MaxValue;
+        bossNameCoroutine = StartCoroutine(BossNameRoutine());
     }
 
     public void EndBossBattle()
     {
-        hp.SetActive(false);
+        if (isBattleEnded) return;
 
-        BlackScreen.gameObject.SetActive(true);
+        isBattleEnded = true;
 
-        Invoke(nameof(EndGame), 2);
+        if (hp != null)
+        {
+            hp.SetActive(false);
+        }
+
+        if (endSequenceCoroutine != null)
+        {
+            StopCoroutine(endSequenceCoroutine);
+        }
+
+        endSequenceCoroutine = StartCoroutine(EndSequenceRoutine());
     }
 
-    private void EndGame()
+    private void OnEnable()
     {
-        EndScreen.gameObject.SetActive(true);
-
-        Invoke(nameof(ResetGame), 4);
+        if (boss != null) boss.OnDamagedAction += UpdateHPSlider;
     }
 
-    private void ResetGame()
+    private void OnDisable()
     {
-        UIManager.Instance.Restart();
+        if (boss != null) boss.OnDamagedAction -= UpdateHPSlider;
     }
-    private void Update()
+
+    private IEnumerator BossNameRoutine()
     {
-        if (hpSlider.gameObject.activeSelf) hpSlider.fillAmount = boss.stats.HPStat.DefaultValue / boss.stats.HPStat.MaxValue;
+        float timer = BossNameFadeDuration;
+
+        while (timer > 0f)
+        {
+            timer -= Time.deltaTime;
+            float alpha = Mathf.Clamp01(timer / BossNameFadeDuration);
+            SetBossNameAlpha(alpha);
+
+            yield return null;
+        }
+
+        if (bossName != null)
+        {
+            bossName.gameObject.SetActive(false);
+        }
+
+        ViewHPSlider();
+        bossNameCoroutine = null;
+    }
+
+    private IEnumerator EndSequenceRoutine()
+    {
+        if (blackScreen != null)
+        {
+            blackScreen.gameObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(EndGameDelay);
+
+        if (endScreen != null)
+        {
+            endScreen.gameObject.SetActive(true);   
+        }
+
+        yield return new WaitForSeconds(RestartDelay);
+
+        UIManager.Instance?.Restart();
+        endSequenceCoroutine = null;
+    }
+
+    private void ViewHPSlider()
+    {
+        if (hp != null) hp.SetActive(true);
+
+        UpdateHPSlider();
+    }
+
+    private void UpdateHPSlider()
+    {
+        if (hpSlider == null || boss == null || boss.stats == null) return;
+        if (!hpSlider.gameObject.activeInHierarchy) return;
+
+        float maxHp = boss.stats.HPStat.MaxValue;
+        if (maxHp <= 0f) return;
+
+        hpSlider.fillAmount = boss.stats.HPStat.DefaultValue / maxHp;
+    }
+
+    private void SetBossNameAlpha(float alpha)
+    {
+        if (bossName == null) return;
+
+        Color color = bossName.color;
+        color.a = alpha;
+        bossName.color = color;
     }
 }

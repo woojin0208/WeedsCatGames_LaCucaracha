@@ -19,7 +19,9 @@ public class PlayerManager : MonoBehaviour
     public int CurrentSpawnPoint { get; set; } = 0;
     public Transform PlayerTextPosition { set; get; }
 
-    private PlayerController playerController;
+    public PlayerController PlayerController { get; private set; }
+    public PlayerBase PlayerBase { get; private set; }
+    public Transform PlayerTransform => PlayerController != null ?  PlayerController.transform : null;
     private PlayerInventory playerInventory;
 
     public int MaxWeaponCount { get; private set; } = 4;
@@ -53,7 +55,9 @@ public class PlayerManager : MonoBehaviour
 
     public void Init(PlayerController playerController)
     {
-        this.playerController = playerController;
+        this.PlayerController = playerController;
+        this.PlayerBase = playerController.GetComponent<PlayerBase>();
+
         playerInventory = playerController.GetComponentInChildren<PlayerInventory>();
 
         for (int i = hasWeapons.Count; i < MaxWeaponCount; i++)
@@ -114,7 +118,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         weapon.BindInstance(instance.Id, instance.Durability);
-        playerController.GetWeapon(weapon);
+        PlayerController.GetWeapon(weapon);
 
         if (WeaponData.TryRegisterWeapon(weapon))
         {
@@ -196,7 +200,7 @@ public class PlayerManager : MonoBehaviour
             CurrentWeapon = null;
             CurrentEquipId = null;
 
-            if (!isThrow) playerController.RemoveWeapon();
+            if (!isThrow) PlayerController.RemoveWeapon();
         }
 
         return true;

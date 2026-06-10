@@ -4,13 +4,28 @@ using UnityEngine;
 // 적 공격 판정과 패턴 프리팹 생성을 처리한다.
 public class EnemyAttack : MonoBehaviour
 {
+    private const int MeleeAttackEventIndex = 0;
+    private const int AreaAttackEventIndex = 1;
+    private const int ProjectileAttackEventIndex = 2;
 
     [SerializeField] private GameObject areaAttackPrefab;
     [SerializeField] private GameObject projectileAttackPrefab;
+
+    [Header("Melee Attack")]
     [SerializeField] private float attackRangeX = 1.0f;
     [SerializeField] private float attackRangeY = 0.5f;
-    private EnemyBase enemyBase;
 
+    [Header("Area Attack")]
+    [SerializeField] private Vector2 areaAttackOffset = new Vector2(-0.67f, 0f);
+    [SerializeField] private float areaAttackYPosition = -2.6f;
+    [SerializeField] private float areaAttackLifeTime = 1.1f;
+
+    [Header("Projectile Attack")]
+    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private Vector2 projectileSpawnPosition = new Vector2(-1.87f, -2.202f);
+    [SerializeField] private float projectileLifeTime = 1f;
+
+    private EnemyBase enemyBase;
     private float attackDamage = 10;
 
     private void Awake()
@@ -23,54 +38,78 @@ public class EnemyAttack : MonoBehaviour
         this.attackDamage = attackDamage;
     }
 
+    private Transform GetPlayerTransform()
+    {
+        return PlayerManager.Instance != null
+            ? PlayerManager.Instance.PlayerTransform
+            : null;
+    }
+
     // 애니메이션 이벤트 번호에 따라 근접, 범위, 투사체 공격을 실행한다.
     public void HandleAttackEvent(int attackNum)
     {
-        if (attackNum == 0)
+        switch (attackNum)
         {
-            Vector2 dir = enemyBase.transform.localScale.x > 0 ? Vector2.left : Vector2.right;
-            Vector2 origin = (Vector2)transform.position + dir * (attackRangeX * 0.5f);
-
-            Collider2D[] hits = Physics2D.OverlapBoxAll(
-                origin,
-                new Vector2(attackRangeX, attackRangeY),
-                0f,
-                LayerMask.GetMask(GameLayers.Player)
-            );
-
-            // 근접 공격 범위 안의 플레이어에게 피해를 준다.
-            foreach (var hit in hits)
-            {
-                if (hit.TryGetComponent<PlayerBase>(out var player))
-                    player.TakeDamage(attackDamage);
-            }
+            case MeleeAttackEventIndex:
+                ExecuteMeleeAttack();
+                break;
+            case AreaAttackEventIndex:
+                StartCoroutine(AreaAttackRoutine());
+                break;
+            case ProjectileAttackEventIndex:
+                StartCoroutine(ProjectileAttackRoutine());
+                break;
         }
-        else if (attackNum == 1)
+    }
+
+    private void ExecuteMeleeAttack()
+    {
+        if (enemyBase == null) return;
+
+        Vector2 dir = enemyBase.transform.localScale.x > 0 ? Vector2.left : Vector2.right;
+        Vector2 origin = (Vector2)transform.position + dir * (attackRangeX * 0.5f);
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(
+            origin,
+            new Vector2(attackRangeX, attackRangeY),
+            0f,
+            LayerMask.GetMask(GameLayers.Player)
+        );
+
+        foreach (Collider2D hit in hits)
         {
-            StartCoroutine(AreaAttackRoutine());
-        }
-        else if (attackNum == 2)
-        {
-            StartCoroutine(ProjectileAttackRoutine());
+            if (hit.TryGetComponent<PlayerBase>(out PlayerBase target))
+                target.TakeDamage(attackDamage);
         }
     }
 
     private IEnumerator AreaAttackRoutine()
     {
-        Vector2 areaPoint = FindObjectOfType<PlayerBase>().transform.position;
-        areaPoint.y = -2.6f;
-        areaPoint.x -= 0.67f;
+        if (areaAttackPrefab == null) yield break;
+
+        Transform target = GetPlayerTransform();
+        if (target == null) yield break;
+
+        Vector2 areaPoint = target.position;
+        areaPoint.y = areaAttackYPosition;
+        areaPoint += areaAttackOffset;
 
         var fx = Instantiate(areaAttackPrefab, areaPoint, Quaternion.identity);
-        Destroy(fx, 1.1f);
+        Destroy(fx, areaAttackLifeTime);
 
         yield return null;
     }
 
     private IEnumerator ProjectileAttackRoutine()
     {
-        var fx = Instantiate(projectileAttackPrefab, new Vector2(-1.87f, -2.202f), Quaternion.identity);
-        Destroy(fx, 1f);
+        if (projectileAttackPrefab == null) yield break;
+
+        Vector2 spawnPosition = projectileSpawnPoint != null
+            ? projectileSpawnPoint.position
+            : projectileSpawnPosition;
+
+        var fx = Instantiate(projectileAttackPrefab, spawnPosition, Quaternion.identity);
+        Destroy(fx, projectileLifeTime);
         yield return null;
     }
 

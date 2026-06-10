@@ -108,4 +108,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("ExitGmae");
     }
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha0)) TryLoadScene("Stage12");
+#endif
+    }
 }
