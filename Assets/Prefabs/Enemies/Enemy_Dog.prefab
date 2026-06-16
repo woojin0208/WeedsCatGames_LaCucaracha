@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 85926336567365349}
   - component: {fileID: 7939208016306680437}
   m_Layer: 6
-  m_Name: Enemy_Bee_Renderer
+  m_Name: Enemy_Dog_Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,7 +135,7 @@ AudioSource:
   m_GameObject: {fileID: 1561848347055908031}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 916283686956501879, guid: 5a3274ff24a71694d8e236882f6a0af4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.3
@@ -285,16 +285,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f0740a5a135d84a9411dea3a1a1165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTypes: 
   areaAttackPrefab: {fileID: 0}
   projectileAttackPrefab: {fileID: 0}
   attackRangeX: 1
   attackRangeY: 0.5
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  boxSize: {x: 3.736842, y: 1.6}
-  boxOffset: {x: 0, y: -0.69}
+  areaAttackOffset: {x: -0.67, y: 0}
+  areaAttackYPosition: -2.6
+  areaAttackLifeTime: 1.1
+  projectileSpawnPoint: {fileID: 0}
+  projectileSpawnPosition: {x: -1.87, y: -2.202}
+  projectileLifeTime: 1
 --- !u!61 &6981112944386974565
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 8873451654731085937}
   - component: {fileID: 2404798348260261493}
   m_Layer: 6
-  m_Name: Enemy_Bee_HitBox
+  m_Name: Enemy_Dog_HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -543,18 +543,6 @@ MonoBehaviour:
       minValue: 1
       defaultValue: 2
       bonusValue: 0
---- !u!114 &7309184263515402102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6712192130845348891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9531a0787399424d9c932ecbf5d6bc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6487432033448388763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,11 +557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectRange: 1
   startDetectPosition: 1.5
-  patrolDistance: 2
-  attackDistance: 1
-  hasSpecialAttack: 0
   groundCheck: {fileID: 7450394230568321942}
-  blockedStates: 
   AttackDistance: 1
   <IdleTime>k__BackingField: 3
   <PatrolTime>k__BackingField: 3
@@ -619,6 +603,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &7309184263515402102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712192130845348891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9531a0787399424d9c932ecbf5d6bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9126064235732980261
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +626,7 @@ GameObject:
   - component: {fileID: 7450394230568321942}
   - component: {fileID: 6996100040512636438}
   m_Layer: 6
-  m_Name: Enemy_Bee_GroundCheck
+  m_Name: Enemy_Dog_GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -652,3 +652,17 @@ ID 규칙:
 - Boss는 의도적으로 `IStatusEffectHandler`를 구현하지 않으므로 Honey Slow, Smoke Blind 같은 상태 이상 효과를 받지 않는다.
 - `EnemyStatusEffectData`, `EffectableEnvironment`, `EffectableWall`은 현재 사용처가 없어 삭제 후보로 정리했다.
 - `PlayerWallClingState` 종료 시 현재는 애니메이션 전환 부자연스러움 때문에 `IdleState`로 이동한다. Animation 리팩터링 시 `WallCling -> Fall` 전환 조건과 애니메이션을 재검토한다.
+
+## 19. Sound 1차 정리 메모
+
+- `MainAudioMixer`를 추가하고 `Master`, `BGM`, `SFX` 그룹으로 출력 경로를 분리했다.
+- `AudioSettingsManager`를 추가해 전체 볼륨, 배경음 볼륨, 효과음 볼륨을 `PlayerPrefs`에 저장하고 `AudioMixer`에 dB 값으로 적용한다.
+- `AudioSetting`을 추가해 설정 UI 슬라이더와 `AudioSettingsManager`를 연결했다.
+- 설정 UI의 Esc 입력은 `InputStateManager.PauseToggleRequested`를 구독해 조작 설정과 같은 방식으로 Pause 메뉴로 복귀한다.
+- 모든 씬의 활성 `AudioListener`를 Main Camera 기준 1개로 정리하고, BGM 오브젝트의 `AudioListener`는 비활성화했다.
+- 모든 `AudioSource`는 `BGM` 또는 `SFX` Mixer Group 중 하나로 연결했다.
+- `BGMPlayer`는 순차 재생, VideoPlayer 종료 후 시작, 기존 `ChangeBGM()` 호출 호환을 유지하면서 null/index 방어를 추가했다.
+- `VFXPlayer`는 기존 Animation Event와 UnityEvent 호환을 위해 `StartVFX(int)`를 유지하고, 내부 재생 함수 `PlaySFX(int)`와 방어 로직을 추가했다.
+- Animation Event 기반 SFX는 공격, 점프, 대시처럼 프레임 타이밍이 중요한 효과음에 한해 유지한다.
+- 현재 효과음 수와 사용 빈도 기준으로 AudioSource 풀링은 적용하지 않는다. 중첩 재생 품질 문제가 생기면 `PlayOneShot` 또는 전용 SFX 풀을 검토한다.
+- `Assets/Audio/NewAudioMixer.mixer`는 현재 참조가 없으므로 삭제 후보로 둔다.

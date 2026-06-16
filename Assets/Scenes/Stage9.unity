@@ -166,7 +166,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145921297}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!82 &145921300
 AudioSource:
   m_ObjectHideFlags: 0
@@ -176,7 +176,7 @@ AudioSource:
   m_GameObject: {fileID: 145921297}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6140627791532286127, guid: 5a3274ff24a71694d8e236882f6a0af4, type: 2}
   m_audioClip: {fileID: 8300000, guid: d1421956bfbf55f4d9623f3389a792b3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
@@ -2585,7 +2585,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372214462}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &1372214466
 Camera:
   m_ObjectHideFlags: 0

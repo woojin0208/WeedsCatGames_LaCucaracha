@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitColor: {r: 0.8773585, g: 0.29383236, b: 0.29383236, a: 1}
-  pipeWarpColor: {r: 0.42352942, g: 0.42352942, b: 0.42352942, a: 1}
+  throwVfxIndex: 3
 --- !u!82 &3224970373274795819
 AudioSource:
   m_ObjectHideFlags: 0
@@ -245,7 +245,7 @@ AudioSource:
   m_GameObject: {fileID: 1860472886024759682}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 916283686956501879, guid: 5a3274ff24a71694d8e236882f6a0af4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

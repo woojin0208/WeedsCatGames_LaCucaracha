@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject controlSettingPanel;
+    [SerializeField] private GameObject audioSettingPanel;
     [SerializeField] private LoadPanel loadPanel;
     [SerializeField] private RectTransform interactiveImage;
     [SerializeField] private GameObject minimap;
@@ -93,7 +94,7 @@ public class UIManager : MonoBehaviour
     private void TryTogglePause()
     {
         if (dialogueUI.gameObject.activeSelf || minimap.activeSelf) return;
-        if (settingPanel.activeSelf || controlSettingPanel.activeSelf) return;
+        if (settingPanel.activeSelf || controlSettingPanel.activeSelf || audioSettingPanel.activeSelf) return;
         if (weaponDescriptionUI != null && weaponDescriptionUI.gameObject.activeSelf)
         {
             weaponDescriptionUI.gameObject.SetActive(false);
@@ -152,6 +153,11 @@ public class UIManager : MonoBehaviour
     public void ClickControlSetting()
     {
         ClickSettingUI(controlSettingPanel);
+    }
+
+    public void ClickAudioSetting()
+    {
+        ClickSettingUI(audioSettingPanel);
     }
 
     public void TryExitGame(bool isTry)

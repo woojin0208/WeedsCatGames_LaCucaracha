@@ -165,6 +165,7 @@ MonoBehaviour:
   <WeaponDefinition>k__BackingField: {fileID: 11400000, guid: ed3d4c7e96d3fea4e91c142771a4a51e, type: 2}
   weaponDamage: 4
   throwSpeed: 8
+  hitEffects: []
   <Durability>k__BackingField: 3
   <WeaponSprite>k__BackingField: {fileID: 21300000, guid: bbd3779421e00d941986be60f07ab7d6, type: 3}
   <InteractivePos>k__BackingField: {fileID: 6049777461602901571}
@@ -306,7 +307,7 @@ AudioSource:
   m_GameObject: {fileID: 9007582285770522307}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 916283686956501879, guid: 5a3274ff24a71694d8e236882f6a0af4, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4e80e461672bb9d4998fc07024d86dba, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

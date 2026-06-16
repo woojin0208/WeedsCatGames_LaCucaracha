@@ -2394,7 +2394,7 @@ AudioSource:
   m_GameObject: {fileID: 3409968097432296416}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 916283686956501879, guid: 5a3274ff24a71694d8e236882f6a0af4, type: 2}
   m_audioClip: {fileID: 8300000, guid: 04bec0ee1370f9642ae5b7c0c4563893, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -3740,6 +3740,8 @@ MonoBehaviour:
   weaponIconImage: {fileID: 2714622324339891119}
   weaponNameText: {fileID: 4227210306207920813}
   weaponDescriptionText: {fileID: 6009898730965192213}
+  weaponDamageText: {fileID: 0}
+  weaponDurabilityText: {fileID: 0}
 --- !u!1 &5212855402938085904
 GameObject:
   m_ObjectHideFlags: 0
@@ -5219,7 +5221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414d9d24ae5d6cd458c36af3da596a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadTime: 0.55
+  fadeTime: 0.55
 --- !u!1 &6498228999263198546
 GameObject:
   m_ObjectHideFlags: 0
@@ -8331,7 +8333,7 @@ AudioSource:
   m_GameObject: {fileID: 8690057556867865541}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 916283686956501879, guid: 5a3274ff24a71694d8e236882f6a0af4, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

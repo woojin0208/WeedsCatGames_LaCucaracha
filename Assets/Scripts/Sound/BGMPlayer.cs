@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -6,69 +5,110 @@ using UnityEngine.Video;
 public class BGMPlayer : MonoBehaviour
 {
     [SerializeField] private AudioClip[] bgmClips;
-    [SerializeField] private VideoPlayer vp;
+    [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private AudioSource audioSource;
-    public event Action<int> onAudioEnd;
-
-    private bool _wasPlaying = false;
-
-    private int count = 0;
-
     [SerializeField] private bool[] loopBGMCounts;
-
     [SerializeField] private bool canBGM = true;
+
+    private bool wasPlaying;
+    private int currentBGMIndex;
+
     private void Start()
     {
-        onAudioEnd += ChangeBGM;
-
-        if (vp != null) vp.loopPointReached += StartBGM;
+        if (videoPlayer != null)
+        {
+            videoPlayer.loopPointReached += HandleVideoEnded;
+        }
     }
 
-    private void StartBGM(VideoPlayer vp)
+    private void OnDestroy()
     {
-        StartBGM(0);
+        if (videoPlayer != null)
+        {
+            videoPlayer.loopPointReached -= HandleVideoEnded;
+        }
     }
 
-    public void StartBGM(int bgmIndex = 0)
-    {
-        canBGM = true;
-        _wasPlaying = false;
-        count = bgmIndex;
-
-        ChangeBGM(bgmIndex);
-    }
     private void Update()
     {
         if (!canBGM) return;
         if (audioSource == null) return;
         if (audioSource.loop) return;
 
-        // 한 번 재생이 시작된 뒤 종료되었을 때만 다음 BGM으로 넘어간다.
-        if (!_wasPlaying && audioSource.isPlaying)
-            _wasPlaying = true;
-
-        if (_wasPlaying && !audioSource.isPlaying)
+        if (!wasPlaying && audioSource.isPlaying)
         {
-            _wasPlaying = false;
-            count++;
-            onAudioEnd?.Invoke(count);
+            wasPlaying = true;
         }
+
+        if (!wasPlaying || audioSource.isPlaying) return;
+
+        wasPlaying = false;
+        PlayBGM(currentBGMIndex + 1);
     }
 
-    public void ChangeBGM(int count = -1)
+    public void StartBGM(int bgmIndex = 0)
     {
-        if (count == -1)
+        canBGM = true;
+        wasPlaying = false;
+
+        PlayBGM(bgmIndex);
+    }
+
+    // 기존 Animation/Event/Inspector 호출 호환용 메서드다.
+    public void ChangeBGM(int bgmIndex = -1)
+    {
+        int nextIndex = bgmIndex >= 0 ? bgmIndex : currentBGMIndex + 1;
+        PlayBGM(nextIndex);
+    }
+
+    private void HandleVideoEnded(VideoPlayer endedVideoPlayer)
+    {
+        StartBGM(0);
+    }
+
+    private void PlayBGM(int bgmIndex)
+    {
+        if (!CanPlayBGM(bgmIndex)) return;
+
+        currentBGMIndex = bgmIndex;
+        audioSource.clip = bgmClips[currentBGMIndex];
+        audioSource.loop = IsLoopBGM(currentBGMIndex);
+        audioSource.Play();
+    }
+
+    private bool CanPlayBGM(int bgmIndex)
+    {
+        if (audioSource == null)
         {
-            this.count++;
-            count = this.count;
+            Debug.LogError("[BGMPlayer] AudioSource가 할당되지 않았습니다.", this);
+            return false;
         }
 
-        if (count >= bgmClips.Length) return;
-        audioSource.clip = bgmClips[count];
+        if (bgmClips == null || bgmClips.Length == 0)
+        {
+            Debug.LogWarning("[BGMPlayer] BGM Clip이 비어 있습니다.", this);
+            return false;
+        }
 
-        audioSource.loop = loopBGMCounts[count];
+        if (bgmIndex < 0 || bgmIndex >= bgmClips.Length)
+        {
+            return false;
+        }
 
-        audioSource.Play();
+        if (bgmClips[bgmIndex] == null)
+        {
+            Debug.LogWarning($"[BGMPlayer] BGM Clip이 비어 있습니다. index: {bgmIndex}", this);
+            return false;
+        }
 
+        return true;
+    }
+
+    private bool IsLoopBGM(int bgmIndex)
+    {
+        if (loopBGMCounts == null) return false;
+        if (bgmIndex < 0 || bgmIndex >= loopBGMCounts.Length) return false;
+
+        return loopBGMCounts[bgmIndex];
     }
 }
