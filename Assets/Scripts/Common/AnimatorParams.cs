@@ -13,6 +13,10 @@ public static class AnimatorParams
     public const string OnPipe = "OnPipe";
     public const string ReversePipe = "ReversePipe";
 
+    public const string IsTalk = "IsTalk";
+    public const string MoveDirection = "moveDirection";
+
     public const string Interaction = "Interaction";
+    public const string Interactive = "Interactive";
     public const string Destruction = "Destruction";
 }

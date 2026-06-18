@@ -19,7 +19,7 @@ public class DonationBox : MonoBehaviour
 
     public void DonationItem()
     {
-        boxAnimator?.SetTrigger("Interaction");
+        boxAnimator?.SetTrigger(AnimatorParams.Interaction);
 
         if (currentNPC == null)
         {

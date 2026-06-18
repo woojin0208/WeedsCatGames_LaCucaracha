@@ -9,7 +9,6 @@ public class LoadPanel : MonoBehaviour
     [SerializeField] private float fadeTime = 0.55f;
 
     private Image panelImage;
-    private Coroutine fadeCoroutine;
 
     public event Action Closed;
 
@@ -47,6 +46,7 @@ public class LoadPanel : MonoBehaviour
         IsShowing = true;
         SetAlpha(1f);
     }
+
     public void HideImmediate()
     {
         if (panelImage == null) return;
@@ -59,12 +59,6 @@ public class LoadPanel : MonoBehaviour
     private IEnumerator Fade(float startAlpha, float endAlpha, bool keepActiveAfterFade)
     {
         if (panelImage == null) yield break;
-
-        if (fadeCoroutine != null)
-        {
-            StopCoroutine(fadeCoroutine);
-            fadeCoroutine = null;
-        }
 
         gameObject.SetActive(true);
         IsShowing = true;

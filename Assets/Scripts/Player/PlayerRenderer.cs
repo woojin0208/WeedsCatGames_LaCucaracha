@@ -24,7 +24,7 @@ public class PlayerRenderer : AnimationBase
         animator.SetInteger(AnimatorParams.JumpCount, jump);
     }
 
-    public void OnAttactkTiming()
+    public void OnAttackTiming()
     {
         playerAttack?.OnAttackHitEvent();
     }

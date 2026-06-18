@@ -16,14 +16,19 @@ public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler
     private bool isPointerEnabled = true;
 
     private MenuNavigationController navigationController;
+    private Selectable selectable;
+
     private void Awake()
     {
         navigationController = GetComponentInParent<MenuNavigationController>();
+        selectable = GetComponent<Selectable>();
     }
+
     private void OnEnable()
     {
         SetSelected(false);
     }
+
     public void SetSelected(bool isSelected)
     {
         if (selectedMark != null) selectedMark.SetActive(isSelected);
@@ -42,11 +47,8 @@ public class MenuSelectableUI : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!isPointerEnabled || navigationController == null) return;
-        
-        Selectable selectable = GetComponent<Selectable>();
+        if (!isPointerEnabled || navigationController == null || selectable == null) return;
 
-        
         navigationController.SelectItem(selectable);
     }
 }

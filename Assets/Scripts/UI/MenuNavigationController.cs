@@ -29,6 +29,10 @@ public class MenuNavigationController : MonoBehaviour
 
         if (isSub)
         {
+            inputStateManager.PauseUpPressedRequested -= MoveUp;
+            inputStateManager.PauseDownPressedRequested -= MoveDown;
+            inputStateManager.PauseSubmitPressedRequested -= SubmitItem;
+
             inputStateManager.PauseUpPressedRequested += MoveUp;
             inputStateManager.PauseDownPressedRequested += MoveDown;
             inputStateManager.PauseSubmitPressedRequested += SubmitItem;
@@ -59,6 +63,7 @@ public class MenuNavigationController : MonoBehaviour
         CancelSelectItem();
 
         currentIndex = Mathf.Clamp(index, 0, menuItems.Length - 1);
+        if (!IsValidIndex(currentIndex)) return;
 
         GameObject currentItem = menuItems[currentIndex].gameObject;
         if (EventSystem.current != null)
@@ -75,6 +80,7 @@ public class MenuNavigationController : MonoBehaviour
     private void CancelSelectItem()
     {
         if (menuItems == null || menuItems.Length == 0) return;
+        if (!IsValidIndex(currentIndex)) return;
 
         GameObject beforeItem = menuItems[currentIndex].gameObject;
 
@@ -104,5 +110,10 @@ public class MenuNavigationController : MonoBehaviour
         Button itemButton = selected.GetComponent<Button>();
         if (itemButton == null || !itemButton.interactable) return;
         itemButton.onClick.Invoke();
+    }
+
+    private bool IsValidIndex(int index)
+    {
+        return index >= 0 && index < menuItems.Length && menuItems[index] != null;
     }
 }

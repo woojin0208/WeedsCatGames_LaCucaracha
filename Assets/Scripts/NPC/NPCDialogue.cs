@@ -43,7 +43,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
     private readonly Dictionary<DialogueNodeData, NodeEvent> eventMap = new();
     private readonly NpcDialogueResolver resolver = new();
 
-    private static readonly int IsTalkHash = Animator.StringToHash("IsTalk");
+    private static readonly int IsTalkHash = Animator.StringToHash(AnimatorParams.IsTalk);
 
     private bool hasTalkParameter;
 
@@ -191,7 +191,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
         if (npcAnimator == null) return;
         if (!hasTalkParameter) return;
 
-        npcAnimator?.SetBool("IsTalk", isStart);
+        npcAnimator.SetBool(IsTalkHash, isStart);
     }
 
     public virtual void Interactive(PlayerBase _ = null)

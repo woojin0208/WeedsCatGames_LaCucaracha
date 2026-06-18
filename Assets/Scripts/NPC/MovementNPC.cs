@@ -10,7 +10,7 @@ public interface IMovementNPC
 // 대화 이벤트에 의해 지정된 위치까지 이동하는 NPC를 처리한다.
 public class MovementNPC : NPCDialogue, IMovementNPC
 {
-    private static readonly int MoveDirectionHash = Animator.StringToHash("moveDirection");
+    private static readonly int MoveDirectionHash = Animator.StringToHash(AnimatorParams.MoveDirection);
 
     [SerializeField] private Transform targetPoint;
     [SerializeField] private float arriveDistance = 0.1f;

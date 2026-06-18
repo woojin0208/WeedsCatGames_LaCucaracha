@@ -93,7 +93,7 @@ AnimationClip:
     intParameter: 1
     messageOptions: 0
   - time: 0.2
-    functionName: OnAttactkTiming
+    functionName: OnAttackTiming
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

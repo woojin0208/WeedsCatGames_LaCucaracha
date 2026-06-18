@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
             loadPanel.HideImmediate();
         }
 
-        inventoryUI.SetActive(true);
+        inventoryUI?.SetActive(true);
     }
 
     private void OnEnable()
@@ -68,7 +68,10 @@ public class UIManager : MonoBehaviour
 
         if (Time.timeScale == 0)
         {
-            interactiveImage.gameObject.SetActive(false);
+            if (interactiveImage != null)
+            {
+                interactiveImage.gameObject.SetActive(false);
+            }
             return;
         }
     }
@@ -93,21 +96,31 @@ public class UIManager : MonoBehaviour
 
     private void TryTogglePause()
     {
-        if (dialogueUI.gameObject.activeSelf || minimap.activeSelf) return;
-        if (settingPanel.activeSelf || controlSettingPanel.activeSelf || audioSettingPanel.activeSelf) return;
+        if ((dialogueUI != null && dialogueUI.gameObject.activeSelf) ||
+            (minimap != null && minimap.activeSelf))
+        {
+            return;
+        }
+
+        if ((settingPanel != null && settingPanel.activeSelf) ||
+            (controlSettingPanel != null && controlSettingPanel.activeSelf) ||
+            (audioSettingPanel != null && audioSettingPanel.activeSelf))
+        {
+            return;
+        }
         if (weaponDescriptionUI != null && weaponDescriptionUI.gameObject.activeSelf)
         {
             weaponDescriptionUI.gameObject.SetActive(false);
             return;
         }
 
-        if (quitImage.activeSelf)
+        if (quitImage != null && quitImage.activeSelf)
         {
             quitImage.SetActive(false);
             return;
         }
 
-        if (pausePanel.activeSelf)
+        if (pausePanel != null && pausePanel.activeSelf)
         {
             ExitSetting();
             return;
@@ -118,31 +131,29 @@ public class UIManager : MonoBehaviour
 
     public void OpenPause()
     {
-        pausePanel.SetActive(true);
+        pausePanel?.SetActive(true);
         Time.timeScale = 0;
         InputStateManager.Instance?.ChangeState(InputStateType.Pause);
     }
 
     public void ExitSetting()
     {
-        pausePanel.SetActive(false);
+        pausePanel?.SetActive(false);
         Time.timeScale = 1f;
         InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
     }
 
     public void ClickContinue()
     {
-        ClickSettingUI(pausePanel);
-        Time.timeScale = 1f;
-        InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
+        ExitSetting();
     }
 
     public void ClickRestart()
     {
-        ClickSettingUI(pausePanel);
+        pausePanel?.SetActive(false);
         Time.timeScale = 1f;
         InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
-        GameManager.Instance.TryLoadScene("Scene_Title");
+        GameManager.Instance?.TryLoadScene("Scene_Title");
     }
 
     public void ClickSetting()
@@ -162,7 +173,7 @@ public class UIManager : MonoBehaviour
 
     public void TryExitGame(bool isTry)
     {
-        quitImage.SetActive(isTry);
+        quitImage?.SetActive(isTry);
     }
 
     public void ClickExitGame()
@@ -175,13 +186,24 @@ public class UIManager : MonoBehaviour
 
     private void ClickSettingUI(GameObject panel)
     {
+        if (panel == null)
+        {
+            Debug.LogWarning("[UIManager] 열 설정 패널이 비어 있습니다.", this);
+            return;
+        }
+
         panel.SetActive(true);
-        pausePanel.SetActive(false);
+        pausePanel?.SetActive(false);
     }
 
     public void OnPausePanel()
     {
-        pausePanel.SetActive(true);
+        settingPanel?.SetActive(false);
+        controlSettingPanel?.SetActive(false);
+        audioSettingPanel?.SetActive(false);
+
+        pausePanel?.SetActive(true);
+        Time.timeScale = 0f;
         InputStateManager.Instance?.ChangeState(InputStateType.Pause);
     }
 
@@ -221,7 +243,7 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
-        pausePanel.SetActive(false);
+        pausePanel?.SetActive(false);
         Time.timeScale = 1f;
         InputStateManager.Instance?.ChangeState(InputStateType.Gameplay);
 
@@ -236,35 +258,50 @@ public class UIManager : MonoBehaviour
     // 상호작용 UI를 표시하고 필요하면 대상 위치로 이동한다.
     public void CanInteraction(bool can, Transform target = null)
     {
+        if (interactiveImage == null)
+        {
+            return;
+        }
+
         if (Time.timeScale == 0)
         {
             interactiveImage.gameObject.SetActive(false);
             return;
         }
+
         interactiveImage.gameObject.SetActive(can);
 
-        if (target != null)
+        if (!can || target == null)
         {
-            Transform interactive = target.GetComponent<IInteractable>().InteractivePos;
-
-            Vector3 screenPoint = interactive != null ?
-                Camera.main.WorldToScreenPoint(interactive.position)
-                : Camera.main.WorldToScreenPoint(target.position + new Vector3(0, 50, 0)); // interactive UI 표시 offset
-
-            interactiveImage.position = screenPoint;
+            return;
         }
+
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            return;
+        }
+
+        IInteractable interactable = target.GetComponent<IInteractable>();
+        Transform interactive = interactable?.InteractivePos;
+
+        Vector3 worldPosition = interactive != null
+            ? interactive.position
+            : target.position + new Vector3(0f, 50f, 0f);
+
+        interactiveImage.position = mainCamera.WorldToScreenPoint(worldPosition);
     }
 
     public void OpenMinimap()
     {
         if (SceneManager.GetActiveScene().name == "Tutorial") return;
         Time.timeScale = Time.timeScale == 1 ? 0 : 1;
-        minimap.SetActive(!minimap.activeSelf);
+        minimap?.SetActive(!minimap.activeSelf);
     }
 
     public void ShowWeaponDescription(WeaponBase weapon)
     {
-        if (weapon.WeaponDefinition == null) return;
+        if (weapon == null || weapon.WeaponDefinition == null || weaponDescriptionUI == null) return;
 
         weaponDescriptionUI.gameObject.SetActive(true);
         weaponDescriptionUI.ViewDescription(weapon);

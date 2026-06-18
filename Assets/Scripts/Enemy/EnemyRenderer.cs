@@ -8,7 +8,6 @@ public class EnemyRenderer : AnimationBase
 
     [SerializeField] private VFXPlayer vfxPlayer;
     [SerializeField] private int hitSoundNum = 3;
-    [SerializeField] private int dieSoundNum;
     protected override void Awake()
     {
         base.Awake();
