@@ -1,10 +1,6 @@
 using UnityEngine;
 
-// UI 표시 여부를 전환한다.
+// 현재 사용하지 않는 이전 UI 제어 스크립트다.
 public class HideUI : MonoBehaviour
 {
-    private void Start()
-    {
-        UIManager.Instance.gameObject.SetActive(false);
-    }
 }

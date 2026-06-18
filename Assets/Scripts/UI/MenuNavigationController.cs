@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// Pause 메뉴의 키보드 선택 이동과 Submit 입력을 처리한다.
 public class MenuNavigationController : MonoBehaviour
 {
     [SerializeField] private Selectable[] menuItems;

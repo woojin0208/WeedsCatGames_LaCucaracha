@@ -25,8 +25,6 @@ public class PlayerPipeWarpState : IPlayerState
     {
         playerController.Move.Stop(true);
         playerController.Anim.PipeWarp(isStartPipeWarp, isLeftStart);
-
-        Debug.LogAssertion("Enter PipeWarp");
     }
 
     public void UpdateState(PlayerController playerController)
@@ -44,6 +42,5 @@ public class PlayerPipeWarpState : IPlayerState
     public void ExitState(PlayerController playerController)
     {
         playerController.Move.Stop(false);
-        Debug.LogAssertion("Exit PipeWarp");
     }
 }

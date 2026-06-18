@@ -196,6 +196,7 @@ public class UIManager : MonoBehaviour
         pausePanel?.SetActive(false);
     }
 
+    // 설정 하위 패널을 닫고 Pause 메뉴로 복귀한다.
     public void OnPausePanel()
     {
         settingPanel?.SetActive(false);

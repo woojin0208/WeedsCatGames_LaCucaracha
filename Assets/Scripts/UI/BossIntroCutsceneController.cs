@@ -105,6 +105,7 @@ public class BossIntroCutsceneController : MonoBehaviour
         FinishCutscene(true);
     }
 
+    // 컷씬 종료 방식에 따라 BGM 전환 여부를 결정하고 전투 상태로 복귀한다.
     private void FinishCutscene(bool shouldChangeBGM)
     {
         if (isFinished) return;

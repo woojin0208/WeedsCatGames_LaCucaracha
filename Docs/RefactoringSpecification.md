@@ -666,3 +666,70 @@ ID 규칙:
 - Animation Event 기반 SFX는 공격, 점프, 대시처럼 프레임 타이밍이 중요한 효과음에 한해 유지한다.
 - 현재 효과음 수와 사용 빈도 기준으로 AudioSource 풀링은 적용하지 않는다. 중첩 재생 품질 문제가 생기면 `PlayOneShot` 또는 전용 SFX 풀을 검토한다.
 - `Assets/Audio/NewAudioMixer.mixer`는 현재 참조가 없으므로 삭제 후보로 둔다.
+
+## 20. Animation / UI 최종 정리 메모
+
+- Animator parameter 문자열은 `AnimatorParams` 공통 상수로 모아 하드코딩을 줄였다.
+- Player 공격 Animation Event는 `OnAttackTiming` 이름으로 통일했다.
+- Boss 공격 판정용 `AttackTiming` Animation Event는 `BossAttackTiming` 수신 컴포넌트가 있는 구조에서만 사용한다.
+- Enemy의 기본 FSM 및 상태이상 처리 구조는 현 범위에서 유지한다.
+- Pause 메뉴는 `MenuNavigationController`가 입력 이동과 Submit을 담당하고, `MenuSelectableUI`가 선택 시각 효과만 담당한다.
+- `UIManager`는 Pause, 설정 패널 복귀, 상호작용 UI, LoadPanel, WeaponDescription 흐름을 관리한다.
+- `UIManager.ClickContinue()`는 Pause UI를 다시 켜지 않고 `ExitSetting()`으로 복귀하도록 정리했다.
+- `LoadPanel`의 미사용 `fadeCoroutine` 필드는 제거했다.
+- `HideUI`는 이전 UI 제어 잔재로, UIManager를 비활성화하던 동작을 제거했다.
+
+## 21. 최종 테스트 루트
+
+### 21.1 기본 시작 / 입력 / UI
+
+- GameStart에서 게임 시작 후 UIManager가 정상 활성화되어 있는지 확인한다.
+- Gameplay 입력, Pause 입력, Dialogue 입력, Cutscene Skip 입력이 서로 충돌하지 않는지 확인한다.
+- Pause 메뉴를 키보드 방향키와 마우스로 조작한다.
+- Continue, Restart, Control Setting, Audio Setting, Quit 확인창 흐름을 확인한다.
+- Audio Setting에서 Master, BGM, SFX Slider 값이 즉시 반영되고 재시작 후 PlayerPrefs 값이 적용되는지 확인한다.
+- LoadPanel fade 동안 플레이어 입력이 막히고, fade 종료 후 Gameplay 입력이 복귀하는지 확인한다.
+
+### 21.2 Weapon / Inventory / Effect
+
+- 무기 근처에서 Interaction UI가 표시되는지 확인한다.
+- 무기 획득 시 Inventory UI와 WeaponDescription UI가 정상 갱신되는지 확인한다.
+- Inventory 4칸이 가득 찬 상태에서 추가 무기 획득이 차단되는지 확인한다.
+- 무기 투척 후 내구도가 감소하고, 내구도 0에서 무기가 제거되는지 확인한다.
+- Honey, Smoke, Stone, Mandarin 계열 상태이상이 Enemy에게 적용되고 지속시간 후 해제되는지 확인한다.
+- Weapon이 Ground, Wall, Enemy, NPC, MapBoundary와 의도한 방식으로 충돌하는지 확인한다.
+
+### 21.3 NPC / Dialogue / Quest
+
+- 일반 NPC의 FirstMeet, InProgress, Complete, Repeat 대화가 NPCState에 맞게 출력되는지 확인한다.
+- Dialogue 선택지가 키보드와 마우스로 정상 선택되는지 확인한다.
+- Dialogue NodeEvent의 OnEnter, OnEnd, OptionEvents가 의도한 시점에 1회 호출되는지 확인한다.
+- ItemGiver, ItemRequirementChecker, DonationBox가 QuestData와 QuestManager 상태를 정상 갱신하는지 확인한다.
+- DonationBox는 장착 무기 점수 누적, 목표 점수 도달, Completed 전환을 확인한다.
+- TutorialNPC처럼 일반 DialogueData 흐름을 사용하지 않는 예외 NPC가 오류 없이 작동하는지 확인한다.
+
+### 21.4 Entrance / Scene / Cutscene
+
+- InteractableEnterance, AutoEnterance, PipeEnterance, GuardedEnterance, BossEnterance를 각각 확인한다.
+- Scene 전환 직후 AutoEnterance가 재진입 불가 상태로 고정되지 않는지 확인한다.
+- SpawnPoint 이동 후 플레이어가 의도한 위치에 배치되는지 확인한다.
+- Boss Intro Cutscene은 자연 종료와 Skip 양쪽에서 BGM, UI, Player 위치, Boss Battle 시작이 정상 처리되는지 확인한다.
+- 이미 본 Boss Intro는 재입장 시 SkipAlreadyViewed 흐름으로 처리되는지 확인한다.
+
+### 21.5 Enemy / Boss / Animation / Sound
+
+- 일반 Enemy가 Patrol, Detect, Attack, Hit, Die 흐름을 정상 수행하는지 확인한다.
+- Enemy 상태이상이 Hit, Attack 상태 전환 중에도 유지되는지 확인한다.
+- Player 공격 콤보 Animation Event가 정상 타이밍에 공격 판정을 호출하는지 확인한다.
+- Boss 피격, 패턴 선택, 공격 판정, 사망 연출, Boss UI 종료 연출을 확인한다.
+- Animation Event 기반 SFX가 누락 receiver 없이 호출되는지 확인한다.
+- Scene별 AudioListener가 Main Camera 기준 1개만 활성화되어 있는지 확인한다.
+
+## 22. 빌드 테스트 기준
+
+- Build Settings에 실제 사용 Scene이 순서대로 등록되어 있는지 확인한다.
+- Windows 빌드에서 GameStart부터 Boss까지 최소 1회 전체 흐름을 진행한다.
+- Editor 전용 코드가 빌드에서 실행되지 않는지 확인한다.
+- VideoPlayer, AudioMixer, PlayerPrefs, SceneName 기반 이동이 빌드에서도 정상 동작하는지 확인한다.
+- 빌드 실행 중 Console 또는 Player.log에 치명적인 Error가 남지 않는지 확인한다.
+- Save/Load는 현 제출 범위에서 제외한다. 단, WeaponId, QuestId, NPCId, Scene/SpawnPoint ID 규칙은 추후 Easy Save 적용을 위한 기반으로 유지한다.
